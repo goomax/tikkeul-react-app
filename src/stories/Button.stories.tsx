@@ -15,7 +15,7 @@ export default {
   },
 };
 
-export const PrimaryIconButton: StoryObj<ButtonProps> = {
+export const PrimaryButton: StoryObj<ButtonProps> = {
   args: {
     variant: 'contained',
     color: 'primary',
