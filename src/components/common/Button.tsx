@@ -13,7 +13,7 @@ const Button = ({ color = 'primary', variant = 'contained', children, sx, ...oth
       sx={{
         borderRadius: '4px',
         boxShadow: 'none',
-        color: variant === 'contained' ? 'white' : undefined,
+        ...(variant === 'contained' ? { color: 'white' } : {}),
         ...sx,
       }}
       {...others}

@@ -10,7 +10,7 @@ const IconButton = ({ textBadge, children, sx, ...others }: IconButtonProps) => 
   return (
     <MuiIconButton
       sx={{
-        position: textBadge ? 'relative' : undefined,
+        ...(textBadge ? { position: 'relative' } : {}),
         width: '40px',
         height: '40px',
         ...sx,
