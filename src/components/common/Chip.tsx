@@ -1,6 +1,4 @@
-import { Chip as MuiChip, useTheme } from '@mui/material';
-
-import { ChipProps as MuiChipProps } from '@mui/material';
+import { Chip as MuiChip, ChipProps as MuiChipProps, useTheme } from '@mui/material';
 
 export interface ChipProps extends MuiChipProps {
   radiusVariant: 'circle' | 'square' | 'half';
