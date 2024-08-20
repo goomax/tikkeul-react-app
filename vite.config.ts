@@ -12,7 +12,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['src/stories/**'],
+      external: ['src/stories/**', 'custom-script/**'],
     },
   },
 });

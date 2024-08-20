@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "sb": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "gen:icon": "node custom-script/createIconTemplate.js",
+    "gen:index": "node custom-script/createIndex.js" 
+
   },
   "dependencies": {
     "@emotion/react": "^11.13.0",
