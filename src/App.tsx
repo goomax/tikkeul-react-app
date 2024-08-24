@@ -1,11 +1,22 @@
 import DynamicRouter from '@/DynamicRouter';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, GlobalStyles } from '@mui/material';
+import ThemeProvider from './components/common/ThemeProvider';
 
 function App() {
   return (
     <>
-      <CssBaseline />
-      <DynamicRouter />
+      <ThemeProvider>
+        <CssBaseline />
+        <GlobalStyles
+          styles={{
+            a: {
+              textDecoration: 'none',
+              color: 'inherit',
+            },
+          }}
+        />
+        <DynamicRouter />
+      </ThemeProvider>
     </>
   );
 }

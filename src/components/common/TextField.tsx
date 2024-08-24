@@ -19,7 +19,7 @@ const TextField = ({ variant = 'standard', focused, sx, ...others }: TextFieldPr
               },
               '& .MuiInputBase-root': {
                 borderRadius: '20px',
-                backgroundColor: theme.palette.grey[100],
+                backgroundColor: theme.palette.background.default,
               },
             }
           : {}),

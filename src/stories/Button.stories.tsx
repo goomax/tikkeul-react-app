@@ -21,5 +21,6 @@ export const PrimaryButton: StoryObj<ButtonProps> = {
     color: 'primary',
     disabled: false,
     children: '여행 시작하기',
+    shape: 'square',
   },
 };

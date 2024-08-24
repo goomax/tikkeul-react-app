@@ -1,7 +1,8 @@
 import { Chip as MuiChip, ChipProps as MuiChipProps, useTheme } from '@mui/material';
 
-export interface ChipProps extends MuiChipProps {
+export interface ChipProps extends Omit<MuiChipProps, 'color'> {
   radiusVariant: 'circle' | 'square' | 'half';
+  color: 'default' | 'primary' | 'secondary';
 }
 
 const Chip = ({ variant, color, sx, radiusVariant = 'circle', ...others }: ChipProps) => {
@@ -11,9 +12,11 @@ const Chip = ({ variant, color, sx, radiusVariant = 'circle', ...others }: ChipP
     <MuiChip
       color={color}
       sx={{
-        ...(color === 'default' ? { backgroundColor: theme.palette.grey[500] } : {}),
-        color: 'white',
+        ...(color === 'default'
+          ? { backgroundColor: theme.palette.grey[200], color: theme.palette.grey[700] }
+          : { color: 'white' }),
         ...radius[radiusVariant],
+        paddingLeft: '1px',
         ...sx,
       }}
       {...others}
