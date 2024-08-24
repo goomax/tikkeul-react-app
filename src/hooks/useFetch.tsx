@@ -2,8 +2,14 @@ import apiClient from '@/apis/apiClient';
 import axios, { AxiosError } from 'axios';
 import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
 
-const useFetch = <T,>({ url, dependencies = [] }: { url: string; dependencies?: DependencyList }) => {
-  const [payload, setPayload] = useState<T | null>(null);
+interface UseFetchProps<T> {
+  url: string;
+  defaultValue: T;
+  dependencies?: DependencyList;
+}
+
+const useFetch = <T,>({ url, defaultValue, dependencies = [] }: UseFetchProps<T>) => {
+  const [payload, setPayload] = useState<T>(defaultValue);
   const [error, setError] = useState<AxiosError | null>(null);
   const [loading, setLoading] = useState(false);
 

@@ -1,5 +1,5 @@
 import { SVGProps } from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { Heart, Home, Map, User } from '../icons';
 
@@ -83,7 +83,9 @@ const NavItem = ({
           ...(isActive ? { stroke: theme.palette.primary.main } : {}),
         }}
       />
-      {label}
+      <Typography fontSize="12px" fontWeight={isActive ? 'bold' : ''}>
+        {label}
+      </Typography>
     </Stack>
   );
 };

@@ -17,6 +17,7 @@ const BackToTopButton = () => {
       onClick={onScrollToTop}
       sx={{
         backgroundColor: theme.palette.primary.main,
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
         position: 'fixed',
         bottom: 80,
         right: 16,
@@ -26,6 +27,7 @@ const BackToTopButton = () => {
           backgroundColor: theme.palette.primary.dark,
         },
       }}
+      aria-label="최상단으로 스크롤"
     >
       <ArrowTop />
     </IconButton>

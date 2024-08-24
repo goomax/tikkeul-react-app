@@ -3,6 +3,10 @@ export const formatTimeRemaining = (deadline: string): `${string}:${string}:${st
   const now = new Date();
   const timeDifference = deadlineDate.getTime() - now.getTime();
 
+  if (timeDifference <= 0) {
+    return '00:00:00';
+  }
+
   const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
   const seconds = Math.floor((timeDifference / 1000) % 60);

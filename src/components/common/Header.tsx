@@ -4,15 +4,11 @@ import { Logo, ShoppingCart } from '../icons';
 
 const Header = () => {
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: '0',
-      }}
-    >
+    <header>
       <Stack
         sx={{
           height: '40px',
+          padding: '8px 10px',
         }}
         flexDirection="row"
         justifyContent="space-between"

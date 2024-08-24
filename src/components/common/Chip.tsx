@@ -13,7 +13,7 @@ const Chip = ({ variant, color, sx, radiusVariant = 'circle', ...others }: ChipP
       color={color}
       sx={{
         ...(color === 'default'
-          ? { backgroundColor: theme.palette.grey[200], color: theme.palette.grey[700] }
+          ? { backgroundColor: theme.palette.grey[100], color: theme.palette.grey[700] }
           : { color: 'white' }),
         ...radius[radiusVariant],
         paddingLeft: '1px',

@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <Box
       sx={{
-        maxWidth: '400px',
+        maxWidth: '360px',
         width: '100%',
         height: '100%',
         margin: '0 auto',
