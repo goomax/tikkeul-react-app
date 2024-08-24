@@ -1,0 +1,33 @@
+{
+  "success": true,
+  "data": [
+    {
+      "key": "1",
+      "type": "맛을 아는",
+      "name": "큰 기와집",
+      "price": "45000",
+      "image": "https://picsum.photos/200"
+    },
+    {
+      "key": "2",
+      "type": "맛을 아는",
+      "name": "순두부 젤라또 강릉",
+      "price": "23000",
+      "image": "https://picsum.photos/200"
+    },
+    {
+      "key": "3",
+      "type": "맛을 아는",
+      "name": "카페 됫마루",
+      "price": "27000",
+      "image": "https://picsum.photos/200"
+    },
+    {
+      "key": "4",
+      "type": "맛을 아는",
+      "name": "동화가든 본점",
+      "price": "56000",
+      "image": "https://picsum.photos/200"
+    }
+  ]
+}
