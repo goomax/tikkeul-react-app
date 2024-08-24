@@ -2,16 +2,24 @@ import { PropsWithChildren } from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 
 export interface ButtonProps extends Omit<PropsWithChildren<MuiButtonProps>, 'color'> {
-  color: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary';
+  shape?: 'round' | 'square';
 }
 
-const Button = ({ color = 'primary', variant = 'contained', children, sx, ...others }: ButtonProps) => {
+const Button = ({
+  color = 'primary',
+  variant = 'contained',
+  shape = 'square',
+  children,
+  sx,
+  ...others
+}: ButtonProps) => {
   return (
     <MuiButton
       color={color}
       variant={variant}
       sx={{
-        borderRadius: '4px',
+        borderRadius: shape === 'square' ? '4px' : '20px',
         boxShadow: 'none',
         ...(variant === 'contained' ? { color: 'white' } : {}),
         ...sx,
