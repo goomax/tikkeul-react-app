@@ -2,8 +2,8 @@ import { PropsWithChildren } from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 
 export interface ButtonProps extends Omit<PropsWithChildren<MuiButtonProps>, 'color'> {
-  color?: 'primary' | 'secondary';
-  shape?: 'round' | 'square';
+  color?: 'primary' | 'secondary' | 'inherit';
+  shape?: 'circle' | 'square';
 }
 
 const Button = ({

@@ -1,7 +1,8 @@
 import { SVGProps } from 'react';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { Heart, Home, Map, User } from '../icons';
+import Typography from './Typography';
 
 const navItems = [
   {
@@ -15,7 +16,7 @@ const navItems = [
     label: '찜',
   },
   {
-    path: '/my-course',
+    path: '/my-course/temp',
     icon: Map,
     label: '내 코스',
   },
@@ -83,7 +84,7 @@ const NavItem = ({
           ...(isActive ? { stroke: theme.palette.primary.main } : {}),
         }}
       />
-      <Typography fontSize="12px" fontWeight={isActive ? 'bold' : ''}>
+      <Typography fontSize={12} {...(isActive ? { bold: true, color: 'primary' } : { color: 'grey' })}>
         {label}
       </Typography>
     </Stack>
