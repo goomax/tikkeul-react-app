@@ -40,8 +40,8 @@ const BannerContainer = () => {
       <Box sx={{ padding: '19px 14px' }}>
         <TextField
           variant="outlined"
-          placeholder="여행지 정보를 찾고 계신가요? 검색해 보세요"
-          aria-label="여행지 정보 검색"
+          placeholder="여행지 정보를 찾고 계신가요?"
+          aria-label="여행지 정보 검색페이지로 이동"
           fullWidth
           InputProps={{
             startAdornment: <Search />,
