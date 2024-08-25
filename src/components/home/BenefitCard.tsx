@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Chip from '../common/Chip';
 import IconButton from '../common/IconButton';
@@ -6,6 +6,7 @@ import { Close } from '../icons';
 import Button from '../common/Button';
 import { GetBenefitResponse } from '@/types/apiResponse';
 import { formatTimeRemaining } from '@/utils/dateHelper';
+import Typography from '../common/Typography';
 
 interface BenefitCardProps {
   benefit: GetBenefitResponse['data'][number] & { isClose: boolean };
@@ -69,18 +70,12 @@ const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
           </IconButton>
         </Stack>
         <Stack gap="4px" height="34px">
-          <Typography
-            fontSize="12px"
-            fontWeight="bold"
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
+          <Typography fontSize={12} bold noWrap>
             {benefit.title}
           </Typography>
-          <Typography fontSize="10px">{benefit.description}</Typography>
+          <Typography fontSize={10} color="grey">
+            {benefit.description}
+          </Typography>
         </Stack>
         <Button sx={{ height: '34px' }} disabled={benefit.isClear}>
           {benefit.isClear ? '참여 완료' : `${timeRemaining} 남음`}

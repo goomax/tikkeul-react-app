@@ -1,14 +1,17 @@
 import Chip from '@/components/common/Chip';
+import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import TextField from '@/components/common/TextField';
+import Typography from '@/components/common/Typography';
 import BenefitCard from '@/components/home/BenefitCard';
 import { Heart, Search, ShoppingCart } from '@/components/icons';
 import useFetch from '@/hooks/useFetch';
+import { useInternalRouter } from '@/hooks/useInternalRouter';
 import {
   GetBenefitResponse,
   GetRecommendedCoursesResponse,
   GetRecommendedLocationsResponse,
 } from '@/types/apiResponse';
-import { Box, Grid, Stack, Tab, Tabs, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
 const HomePage = () => {
@@ -44,12 +47,18 @@ const HomePage = () => {
 
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  const router = useInternalRouter();
+
+  const onFocusSearchInput = () => {
+    router.push('/search-form');
+  };
+
   return (
-    <>
+    <PageTransformWrapper>
       <Stack sx={{ backgroundColor: '#F3FFFB' }}>
         <Box sx={{ padding: '19px 14px' }}>
           <TextField
@@ -63,23 +72,18 @@ const HomePage = () => {
                 height: '36px',
               },
             }}
+            onFocus={onFocusSearchInput}
           />
         </Box>
         <Stack>
           <Box sx={{ padding: '8px 14px' }}>
-            <Typography fontSize="14px" lineHeight="21px">
+            <Typography fontSize={14} lineHeight="21px">
               안녕하세요, 김티끌님!
             </Typography>
-            <Typography fontSize="14px" lineHeight="21px" fontWeight="bold">
+            <Typography fontSize={14} lineHeight="21px" bold>
               오늘 받으실 수 있는 혜택은{' '}
-              <Typography
-                component="span"
-                color={theme.palette.primary.main}
-                fontSize="inherit"
-                lineHeight="inherit"
-                fontWeight="inherit"
-              >
-                총 {benefits?.length}개
+              <Typography color="primary" inline>
+                총 {benefits.filter((benefit) => !benefit.isClose).length}개
               </Typography>
               입니다
             </Typography>
@@ -109,19 +113,13 @@ const HomePage = () => {
       {/* 회원 전용 추천 코스 */}
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Stack>
-          <Typography fontSize="14px" lineHeight="21px" fontWeight="bold">
-            <Typography
-              component="span"
-              color={theme.palette.primary.main}
-              fontSize="inherit"
-              lineHeight="inherit"
-              fontWeight="inherit"
-            >
+          <Typography fontSize={14} lineHeight="21px" bold>
+            <Typography color="primary" inline>
               열정적인 활동가들
             </Typography>
             이 선택한 코스
           </Typography>
-          <Typography fontSize="12px" color={theme.palette.grey[500]}>
+          <Typography fontSize={12} color="grey">
             같은 유형의 사용자들이 최근 일주일 간 가장 많이 본 코스입니다
           </Typography>
         </Stack>
@@ -161,45 +159,31 @@ const HomePage = () => {
                     label={course.type}
                   />
                   <Stack gap="1px">
-                    <Typography
-                      fontSize="12px"
-                      fontWeight="bold"
-                      sx={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
+                    <Typography fontSize={12} bold noWrap>
                       {course.title}
                     </Typography>
-                    <Typography fontSize="10px" color={theme.palette.grey[500]}>
+                    <Typography fontSize={10} color="grey">
                       {course.desc}
                     </Typography>
                   </Stack>
                   <Stack flexDirection="row" gap="8px">
                     <Stack flexDirection="row" gap="4px">
                       <Heart svgProps={{ width: '15px', height: '15px' }} />
-                      <Typography fontSize="12px" color="#CCCCCC">
+                      <Typography fontSize={12} color="grey">
                         {course.heart}
                       </Typography>
                     </Stack>
                     <Stack flexDirection="row" gap="4px">
                       <ShoppingCart svgProps={{ width: '15px', height: '15px' }} pathProps={{ stroke: '#CCCCCC' }} />
-                      <Typography fontSize="12px" color="#CCCCCC">
+                      <Typography fontSize={12} color="grey">
                         {course.cart}
                       </Typography>
                     </Stack>
                   </Stack>
                   <Stack justifyContent="flex-end" alignItems="flex-end">
-                    <Typography fontSize="10px" display="inline-flex" alignItems="center" gap="8px">
+                    <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
                       예상 평균 금액{' '}
-                      <Typography
-                        fontSize="14px"
-                        fontWeight="bold"
-                        component="span"
-                        color={theme.palette.secondary.main}
-                        lineHeight="inherit"
-                      >
+                      <Typography fontSize={14} color="secondary" inline bold>
                         {course.price}원
                       </Typography>
                     </Typography>
@@ -212,14 +196,8 @@ const HomePage = () => {
       </Stack>
 
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
-        <Typography fontSize="14px" lineHeight="21px" fontWeight="bold">
-          <Typography
-            component="span"
-            color={theme.palette.primary.main}
-            fontSize="inherit"
-            lineHeight="inherit"
-            fontWeight="inherit"
-          >
+        <Typography fontSize={14} lineHeight="21px" bold>
+          <Typography color="primary" inline>
             열정적인 활동가들
           </Typography>
           에게 딱 맞는 혜택 받기
@@ -233,13 +211,13 @@ const HomePage = () => {
             borderRadius: '4px',
           }}
         >
-          <Typography fontSize="14px" lineHeight="21px">
+          <Typography fontSize={14} lineHeight="21px" color="white">
             오늘만{' '}
-            <Typography component="span" fontSize="inherit" lineHeight="inherit" fontWeight="bold">
+            <Typography inline bold color="white">
               속초 숙소 10%
             </Typography>
           </Typography>
-          <Typography fontSize="14px" lineHeight="21px">
+          <Typography fontSize={14} lineHeight="21px" color="white">
             할인된 가격으로 예약하기
           </Typography>
         </Stack>
@@ -247,19 +225,13 @@ const HomePage = () => {
       {/* 핫한 추천 코스 */}
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Stack>
-          <Typography fontSize="14px" lineHeight="21px" fontWeight="bold">
-            <Typography
-              component="span"
-              color={theme.palette.primary.main}
-              fontSize="inherit"
-              lineHeight="inherit"
-              fontWeight="inherit"
-            >
+          <Typography fontSize={14} lineHeight="21px" bold>
+            <Typography color="primary" inline>
               요즘 가장 핫한
             </Typography>{' '}
             코스 추천
           </Typography>
-          <Typography fontSize="12px" color={theme.palette.grey[500]}>
+          <Typography fontSize={12} color="grey">
             최근 일주일 간 가장 담기가 많았던 코스입니다
           </Typography>
         </Stack>
@@ -299,45 +271,31 @@ const HomePage = () => {
                     label={course.type}
                   />
                   <Stack gap="1px">
-                    <Typography
-                      fontSize="12px"
-                      fontWeight="bold"
-                      sx={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
+                    <Typography fontSize={12} bold noWrap>
                       {course.title}
                     </Typography>
-                    <Typography fontSize="10px" color={theme.palette.grey[500]}>
+                    <Typography fontSize={10} color="grey">
                       {course.desc}
                     </Typography>
                   </Stack>
                   <Stack flexDirection="row" gap="8px">
                     <Stack flexDirection="row" gap="4px">
                       <Heart svgProps={{ width: '15px', height: '15px' }} />
-                      <Typography fontSize="12px" color="#CCCCCC">
+                      <Typography fontSize={12} color="grey">
                         {course.heart}
                       </Typography>
                     </Stack>
                     <Stack flexDirection="row" gap="4px">
                       <ShoppingCart svgProps={{ width: '15px', height: '15px' }} pathProps={{ stroke: '#CCCCCC' }} />
-                      <Typography fontSize="12px" color="#CCCCCC">
+                      <Typography fontSize={12} color="grey">
                         {course.cart}
                       </Typography>
                     </Stack>
                   </Stack>
                   <Stack justifyContent="flex-end" alignItems="flex-end">
-                    <Typography fontSize="10px" display="inline-flex" alignItems="center" gap="8px">
+                    <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
                       예상 평균 금액{' '}
-                      <Typography
-                        fontSize="14px"
-                        fontWeight="bold"
-                        component="span"
-                        color={theme.palette.secondary.main}
-                        lineHeight="inherit"
-                      >
+                      <Typography fontSize={14} bold color="secondary" inline>
                         {course.price}원
                       </Typography>
                     </Typography>
@@ -351,10 +309,10 @@ const HomePage = () => {
       {/* 카테고리별 추천 코스 */}
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Stack>
-          <Typography fontSize="14px" lineHeight="21px" fontWeight="bold">
+          <Typography fontSize={14} lineHeight="21px" bold>
             카테고리별 추천
           </Typography>
-          <Typography fontSize="12px" color={theme.palette.grey[500]}>
+          <Typography fontSize={12} color="grey">
             최근 일주일 간 가장 조회가 많았던 장소입니다
           </Typography>
         </Stack>
@@ -420,18 +378,12 @@ const HomePage = () => {
                     }}
                     label={location.type}
                   />
-                  <Typography fontSize="12px" fontWeight="bold">
+                  <Typography fontSize={12} bold>
                     {location.name}
                   </Typography>
-                  <Typography fontSize="10px" display="inline-flex" alignItems="center" gap="8px">
+                  <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
                     예상 평균 금액{' '}
-                    <Typography
-                      fontSize="14px"
-                      fontWeight="bold"
-                      component="span"
-                      color={theme.palette.secondary.main}
-                      lineHeight="inherit"
-                    >
+                    <Typography fontSize={14} bold color="secondary" inline>
                       {location.price}원
                     </Typography>
                   </Typography>
@@ -441,7 +393,7 @@ const HomePage = () => {
           })}
         </Grid>
       </Stack>
-    </>
+    </PageTransformWrapper>
   );
 };
 

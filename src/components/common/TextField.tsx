@@ -4,7 +4,7 @@ export interface TextFieldProps extends Omit<MuiTextFieldProps, 'variant'> {
   variant: 'outlined' | 'standard';
 }
 
-const TextField = ({ variant = 'standard', focused, sx, ...others }: TextFieldProps) => {
+const TextField = ({ variant = 'standard', sx, ...others }: TextFieldProps) => {
   const theme = useTheme();
   return (
     <MuiTextField
