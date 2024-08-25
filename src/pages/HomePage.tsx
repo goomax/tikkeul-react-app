@@ -1,8 +1,10 @@
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
-import BannerContainer from '@/components/home/BannerContainer';
-import HotRecommendContainer from '@/components/home/HotRecommendContainer';
-import LocationRecommendContainer from '@/components/home/LocationRecommendContainer';
-import UserRecommendContainer from '@/components/home/UserRecommendContainer';
+import {
+  BannerContainer,
+  HotRecommendContainer,
+  LocationRecommendContainer,
+  UserRecommendContainer,
+} from '@/components/home';
 
 const HomePage = () => {
   return (
