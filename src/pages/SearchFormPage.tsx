@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import AttractionImg from '@/assets/명소.png';
 import LodgingImg from '@/assets/숙소.png';
 import RestaurantImg from '@/assets/음식점.png';
-import { DUMMY_OF_POPULAR_SEARCHES } from '@/constants/dummy';
+import { DUMMY_OF_POPULAR_SEARCHES, DUMMY_OF_RECOMMENDED_SEARCHES } from '@/constants/dummy';
 import { useInput } from '@/hooks';
 import { motion } from 'framer-motion';
 
@@ -152,7 +152,6 @@ const SearchFormPage = () => {
                       color: theme.palette.grey[500],
                       border: `1px solid ${theme.palette.grey[500]}`,
                       width: 'fit-content',
-                      textTransform: 'none',
                     }}
                   >
                     {recentSearch}
@@ -177,54 +176,23 @@ const SearchFormPage = () => {
             </Typography>
           </Stack>
           <Stack flexDirection="row" gap="12px" flexWrap="wrap" sx={{ padding: '8px 14px' }}>
-            <Button
-              variant="outlined"
-              color="inherit"
-              shape="circle"
-              sx={{
-                color: theme.palette.grey[500],
-                border: `1px solid ${theme.palette.grey[500]}`,
-                width: 'fit-content',
-              }}
-            >
-              열정적인 활동가
-            </Button>
-            <Button
-              variant="outlined"
-              color="inherit"
-              shape="circle"
-              sx={{
-                color: theme.palette.grey[500],
-                border: `1px solid ${theme.palette.grey[500]}`,
-                width: 'fit-content',
-              }}
-            >
-              양양 맛집
-            </Button>{' '}
-            <Button
-              variant="outlined"
-              color="inherit"
-              shape="circle"
-              sx={{
-                color: theme.palette.grey[500],
-                border: `1px solid ${theme.palette.grey[500]}`,
-                width: 'fit-content',
-              }}
-            >
-              로컬 맛집
-            </Button>{' '}
-            <Button
-              variant="outlined"
-              color="inherit"
-              shape="circle"
-              sx={{
-                color: theme.palette.grey[500],
-                border: `1px solid ${theme.palette.grey[500]}`,
-                width: 'fit-content',
-              }}
-            >
-              분위기 좋은 속초 카페
-            </Button>
+            {DUMMY_OF_RECOMMENDED_SEARCHES.map((search) => {
+              return (
+                <Button
+                  key={search}
+                  variant="outlined"
+                  color="inherit"
+                  shape="circle"
+                  sx={{
+                    color: theme.palette.grey[500],
+                    border: `1px solid ${theme.palette.grey[500]}`,
+                    width: 'fit-content',
+                  }}
+                >
+                  {search}
+                </Button>
+              );
+            })}
           </Stack>
         </Stack>
         {/* 인기 검색어 */}
