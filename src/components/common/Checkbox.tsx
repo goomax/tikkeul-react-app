@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { FormControlLabel, CheckboxProps as MuiCheckboxProps, Checkbox as MuiCheckbox } from '@mui/material';
 
 export interface CheckboxProps extends MuiCheckboxProps {
-  label?: string;
+  label?: React.ReactNode;
 }
 
 const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(({ label, ...others }, ref) => {

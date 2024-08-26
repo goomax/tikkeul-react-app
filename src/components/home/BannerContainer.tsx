@@ -5,7 +5,7 @@ import { Search } from '@/components/icons';
 import { useInternalRouter, useFetch } from '@/hooks';
 import { GetBenefitResponse } from '@/types/apiResponse';
 import { Box, Stack } from '@mui/material';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const BannerContainer = () => {
@@ -79,13 +79,15 @@ const BannerContainer = () => {
             },
           }}
         >
-          {benefits.map((benefit) => {
-            if (benefit.isClose) {
-              return null;
-            }
+          <AnimatePresence>
+            {benefits.map((benefit) => {
+              if (benefit.isClose) {
+                return null;
+              }
 
-            return <BenefitCard key={benefit.key} benefit={benefit} onClose={onCloseBenefit} />;
-          })}
+              return <BenefitCard key={benefit.key} benefit={benefit} onClose={onCloseBenefit} />;
+            })}
+          </AnimatePresence>
         </Stack>
       </Stack>
     </Stack>

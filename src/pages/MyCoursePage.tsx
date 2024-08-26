@@ -1,7 +1,10 @@
+import Button from '@/components/common/Button';
+import Checkbox from '@/components/common/Checkbox';
+import Chip from '@/components/common/Chip';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
-import { Skeleton, Stack, useTheme } from '@mui/material';
+import { Box, Divider, Skeleton, Stack, Step, StepContent, StepLabel, Stepper, useTheme } from '@mui/material';
 
 const MyCoursePage = () => {
   const theme = useTheme();
@@ -37,9 +40,130 @@ const MyCoursePage = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack sx={{ backgroundColor: theme.palette.grey[300] }}></Stack>
+      <Stack>
+        <Stack flexDirection="row" justifyContent="space-between" alignItems="center" sx={{ padding: '12px 14px' }}>
+          <Box>
+            <Checkbox
+              checked
+              color="primary"
+              label={
+                <Typography fontSize={12} color="grey">
+                  장소 전체 선택
+                </Typography>
+              }
+              size="small"
+            />
+          </Box>
+          <Button variant="text" sx={{ fontSize: '10px' }}>
+            편집하기 &gt;
+          </Button>
+        </Stack>
+        <Stack sx={{ padding: '12px 14px' }}>
+          <Typography fontSize={12}>1일차</Typography>
+          <Stack gap="12px">
+            <Stepper activeStep={-1} orientation="vertical">
+              <Step>
+                <StepLabel>
+                  <StepCard />
+                </StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>
+                  <StepCard />
+                </StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>
+                  <StepCard />
+                </StepLabel>
+              </Step>
+            </Stepper>
+            <Button variant="outlined">장소 추가하기</Button>
+          </Stack>
+        </Stack>
+        <Divider />
+        <Stack sx={{ padding: '12px 14px' }}>
+          <Typography fontSize={12}>2일차</Typography>
+          <Stack gap="12px">
+            <Stepper
+              activeStep={-1}
+              orientation="vertical"
+              sx={{
+                '& .MuiStepper-dot': { backgroundColor: '#CCCCCC' },
+                '& .MuiStepper-dotActive': { backgroundColor: '#666666' },
+              }}
+            >
+              <Step>
+                <StepLabel>
+                  <StepCard />
+                </StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>
+                  <StepCard />
+                </StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>
+                  <StepCard />
+                </StepLabel>
+              </Step>
+            </Stepper>
+            <Button variant="outlined">장소 추가하기</Button>
+          </Stack>
+        </Stack>
+        <Stack sx={{ padding: '12px 14px' }}>
+          <Button variant="contained" fullWidth sx={{ height: '45px' }}>
+            이대로 여행 시작하기
+          </Button>
+        </Stack>
+      </Stack>
     </PageTransformWrapper>
   );
 };
 
 export default MyCoursePage;
+
+const StepCard = () => {
+  const theme = useTheme();
+
+  return (
+    <Stack
+      flexDirection="row"
+      alignItems="center"
+      gap="20px"
+      bgcolor={theme.palette.background.default}
+      sx={{
+        padding: '8px 14px',
+        borderRadius: '4px',
+        boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
+        marginLeft: '10px',
+      }}
+    >
+      <Skeleton width={52} height={52} variant="rectangular" />
+      <Stack gap="8px">
+        <Stack flexDirection="row" gap="8px">
+          <Chip
+            radiusVariant="square"
+            color="default"
+            sx={{
+              width: '27px',
+              height: '19px',
+              '& .MuiChip-label': {
+                padding: '1px',
+                fontSize: '10px',
+              },
+            }}
+            label="명소"
+          />
+          <Typography fontSize={12} bold>
+            경포대
+          </Typography>
+        </Stack>
+        <Typography fontSize={10} color="grey">
+          강원도 강릉시 경포로 365
+        </Typography>
+      </Stack>
+    </Stack>
+  );
+};

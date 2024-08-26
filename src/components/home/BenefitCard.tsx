@@ -8,6 +8,7 @@ import { GetBenefitResponse } from '@/types/apiResponse';
 import { formatTimeRemaining } from '@/utils/dateHelper';
 import Typography from '../common/Typography';
 import { useRequestAnimationFrame } from '@/hooks';
+import { motion } from 'framer-motion';
 
 interface BenefitCardProps {
   benefit: GetBenefitResponse['data'][number] & { isClose: boolean };
@@ -24,58 +25,64 @@ const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
   }, [benefit.isClear]);
 
   return (
-    <Box
-      key={benefit.key}
-      sx={{
-        minWidth: '188px',
-        height: '135px',
-        padding: '8px 14px',
-        boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
-        backgroundColor: 'white',
-        borderRadius: '8px',
-      }}
+    <motion.div
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.3 }}
     >
-      <Stack gap="16px">
-        <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
-          <Chip
-            radiusVariant="square"
-            color="default"
-            sx={{
-              width: '56px',
-              height: '19px',
-              fontSize: '10px',
-              '& .MuiChip-label': {
-                padding: '1px',
-              },
-            }}
-            label={benefit.type}
-          />
-          <IconButton
-            onClick={() => {
-              onClose(benefit.key);
-            }}
-            sx={{
-              height: '20px',
-              width: '20px',
-              padding: 0,
-            }}
-          >
-            <Close />
-          </IconButton>
+      <Box
+        sx={{
+          minWidth: '188px',
+          height: '135px',
+          padding: '8px 14px',
+          boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
+          backgroundColor: 'white',
+          borderRadius: '8px',
+        }}
+      >
+        <Stack gap="16px">
+          <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
+            <Chip
+              radiusVariant="square"
+              color="default"
+              sx={{
+                width: '56px',
+                height: '19px',
+                fontSize: '10px',
+                '& .MuiChip-label': {
+                  padding: '1px',
+                },
+              }}
+              label={benefit.type}
+            />
+            <IconButton
+              onClick={() => {
+                onClose(benefit.key);
+              }}
+              sx={{
+                height: '20px',
+                width: '20px',
+                padding: 0,
+              }}
+            >
+              <Close />
+            </IconButton>
+          </Stack>
+          <Stack gap="4px" height="34px">
+            <Typography fontSize={12} bold noWrap>
+              {benefit.title}
+            </Typography>
+            <Typography fontSize={10} color="grey">
+              {benefit.description}
+            </Typography>
+          </Stack>
+          <Button sx={{ height: '34px' }} disabled={benefit.isClear}>
+            {benefit.isClear ? '참여 완료' : `${timeRemaining} 남음`}
+          </Button>
         </Stack>
-        <Stack gap="4px" height="34px">
-          <Typography fontSize={12} bold noWrap>
-            {benefit.title}
-          </Typography>
-          <Typography fontSize={10} color="grey">
-            {benefit.description}
-          </Typography>
-        </Stack>
-        <Button sx={{ height: '34px' }} disabled={benefit.isClear}>
-          {benefit.isClear ? '참여 완료' : `${timeRemaining} 남음`}
-        </Button>
-      </Stack>
-    </Box>
+      </Box>
+    </motion.div>
   );
 };
 
