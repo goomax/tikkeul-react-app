@@ -27,6 +27,11 @@ const SearchFormPage = () => {
   const theme = useTheme();
   const { value: searchKeyword, onChange: onChangeSearchKeyword } = useInput('');
 
+  const loadRecentSearches = () => {
+    const storedSearches = JSON.parse(localStorage.getItem(STORAGE_KEY.RECENT_SEARCHES) || '[]');
+    setRecentSearches(storedSearches);
+  };
+
   const handleSearchKeyword = () => {
     if (!searchKeyword) {
       return;
@@ -45,7 +50,7 @@ const SearchFormPage = () => {
   };
 
   const onClear = () => {
-    localStorage.removeItem('recentSearches');
+    localStorage.removeItem(STORAGE_KEY.RECENT_SEARCHES);
     setRecentSearches([]);
   };
 
@@ -59,12 +64,6 @@ const SearchFormPage = () => {
     if (event.key === 'Enter') {
       handleSearchKeyword();
     }
-  };
-
-  const loadRecentSearches = () => {
-    const storedSearches = JSON.parse(localStorage.getItem(STORAGE_KEY.RECENT_SEARCHES) || '[]');
-    console.log(storedSearches);
-    setRecentSearches(storedSearches);
   };
 
   useEffect(() => {
