@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function useInternalRouter() {
+type RoutePath = `/${string}`;
+
+const useInternalRouter = () => {
   const navigate = useNavigate();
 
   return useMemo(() => {
@@ -17,6 +19,6 @@ export function useInternalRouter() {
       },
     };
   }, [navigate]);
-}
+};
 
-type RoutePath = `/${string}`;
+export default useInternalRouter;

@@ -1,5 +1,5 @@
 import Typography from '@/components/common/Typography';
-import useFetch from '@/hooks/useFetch';
+import { useFetch } from '@/hooks';
 import { GetRecommendedCoursesResponse } from '@/types/apiResponse';
 import { Stack, useTheme } from '@mui/material';
 import RecommendCourses from './RecommendCourses';

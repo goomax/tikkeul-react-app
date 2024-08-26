@@ -5,26 +5,16 @@ import TextField from '@/components/common/TextField';
 import Typography from '@/components/common/Typography';
 import { Search } from '@/components/icons';
 import { STORAGE_KEY } from '@/constants/storageKey';
-import { useInput } from '@/hooks/useInput';
 import { Box, Grid, Stack, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import AttractionImg from '@/assets/명소.png';
 import LodgingImg from '@/assets/숙소.png';
 import RestaurantImg from '@/assets/음식점.png';
+import { DUMMY_OF_POPULAR_SEARCHES } from '@/constants/dummy';
+import { useInput } from '@/hooks';
 
 const MAX_RECENT_SEARCHES = 5;
-
-const DUMMY_OF_POPULAR_SEARCHES = [
-  '속초 명소',
-  '속초 맛집',
-  '양양 카페',
-  '동해 맛집',
-  '동해 야외 활동',
-  '속초 드라이브',
-  '속초 카페',
-  '속초 숙소',
-];
 
 const CATEGORIES_ON_SEARCH = [
   { label: '숙소', imgSrc: LodgingImg },
@@ -37,7 +27,7 @@ const SearchFormPage = () => {
   const theme = useTheme();
   const { value: searchKeyword, onChange: onChangeSearchKeyword } = useInput('');
 
-  const onSearch = () => {
+  const handleSearchKeyword = () => {
     if (!searchKeyword) {
       return;
     }
@@ -59,9 +49,15 @@ const SearchFormPage = () => {
     setRecentSearches([]);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+  const onClickSearch = () => {
+    if (searchKeyword) {
+      handleSearchKeyword();
+    }
+  };
+
+  const onKeyDownSearch = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      onSearch();
+      handleSearchKeyword();
     }
   };
 
@@ -98,7 +94,7 @@ const SearchFormPage = () => {
             fullWidth
             InputProps={{
               startAdornment: (
-                <IconButton onClick={onSearch}>
+                <IconButton onClick={onClickSearch} sx={{ padding: 0, width: '20px', height: '20px' }}>
                   <Search />
                 </IconButton>
               ),
@@ -108,7 +104,7 @@ const SearchFormPage = () => {
             }}
             value={searchKeyword}
             onChange={onChangeSearchKeyword}
-            onKeyDown={handleKeyDown}
+            onKeyDown={onKeyDownSearch}
           />
         </Box>
         {/* 최근 검색어 */}

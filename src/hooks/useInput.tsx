@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useInput<T>(initialValue: T, debounceDuration = 0) {
+const useInput = <T,>(initialValue: T, debounceDuration = 0) => {
   const [value, setValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
@@ -25,4 +25,6 @@ export function useInput<T>(initialValue: T, debounceDuration = 0) {
   }, [value, debounceDuration]);
 
   return { value, onChange, onInit, debouncedValue };
-}
+};
+
+export default useInput;
