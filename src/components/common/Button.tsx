@@ -19,8 +19,9 @@ const Button = ({
       color={color}
       variant={variant}
       sx={{
-        borderRadius: shape === 'square' ? '4px' : '20px',
+        textTransform: 'none',
         boxShadow: 'none',
+        borderRadius: shape === 'square' ? '4px' : '20px',
         ...(variant === 'contained' ? { color: 'white' } : {}),
         ...sx,
       }}

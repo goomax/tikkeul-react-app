@@ -1,5 +1,5 @@
 import { Box, Stack } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Chip from '../common/Chip';
 import IconButton from '../common/IconButton';
 import { Close } from '../icons';
@@ -7,6 +7,7 @@ import Button from '../common/Button';
 import { GetBenefitResponse } from '@/types/apiResponse';
 import { formatTimeRemaining } from '@/utils/dateHelper';
 import Typography from '../common/Typography';
+import { useRequestAnimationFrame } from '@/hooks';
 
 interface BenefitCardProps {
   benefit: GetBenefitResponse['data'][number] & { isClose: boolean };
@@ -16,18 +17,11 @@ interface BenefitCardProps {
 const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
   const [timeRemaining, setTimeRemaining] = useState<string>('');
 
-  useEffect(() => {
-    let animationFrameId: number;
-
-    const updateTimer = () => {
+  useRequestAnimationFrame(() => {
+    if (!benefit.isClear) {
       setTimeRemaining(formatTimeRemaining(benefit.deadline));
-      animationFrameId = requestAnimationFrame(updateTimer);
-    };
-
-    updateTimer();
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [benefit]);
+    }
+  }, [benefit.isClear]);
 
   return (
     <Box

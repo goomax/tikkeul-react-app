@@ -1,9 +1,10 @@
 import Chip from '@/components/common/Chip';
 import Typography from '@/components/common/Typography';
-import useFetch from '@/hooks/useFetch';
+import { useFetch } from '@/hooks';
 import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
 import { Box, Grid, Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { SyntheticEvent, useState } from 'react';
+import Image from '../common/Image';
 
 const LocationRecommendContainer = () => {
   const theme = useTheme();
@@ -71,7 +72,7 @@ const LocationRecommendContainer = () => {
                   height: '100%',
                 }}
               >
-                <img
+                <Image
                   src={location.image}
                   alt={location.name}
                   width="148px"

@@ -3,6 +3,7 @@ import Layout from '@/components/common/Layout';
 import HomePage from './pages/HomePage';
 import SearchFormPage from './pages/SearchFormPage';
 import { AnimatePresence } from 'framer-motion';
+import MyCoursePage from './pages/MyCoursePage';
 
 function DynamicRouter() {
   return (
@@ -17,7 +18,7 @@ function DynamicRouter() {
             <Route path="/preference-form" element={<>Login</>} />
             <Route path="/onboarding" element={<>Login</>} />
             <Route path="/favorites" element={<>favorites</>} />
-            <Route path="/my-course/:courseId" element={<>my-course</>} />
+            <Route path="/my-course/:courseId" element={<MyCoursePage />} />
             <Route path="/profile" element={<>profile</>} />
           </Route>
         </Routes>

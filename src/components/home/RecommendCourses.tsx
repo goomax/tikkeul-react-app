@@ -3,6 +3,7 @@ import Chip from '@/components/common/Chip';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
 import { Box, Stack } from '@mui/material';
+import Image from '../common/Image';
 
 interface RecommendCoursesProps {
   courses: GetRecommendedCoursesResponse['data'];
@@ -26,7 +27,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
             gap="12px"
             sx={{ height: '100%', padding: '8px 14px' }}
           >
-            <img src={course.image} width={80} height={80} alt={course.title} style={{ borderRadius: '16px' }} />
+            <Image src={course.image} width={80} height={80} alt={course.title} style={{ borderRadius: '16px' }} />
             <Stack
               gap="8px"
               sx={{
