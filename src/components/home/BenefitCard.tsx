@@ -21,7 +21,7 @@ const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
     if (!benefit.isClear) {
       setTimeRemaining(formatTimeRemaining(benefit.deadline));
     }
-  });
+  }, [benefit.isClear]);
 
   return (
     <Box
