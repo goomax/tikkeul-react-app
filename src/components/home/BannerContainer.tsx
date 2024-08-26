@@ -5,6 +5,7 @@ import { Search } from '@/components/icons';
 import { useInternalRouter, useFetch } from '@/hooks';
 import { GetBenefitResponse } from '@/types/apiResponse';
 import { Box, Stack } from '@mui/material';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const BannerContainer = () => {
@@ -37,19 +38,21 @@ const BannerContainer = () => {
   return (
     <Stack sx={{ backgroundColor: '#F3FFFB' }}>
       <Box sx={{ padding: '19px 14px' }}>
-        <TextField
-          variant="outlined"
-          placeholder="여행지 정보를 찾고 계신가요?"
-          aria-label="여행지 정보 검색페이지로 이동"
-          fullWidth
-          InputProps={{
-            startAdornment: <Search />,
-            sx: {
-              height: '36px',
-            },
-          }}
-          onFocus={onFocusSearchInput}
-        />
+        <motion.div className="card-content" layoutId="search-input">
+          <TextField
+            variant="outlined"
+            placeholder="여행지 정보를 찾고 계신가요?"
+            aria-label="여행지 정보 검색페이지로 이동"
+            fullWidth
+            InputProps={{
+              startAdornment: <Search />,
+              sx: {
+                height: '36px',
+              },
+            }}
+            onFocus={onFocusSearchInput}
+          />
+        </motion.div>
       </Box>
       <Stack>
         <Box sx={{ padding: '8px 14px' }}>

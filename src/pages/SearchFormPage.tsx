@@ -1,6 +1,5 @@
 import Button from '@/components/common/Button';
 import IconButton from '@/components/common/IconButton';
-import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import TextField from '@/components/common/TextField';
 import Typography from '@/components/common/Typography';
 import { Search } from '@/components/icons';
@@ -13,6 +12,7 @@ import LodgingImg from '@/assets/숙소.png';
 import RestaurantImg from '@/assets/음식점.png';
 import { DUMMY_OF_POPULAR_SEARCHES } from '@/constants/dummy';
 import { useInput } from '@/hooks';
+import { motion } from 'framer-motion';
 
 const MAX_RECENT_SEARCHES = 5;
 
@@ -82,10 +82,15 @@ const SearchFormPage = () => {
   }, []);
 
   return (
-    <PageTransformWrapper>
-      <Stack gap="16px">
-        {/* 검색창 */}
-        <Box sx={{ padding: '19px 14px' }}>
+    <Stack gap="16px">
+      {/* 검색창 */}
+      <Box sx={{ padding: '19px 14px' }}>
+        <motion.div
+          className="card-content"
+          layoutId="search-input"
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+        >
           <TextField
             variant="outlined"
             placeholder="이번엔 어디로 떠나볼까요?"
@@ -105,8 +110,20 @@ const SearchFormPage = () => {
             onChange={onChangeSearchKeyword}
             onKeyDown={onKeyDownSearch}
           />
-        </Box>
-        {/* 최근 검색어 */}
+        </motion.div>
+      </Box>
+      {/* 최근 검색어 */}
+      <motion.div
+        className="card-content"
+        layoutId="search-contents"
+        initial={{ opacity: 0, transform: 'translateY(20px)' }}
+        animate={{
+          opacity: 1,
+          transform: 'translateY(0)',
+          transitionDuration: '0.5s',
+          transitionDelay: '0.15s',
+        }}
+      >
         <Stack>
           <Stack flexDirection="row" justifyContent="space-between" alignItems="center" sx={{ padding: '8px 14px' }}>
             <Typography fontSize={14} bold>
@@ -270,8 +287,8 @@ const SearchFormPage = () => {
             })}
           </Stack>
         </Stack>
-      </Stack>
-    </PageTransformWrapper>
+      </motion.div>
+    </Stack>
   );
 };
 

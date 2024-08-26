@@ -18,7 +18,9 @@ const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
   const [timeRemaining, setTimeRemaining] = useState<string>('');
 
   useRequestAnimationFrame(() => {
-    setTimeRemaining(formatTimeRemaining(benefit.deadline));
+    if (!benefit.isClear) {
+      setTimeRemaining(formatTimeRemaining(benefit.deadline));
+    }
   });
 
   return (
