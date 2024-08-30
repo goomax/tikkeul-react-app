@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from '@/components/common/Layout';
-import HomePage from './pages/HomePage';
-import SearchFormPage from './pages/SearchFormPage';
+import HomePage from '@/pages/HomePage';
+import SearchFormPage from '@/pages/SearchFormPage';
 import { AnimatePresence } from 'framer-motion';
-import MyCoursePage from './pages/MyCoursePage';
+import MyCoursePage from '@/pages/MyCoursePage';
+import LoginPage from '@/pages/LoginPage';
 
 function DynamicRouter() {
   return (
@@ -12,7 +13,7 @@ function DynamicRouter() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/auth" element={<>Login</>} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/search-form" element={<SearchFormPage />} />
             <Route path="/headcount-form" element={<>Login</>} />
             <Route path="/preference-form" element={<>Login</>} />

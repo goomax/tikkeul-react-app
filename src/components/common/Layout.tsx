@@ -14,7 +14,7 @@ const Layout = () => {
         margin: '0 auto',
       }}
     >
-      <Box sx={{ paddingBottom: '100px' }}>
+      <Box sx={{ paddingBottom: '100px', height: '100%' }}>
         <Header />
         <Outlet />
       </Box>

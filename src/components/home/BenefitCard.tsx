@@ -28,7 +28,7 @@ const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
     <motion.div
       initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+      exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.3 }}
     >
       <Box
