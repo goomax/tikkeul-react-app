@@ -1,10 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from '@/components/common/Layout';
-import HomePage from '@/pages/HomePage';
-import SearchFormPage from '@/pages/SearchFormPage';
 import { AnimatePresence } from 'framer-motion';
-import MyCoursePage from '@/pages/MyCoursePage';
-import LoginPage from '@/pages/LoginPage';
+import Layout from '@/components/common/Layout';
+import {
+  HeadcountFormPage,
+  HomePage,
+  LoginPage,
+  MyCoursePage,
+  OnboardingPage,
+  PreferenceFormPage,
+  SearchFormPage,
+} from '@/pages';
 
 function DynamicRouter() {
   return (
@@ -15,9 +20,9 @@ function DynamicRouter() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/search-form" element={<SearchFormPage />} />
-            <Route path="/headcount-form" element={<>Login</>} />
-            <Route path="/preference-form" element={<>Login</>} />
-            <Route path="/onboarding" element={<>Login</>} />
+            <Route path="/headcount-form" element={<HeadcountFormPage />} />
+            <Route path="/preference-form" element={<PreferenceFormPage />} />
+            <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="/favorites" element={<>favorites</>} />
             <Route path="/my-course/:courseId" element={<MyCoursePage />} />
             <Route path="/profile" element={<>profile</>} />

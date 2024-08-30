@@ -18,7 +18,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Stack justifyContent="center" alignItems="center" gap="54px" sx={{ padding: '0 14px', height: '80vh' }}>
+    <Stack justifyContent="center" alignItems="center" gap="54px" sx={{ padding: '0 14px', minHeight: '540px' }}>
       <Stack sx={{ width: '100%' }}>
         <Typography fontSize={24}>돌아오셨군요!</Typography>
         <Typography fontSize={24} bold>
