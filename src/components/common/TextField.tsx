@@ -1,10 +1,11 @@
+import { forwardRef } from 'react';
 import { TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, useTheme } from '@mui/material';
 
 export interface TextFieldProps extends Omit<MuiTextFieldProps, 'variant'> {
   variant: 'outlined' | 'standard';
 }
 
-const TextField = ({ variant = 'standard', sx, ...others }: TextFieldProps) => {
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({ variant = 'standard', sx, ...others }, ref) => {
   const theme = useTheme();
   return (
     <MuiTextField
@@ -25,9 +26,10 @@ const TextField = ({ variant = 'standard', sx, ...others }: TextFieldProps) => {
           : {}),
         ...sx,
       }}
+      ref={ref}
       {...others}
     />
   );
-};
+});
 
 export default TextField;

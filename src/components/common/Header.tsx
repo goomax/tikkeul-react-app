@@ -7,7 +7,7 @@ const Header = () => {
     <header>
       <Stack
         sx={{
-          height: '40px',
+          height: '45px',
           padding: '8px 10px',
         }}
         flexDirection="row"

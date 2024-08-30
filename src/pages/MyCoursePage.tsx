@@ -4,7 +4,7 @@ import Chip from '@/components/common/Chip';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
-import { Box, Divider, Skeleton, Stack, Step, StepContent, StepLabel, Stepper, useTheme } from '@mui/material';
+import { Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
 
 const MyCoursePage = () => {
   const theme = useTheme();
