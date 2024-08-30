@@ -5,7 +5,7 @@ import Typography from '@/components/common/Typography';
 import { Search } from '@/components/icons';
 import { STORAGE_KEY } from '@/constants/storageKey';
 import { Box, Grid, Stack, useTheme } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import AttractionImg from '@/assets/명소.png';
 import LodgingImg from '@/assets/숙소.png';
@@ -23,6 +23,7 @@ const CATEGORIES_ON_SEARCH = [
 ];
 
 const SearchFormPage = () => {
+  const searchRef = useRef<HTMLInputElement | null>(null);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const theme = useTheme();
   const { value: searchKeyword, onChange: onChangeSearchKeyword } = useInput('');
@@ -81,6 +82,12 @@ const SearchFormPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, []);
+
   return (
     <Stack gap="16px">
       {/* 검색창 */}
@@ -92,6 +99,7 @@ const SearchFormPage = () => {
           animate={{ opacity: 1 }}
         >
           <TextField
+            inputRef={searchRef}
             variant="outlined"
             placeholder="이번엔 어디로 떠나볼까요?"
             aria-label="여행지 정보 검색"
