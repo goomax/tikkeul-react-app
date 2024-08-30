@@ -5,7 +5,7 @@ export interface ChipProps extends Omit<MuiChipProps, 'color'> {
   color: 'default' | 'primary' | 'secondary';
 }
 
-const Chip = ({ variant, color, sx, radiusVariant = 'circle', ...others }: ChipProps) => {
+const Chip = ({ variant, color, sx, radiusVariant = 'square', ...others }: ChipProps) => {
   const theme = useTheme();
 
   return (
