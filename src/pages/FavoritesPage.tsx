@@ -13,7 +13,9 @@ const FavoritesPage = () => {
 
   return (
     <Stack sx={{ padding: '8px 14px' }}>
-      <Typography>내가 찜한 코스</Typography>
+      <Typography bold fontSize={16} mb="20px">
+        내가 찜한 코스
+      </Typography>
 
       <GridCard.Wrapper>
         {recommendedLocations.map((location) => (

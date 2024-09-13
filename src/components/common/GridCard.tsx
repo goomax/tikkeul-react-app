@@ -28,6 +28,7 @@ const GridCard = {
           borderRadius: '8px',
           height: '100%',
         }}
+        gap="2px"
       >
         <Image src={card.image} alt={card.name} width="148px" height="132px" style={{ borderRadius: '4px' }} />
         <Chip
