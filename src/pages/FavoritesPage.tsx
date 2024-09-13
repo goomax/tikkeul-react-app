@@ -20,6 +20,7 @@ const FavoritesPage = () => {
       <GridCard.Wrapper>
         {recommendedLocations.map((location) => (
           <GridCard.Card
+            key={location.id}
             card={location}
             bottom={
               <Button fullWidth variant="outlined" disabled>

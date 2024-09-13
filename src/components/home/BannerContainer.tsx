@@ -85,7 +85,15 @@ const BannerContainer = () => {
                 return null;
               }
 
-              return <BenefitCard key={benefit.id} benefit={benefit} onClose={onCloseBenefit} />;
+              return (
+                <BenefitCard
+                  key={benefit.id}
+                  benefit={benefit}
+                  onClose={() => {
+                    onCloseBenefit(benefit.id);
+                  }}
+                />
+              );
             })}
           </AnimatePresence>
         </Stack>
