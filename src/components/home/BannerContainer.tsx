@@ -27,7 +27,7 @@ const BannerContainer = () => {
 
   const onCloseBenefit = (benefitId: string) => {
     setBenefits((prevBenefits) =>
-      prevBenefits.map((benefit) => (benefit.key === benefitId ? { ...benefit, isClose: true } : benefit)),
+      prevBenefits.map((benefit) => (benefit.id === benefitId ? { ...benefit, isClose: true } : benefit)),
     );
   };
 
@@ -85,7 +85,7 @@ const BannerContainer = () => {
                 return null;
               }
 
-              return <BenefitCard key={benefit.key} benefit={benefit} onClose={onCloseBenefit} />;
+              return <BenefitCard key={benefit.id} benefit={benefit} onClose={onCloseBenefit} />;
             })}
           </AnimatePresence>
         </Stack>

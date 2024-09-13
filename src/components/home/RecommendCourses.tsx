@@ -21,7 +21,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
       {courses.map((course) => {
         return (
           <Stack
-            key={course.key}
+            key={course.id}
             flexDirection="row"
             alignItems="center"
             gap="12px"
