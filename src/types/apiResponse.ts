@@ -4,7 +4,7 @@ interface DefaultResponse {
 
 export interface GetBenefitResponse extends DefaultResponse {
   data: {
-    key: string;
+    id: string;
     type: string;
     isClear: boolean;
     title: string;
@@ -15,7 +15,7 @@ export interface GetBenefitResponse extends DefaultResponse {
 
 export interface GetRecommendedCoursesResponse extends DefaultResponse {
   data: {
-    key: string;
+    id: string;
     title: string;
     desc: string;
     image: string;
@@ -29,7 +29,7 @@ export interface GetRecommendedCoursesResponse extends DefaultResponse {
 
 export interface GetRecommendedLocationsResponse extends DefaultResponse {
   data: {
-    key: string;
+    id: string;
     type: string;
     name: string;
     price: string;

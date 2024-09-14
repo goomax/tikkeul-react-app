@@ -1,10 +1,9 @@
-import Chip from '@/components/common/Chip';
 import Typography from '@/components/common/Typography';
 import { useFetch } from '@/hooks';
 import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
-import { Box, Grid, Stack, Tab, Tabs, useTheme } from '@mui/material';
+import { Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { SyntheticEvent, useState } from 'react';
-import Image from '../common/Image';
+import GridCard from '../common/GridCard';
 
 const LocationRecommendContainer = () => {
   const theme = useTheme();
@@ -30,7 +29,6 @@ const LocationRecommendContainer = () => {
           최근 일주일 간 가장 조회가 많았던 장소입니다
         </Typography>
       </Stack>
-
       <Tabs
         value={value}
         centered
@@ -61,51 +59,11 @@ const LocationRecommendContainer = () => {
         <Tab label="음식점" {...a11yProps(1)} sx={{ minHeight: '28px', height: '28px' }} />
         <Tab label="명소" {...a11yProps(2)} sx={{ minHeight: '28px', height: '28px' }} />
       </Tabs>
-
-      <Grid container spacing={4}>
-        {recommendedLocations.map((location) => {
-          return (
-            <Grid item xs={6} key={location.key}>
-              <Box
-                sx={{
-                  borderRadius: '8px',
-                  height: '100%',
-                }}
-              >
-                <Image
-                  src={location.image}
-                  alt={location.name}
-                  width="148px"
-                  height="132px"
-                  style={{ borderRadius: '4px' }}
-                />
-                <Chip
-                  radiusVariant="square"
-                  color="default"
-                  sx={{
-                    width: '47px',
-                    height: '19px',
-                    '& .MuiChip-label': {
-                      padding: '1px',
-                      fontSize: '10px',
-                    },
-                  }}
-                  label={location.type}
-                />
-                <Typography fontSize={12} bold>
-                  {location.name}
-                </Typography>
-                <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
-                  예상 평균 금액{' '}
-                  <Typography fontSize={14} bold color="secondary" inline>
-                    {location.price}원
-                  </Typography>
-                </Typography>
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
+      <GridCard.Wrapper>
+        {recommendedLocations.map((location) => (
+          <GridCard.Card card={location} />
+        ))}
+      </GridCard.Wrapper>
     </Stack>
   );
 };

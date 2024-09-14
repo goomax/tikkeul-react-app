@@ -2,7 +2,7 @@
   "success": true,
   "data": [
     {
-      "key": "1",
+      "id": "1",
       "type": "데일리 적립",
       "isClear": false,
       "title": "출석하고 리워드 10p 받기",
@@ -10,7 +10,7 @@
       "deadline": "2024-09-24T14:35:00Z"
     },
     {
-      "key": "2",
+      "id": "2",
       "type": "데일리 적립",
       "isClear": true,
       "title": "공유하고 리워드 20p 받기",
@@ -18,7 +18,7 @@
       "deadline": "2024-09-24T14:35:00Z"
     },
     {
-      "key": "3",
+      "id": "3",
       "type": "데일리 적립",
       "isClear": false,
       "title": "출석하고 리워드 10p 받기",

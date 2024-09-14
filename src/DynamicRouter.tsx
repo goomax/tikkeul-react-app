@@ -10,6 +10,8 @@ import {
   PreferenceFormPage,
   SearchFormPage,
 } from '@/pages';
+import FavoritesPage from './pages/FavoritesPage';
+import ProfilePage from './pages/ProfilePage';
 
 function DynamicRouter() {
   return (
@@ -23,9 +25,9 @@ function DynamicRouter() {
             <Route path="/headcount-form" element={<HeadcountFormPage />} />
             <Route path="/preference-form" element={<PreferenceFormPage />} />
             <Route path="/onboarding" element={<OnboardingPage />} />
-            <Route path="/favorites" element={<>favorites</>} />
+            <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/my-course/:courseId" element={<MyCoursePage />} />
-            <Route path="/profile" element={<>profile</>} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Routes>
       </AnimatePresence>
