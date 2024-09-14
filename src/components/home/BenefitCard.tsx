@@ -43,22 +43,10 @@ const BenefitCard = ({ benefit, onClose }: BenefitCardProps) => {
       >
         <Stack gap="16px">
           <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
-            <Chip
-              radiusVariant="square"
-              color="default"
-              sx={{
-                width: '56px',
-                height: '19px',
-                fontSize: '10px',
-                '& .MuiChip-label': {
-                  padding: '1px',
-                },
-              }}
-              label={benefit.type}
-            />
+            <Chip radiusVariant="square" color="default" label={benefit.type} />
             <IconButton
               onClick={() => {
-                onClose(benefit.key);
+                onClose(benefit.id);
               }}
               sx={{
                 height: '20px',

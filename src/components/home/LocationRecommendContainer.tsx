@@ -61,7 +61,7 @@ const LocationRecommendContainer = () => {
       </Tabs>
       <GridCard.Wrapper>
         {recommendedLocations.map((location) => (
-          <GridCard.Card card={location} />
+          <GridCard.Card key={location.id} card={location} />
         ))}
       </GridCard.Wrapper>
     </Stack>

@@ -28,19 +28,13 @@ const GridCard = {
           borderRadius: '8px',
           height: '100%',
         }}
-        gap="2px"
       >
         <Image src={card.image} alt={card.name} width="148px" height="132px" style={{ borderRadius: '4px' }} />
         <Chip
           radiusVariant="square"
           color="default"
           sx={{
-            width: '47px',
-            height: '19px',
-            '& .MuiChip-label': {
-              padding: '1px',
-              fontSize: '10px',
-            },
+            marginTop: '6px',
           }}
           label={card.type}
         />

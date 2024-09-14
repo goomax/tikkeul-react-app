@@ -12,6 +12,7 @@ import {
 } from '@/pages';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
+import CoursePage from './pages/CoursePage';
 
 function DynamicRouter() {
   return (
@@ -26,6 +27,7 @@ function DynamicRouter() {
             <Route path="/preference-form" element={<PreferenceFormPage />} />
             <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/my-course/:courseId" element={<MyCoursePage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>

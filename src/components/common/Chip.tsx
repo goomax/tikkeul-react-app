@@ -5,7 +5,7 @@ export interface ChipProps extends Omit<MuiChipProps, 'color'> {
   color: 'default' | 'primary' | 'secondary';
 }
 
-const Chip = ({ variant, color, sx, radiusVariant = 'square', ...others }: ChipProps) => {
+const Chip = ({ variant, color, sx, size = 'small', radiusVariant = 'square', ...others }: ChipProps) => {
   const theme = useTheme();
 
   return (
@@ -17,6 +17,7 @@ const Chip = ({ variant, color, sx, radiusVariant = 'square', ...others }: ChipP
           : { color: 'white' }),
         ...radius[radiusVariant],
         paddingLeft: '1px',
+        ...sizeConfig[size],
         ...sx,
       }}
       {...others}
@@ -36,4 +37,16 @@ const radius = {
   half: {
     borderRadius: '20px',
   },
+};
+
+const sizeConfig = {
+  small: {
+    width: '47px',
+    height: '19px',
+    '& .MuiChip-label': {
+      padding: '1px',
+      fontSize: '10px',
+    },
+  },
+  medium: {},
 };

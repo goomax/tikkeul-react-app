@@ -39,11 +39,6 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
                 color="default"
                 sx={{
                   width: '56px',
-                  height: '19px',
-                  '& .MuiChip-label': {
-                    padding: '1px',
-                    fontSize: '10px',
-                  },
                 }}
                 label={course.type}
               />
