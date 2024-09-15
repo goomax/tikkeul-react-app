@@ -2,7 +2,7 @@
 import * as Icons from '@/components/icons';
 
 export default {
-  title: 'Example/Icons',
+  title: 'Common/Icons',
   component: Icons.Add,
 };
 

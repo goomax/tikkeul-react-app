@@ -3,7 +3,7 @@ import IconButton, { IconButtonProps } from '@/components/common/IconButton';
 import ShoppingCart from '@/components/icons/ShoppingCart';
 
 export default {
-  title: 'Example/IconButton',
+  title: 'Common/IconButton',
   component: IconButton,
   tags: ['autodocs'],
 };

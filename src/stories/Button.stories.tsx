@@ -2,7 +2,7 @@ import { StoryObj } from '@storybook/react';
 import Button, { ButtonProps } from '@/components/common/Button';
 
 export default {
-  title: 'Example/Button',
+  title: 'Common/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {

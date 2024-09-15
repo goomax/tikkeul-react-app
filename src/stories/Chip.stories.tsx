@@ -2,7 +2,7 @@ import Chip, { ChipProps } from '@/components/common/Chip';
 import { StoryObj } from '@storybook/react';
 
 export default {
-  title: 'Example/Chip',
+  title: 'Common/Chip',
   component: Chip,
   tags: ['autodocs'],
   argTypes: {

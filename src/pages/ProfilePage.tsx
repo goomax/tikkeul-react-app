@@ -1,10 +1,7 @@
 import Button from '@/components/common/Button';
-import Checkbox from '@/components/common/Checkbox';
-import Chip from '@/components/common/Chip';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
-import { Heart, ShoppingCart } from '@/components/icons';
-import { Avatar, Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
+import { Avatar, Stack, useTheme } from '@mui/material';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -78,7 +75,68 @@ const ProfilePage = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack></Stack>
+      <Stack
+        sx={{
+          padding: '28px 14px',
+        }}
+      >
+        <Stack
+          alignItems="center"
+          bgcolor={theme.palette.background.default}
+          sx={{
+            borderRadius: '4px',
+            boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
+          }}
+        >
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+            width="100%"
+            sx={{
+              padding: '12px 14px',
+            }}
+          >
+            <Typography bold fontSize={14}>
+              참여 그룹
+            </Typography>
+            <Button variant="outlined" shape="circle" sx={{ fontSize: '10px' }}>
+              편집하기 &gt;
+            </Button>
+          </Stack>
+          <Stack width="100%">
+            {['바다를 사랑하는 대문자 E의 모임', '먹기 위한 여행을 즐기는 여행가들'].map((group) => {
+              return (
+                <Stack
+                  key={group}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="flex-start"
+                  gap="12px"
+                  sx={{
+                    padding: '10px 14px',
+                  }}
+                  width="100%"
+                >
+                  <Avatar sx={{ width: '40x', height: '40px' }} />
+                  <Typography fontSize={12} color="grey">
+                    {group}
+                  </Typography>
+                </Stack>
+              );
+            })}
+          </Stack>
+        </Stack>
+        <Button
+          disabled
+          variant="outlined"
+          sx={{
+            marginTop: '40px',
+          }}
+        >
+          회원 탈퇴
+        </Button>
+      </Stack>
     </PageTransformWrapper>
   );
 };

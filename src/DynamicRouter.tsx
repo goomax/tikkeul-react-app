@@ -12,10 +12,13 @@ import {
 } from '@/pages';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
+import CoursePage from './pages/CoursePage';
+import ScrollToTop from './components/ScrollToTop';
 
 function DynamicRouter() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AnimatePresence>
         <Routes>
           <Route element={<Layout />}>
@@ -26,6 +29,7 @@ function DynamicRouter() {
             <Route path="/preference-form" element={<PreferenceFormPage />} />
             <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/my-course/:courseId" element={<MyCoursePage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>

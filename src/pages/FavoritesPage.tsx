@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button';
-import GridCard from '@/components/common/GridCard';
 import Typography from '@/components/common/Typography';
+import GridCard from '@/components/GridCard';
 import { useFetch } from '@/hooks';
 import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
 import { Stack } from '@mui/material';

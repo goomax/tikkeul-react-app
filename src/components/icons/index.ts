@@ -4,6 +4,7 @@ export { default as ArrowTop } from './ArrowTop';
 export { default as Check } from './Check';
 export { default as Close } from './Close';
 export { default as CloseCircle } from './CloseCircle';
+export { default as DragBar } from './DragBar';
 export { default as Heart } from './Heart';
 export { default as Help } from './Help';
 export { default as Home } from './Home';

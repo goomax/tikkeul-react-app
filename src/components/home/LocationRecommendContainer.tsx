@@ -3,7 +3,7 @@ import { useFetch } from '@/hooks';
 import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
 import { Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { SyntheticEvent, useState } from 'react';
-import GridCard from '../common/GridCard';
+import GridCard from '../GridCard';
 
 const LocationRecommendContainer = () => {
   const theme = useTheme();
@@ -20,7 +20,7 @@ const LocationRecommendContainer = () => {
   };
 
   return (
-    <Stack gap="16px" sx={{ padding: '8px 14px' }}>
+    <Stack gap="16px" sx={{ padding: '8px 14px 100px 14px' }}>
       <Stack>
         <Typography fontSize={14} lineHeight="21px" bold>
           카테고리별 추천
@@ -61,7 +61,7 @@ const LocationRecommendContainer = () => {
       </Tabs>
       <GridCard.Wrapper>
         {recommendedLocations.map((location) => (
-          <GridCard.Card card={location} />
+          <GridCard.Card key={location.id} card={location} />
         ))}
       </GridCard.Wrapper>
     </Stack>

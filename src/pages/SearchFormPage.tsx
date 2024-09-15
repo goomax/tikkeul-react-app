@@ -89,7 +89,12 @@ const SearchFormPage = () => {
   }, []);
 
   return (
-    <Stack gap="16px">
+    <Stack
+      gap="16px"
+      sx={{
+        paddingBottom: '100px',
+      }}
+    >
       {/* 검색창 */}
       <Box sx={{ padding: '19px 14px' }}>
         <motion.div

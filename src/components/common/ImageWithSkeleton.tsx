@@ -5,7 +5,7 @@ export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   variant?: 'circular' | 'rectangular' | 'rounded';
 }
 
-const Image = ({ src, alt, width, height, variant = 'rounded', ...others }: ImageProps) => {
+const ImageWithSkeleton = ({ src, alt, width, height, variant = 'rounded', ...others }: ImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const onLoadImage = () => {
@@ -33,4 +33,4 @@ const Image = ({ src, alt, width, height, variant = 'rounded', ...others }: Imag
   );
 };
 
-export default Image;
+export default ImageWithSkeleton;
