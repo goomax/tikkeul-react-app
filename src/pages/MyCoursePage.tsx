@@ -15,9 +15,9 @@ const MyCoursePage = () => {
         <Stack justifyContent="flex-start" alignItems="center" gap="16px" sx={{ padding: '19px 14px 43px 14px' }}>
           {/* <Skeleton variant="rectangular" width="100%" height={260} /> */}
           <Map
-            center={{ lat: 33.5563, lng: 126.79581 }}
+            center={{ lat: 38.204275, lng: 128.5941667 }}
             style={{ width: '100%', height: '260px', borderRadius: '5px' }}
-            level={7}
+            level={8}
           ></Map>
           <Stack flexDirection="row" justifyContent="space-between" sx={{ width: '100%' }}>
             <Stack alignItems="flex-start">
