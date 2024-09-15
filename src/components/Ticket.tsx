@@ -4,6 +4,7 @@ import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import Typography from '@/components/common/Typography';
 import { Stack } from '@mui/material';
 import { Map } from 'react-kakao-maps-sdk';
+import Carousel from './common/Carousel';
 
 interface TicketHeaderProps {
   label: string;
@@ -81,18 +82,12 @@ const Ticket = {
           height: '100px',
         }}
       >
-        <Stack
-          flexDirection="row"
+        <Carousel
           gap="12px"
           sx={{
             padding: '6px 14px',
             width: '300px',
             height: '100px',
-            overflowX: 'scroll',
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
           }}
         >
           {images.map((src, index) => {
@@ -108,7 +103,7 @@ const Ticket = {
               />
             );
           })}
-        </Stack>
+        </Carousel>
       </Stack>
     );
   },

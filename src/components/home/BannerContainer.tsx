@@ -7,6 +7,7 @@ import { GetBenefitResponse } from '@/types/apiResponse';
 import { Box, Stack } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import Carousel from '../common/Carousel';
 
 const BannerContainer = () => {
   const [benefits, setBenefits] = useState<(GetBenefitResponse['data'][number] & { isClose: boolean })[]>([]);
@@ -67,16 +68,10 @@ const BannerContainer = () => {
             입니다
           </Typography>
         </Box>
-        <Stack
-          flexDirection="row"
+        <Carousel
           gap="20px"
           sx={{
             padding: '20px 14px',
-            overflowX: 'scroll',
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
           }}
         >
           <AnimatePresence>
@@ -96,7 +91,7 @@ const BannerContainer = () => {
               );
             })}
           </AnimatePresence>
-        </Stack>
+        </Carousel>
       </Stack>
     </Stack>
   );

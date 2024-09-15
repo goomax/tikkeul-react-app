@@ -1,10 +1,17 @@
 import Button from '@/components/common/Button';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
+import { useInternalRouter } from '@/hooks';
 import { Avatar, Stack, useTheme } from '@mui/material';
 
 const ProfilePage = () => {
   const theme = useTheme();
+  const router = useInternalRouter();
+
+  const onClickRetest = () => {
+    router.push('/headcount-form');
+  };
+
   return (
     <PageTransformWrapper>
       <Stack
@@ -56,6 +63,7 @@ const ProfilePage = () => {
                   fontSize: '10px',
                   padding: 0,
                 }}
+                onClick={onClickRetest}
               >
                 다시 테스트하기
               </Button>
