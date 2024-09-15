@@ -3,13 +3,30 @@ import IconButton from '@/components/common/IconButton';
 import TextField from '@/components/common/TextField';
 import Typography from '@/components/common/Typography';
 import { CloseCircle } from '@/components/icons';
+import { CreateGroupFormData, createGroupFormDataSchema } from '@/constants/schema';
+import { useFormContext } from '@/FormDataProvider';
 import { useInternalRouter } from '@/hooks';
 import { Stack } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const HeadcountFormPage = () => {
   const router = useInternalRouter();
+  const { formData: createGroupFormData, updateFormData: updateCreateGroupFormData } =
+    useFormContext<CreateGroupFormData>();
+  const {
+    getValues,
+    register,
+    formState: { errors },
+  } = useForm({
+    defaultValues: createGroupFormData,
+    resolver: yupResolver(createGroupFormDataSchema),
+    mode: 'onChange',
+  });
 
   const onClickNextButton = () => {
+    const data = getValues();
+    updateCreateGroupFormData(data);
     router.push('/preference-form');
   };
 
@@ -34,6 +51,8 @@ const HeadcountFormPage = () => {
         <TextField
           variant="standard"
           label="여행 총 인원을 입력해 주세요"
+          id="headCount"
+          {...register('headCount')}
           InputProps={{
             endAdornment: (
               <IconButton>
@@ -41,10 +60,11 @@ const HeadcountFormPage = () => {
               </IconButton>
             ),
           }}
-          helperText="미입력 시 다음 단계로 넘어갈 수 없습니다"
+          helperText={errors.headCount?.message}
+          error={!!errors.headCount}
         />
       </Stack>
-      <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton}>
+      <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton} disabled={!!errors.headCount}>
         다음
       </FixedBottomCTA>
     </>

@@ -1,7 +1,7 @@
 import { Typography as MuiTypography, TypographyProps as MuiTypographyProps, useTheme } from '@mui/material';
 
 export interface TypographyProps extends Omit<MuiTypographyProps, 'color'> {
-  color?: 'primary' | 'secondary' | 'dark' | 'grey' | 'white';
+  color?: 'primary' | 'secondary' | 'dark' | 'grey' | 'white' | 'warning';
   inline?: boolean;
   bold?: boolean;
 }
@@ -15,6 +15,7 @@ const Typography = ({ color = 'dark', inline, bold, children, sx, ...others }: T
     grey: theme.palette.grey[500],
     dark: theme.palette.text.primary,
     white: theme.palette.background.default,
+    warning: theme.palette.warning.main,
   };
 
   return (

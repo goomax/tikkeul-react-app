@@ -14,6 +14,8 @@ import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import CoursePage from './pages/CoursePage';
 import ScrollToTop from './components/ScrollToTop';
+import { FormDataProvider } from './FormDataProvider';
+import { CreateGroupFormData, initialCreateGroupFormData } from './constants/schema';
 
 function DynamicRouter() {
   return (
@@ -25,9 +27,12 @@ function DynamicRouter() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/search-form" element={<SearchFormPage />} />
-            <Route path="/headcount-form" element={<HeadcountFormPage />} />
-            <Route path="/preference-form" element={<PreferenceFormPage />} />
-            <Route path="/onboarding" element={<OnboardingPage />} />
+            <Route element={<FormDataProvider<CreateGroupFormData> initialData={initialCreateGroupFormData} />}>
+              <Route path="/headcount-form" element={<HeadcountFormPage />} />
+              <Route path="/preference-form" element={<PreferenceFormPage />} />
+              <Route path="/onboarding" element={<OnboardingPage />} />
+            </Route>
+
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/my-course/:courseId" element={<MyCoursePage />} />
