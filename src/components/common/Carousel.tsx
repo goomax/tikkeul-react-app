@@ -5,6 +5,7 @@ const Carousel = ({ sx, children, ...others }: StackProps) => {
     <Stack
       flexDirection="row"
       sx={{
+        overflowY: 'hidden',
         overflowX: 'scroll',
         scrollbarWidth: 'none',
         '&::-webkit-scrollbar': {
