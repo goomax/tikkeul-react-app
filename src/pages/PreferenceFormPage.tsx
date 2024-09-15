@@ -1,11 +1,11 @@
 import FixedBottomCTA from '@/components/common/FixedBottomCTA';
+import RatingInput from '@/components/RatingInput';
 import Typography from '@/components/common/Typography';
 import { useInputs, useInternalRouter } from '@/hooks';
-import { Rating, Stack, useTheme } from '@mui/material';
+import { Stack } from '@mui/material';
 
 const PreferenceFormPage = () => {
   const router = useInternalRouter();
-  const theme = useTheme();
   const [ratings, onChangeRatings] = useInputs<
     Record<'foodRating' | 'experienceRating' | 'accommodationRating', number | null>
   >({
@@ -52,66 +52,27 @@ const PreferenceFormPage = () => {
             모두 선택해야 완료할 수 있어요!{' '}
           </Typography>
         </Stack>
-        {/* 음식 선호도 */}
-        <Stack>
-          <Typography fontSize={14} bold sx={{ marginBottom: '12px' }}>
-            음식 선호도
-          </Typography>
-          <Rating
-            value={ratings.foodRating}
-            name="foodRating"
-            onChange={onChangeRatings}
-            size="large"
-            sx={{
-              '& .MuiRating-iconFilled': {
-                color: theme.palette.primary.main,
-              },
-            }}
-          />
-          <Typography fontSize={12} color="grey">
-            {getHelperText(ratings.foodRating)}
-          </Typography>
-        </Stack>
-        {/* 관광 체험 선호도 */}
-        <Stack>
-          <Typography fontSize={14} bold sx={{ marginBottom: '12px' }}>
-            관광 체험 선호도
-          </Typography>
-          <Rating
-            value={ratings.experienceRating}
-            name="experienceRating"
-            onChange={onChangeRatings}
-            size="large"
-            sx={{
-              '& .MuiRating-iconFilled': {
-                color: theme.palette.primary.main,
-              },
-            }}
-          />
-          <Typography fontSize={12} color="grey">
-            {getHelperText(ratings.experienceRating)}
-          </Typography>
-        </Stack>
-        {/* 숙소 선호도 */}
-        <Stack>
-          <Typography fontSize={14} bold sx={{ marginBottom: '12px' }}>
-            숙소 선호도
-          </Typography>
-          <Rating
-            value={ratings.accommodationRating}
-            name="accommodationRating"
-            onChange={onChangeRatings}
-            size="large"
-            sx={{
-              '& .MuiRating-iconFilled': {
-                color: theme.palette.primary.main,
-              },
-            }}
-          />
-          <Typography fontSize={12} color="grey">
-            {getHelperText(ratings.accommodationRating)}
-          </Typography>
-        </Stack>{' '}
+        <RatingInput
+          label="음식 선호도"
+          name="foodRating"
+          value={ratings.foodRating}
+          onChange={onChangeRatings}
+          helperText={getHelperText(ratings.foodRating)}
+        />
+        <RatingInput
+          label="관광 체험 선호도"
+          name="experienceRating"
+          value={ratings.experienceRating}
+          onChange={onChangeRatings}
+          helperText={getHelperText(ratings.experienceRating)}
+        />
+        <RatingInput
+          label="숙소 선호도"
+          name="accommodationRating"
+          value={ratings.accommodationRating}
+          onChange={onChangeRatings}
+          helperText={getHelperText(ratings.accommodationRating)}
+        />
       </Stack>
       <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton}>
         다음

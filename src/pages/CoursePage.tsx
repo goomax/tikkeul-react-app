@@ -1,4 +1,5 @@
 import { BottomSheet } from '@/components/BottomSheet';
+import Carousel from '@/components/common/Carousel';
 import Chip from '@/components/common/Chip';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
@@ -61,16 +62,10 @@ const CoursePage = () => {
               }}
               onClick={onClickLocation}
             >
-              <Stack
-                flexDirection="row"
+              <Carousel
                 gap="12px"
                 sx={{
                   marginBottom: '5px',
-                  overflowX: 'scroll',
-                  scrollbarWidth: 'none',
-                  '&::-webkit-scrollbar': {
-                    display: 'none',
-                  },
                 }}
               >
                 {[
@@ -92,7 +87,7 @@ const CoursePage = () => {
                     />
                   );
                 })}
-              </Stack>
+              </Carousel>
               <Stack flexDirection="row" gap="12px">
                 {['식당', '맛을 아는'].map((label) => {
                   return <Chip key={label} label={label} radiusVariant="square" color="default" />;
@@ -131,16 +126,10 @@ const CoursePage = () => {
       </Stack>
       <BottomSheet open={open} header={<DragBar />} close={onClose}>
         <Stack gap="5px">
-          <Stack
-            flexDirection="row"
+          <Carousel
             gap="12px"
             sx={{
               marginBottom: '30px',
-              overflowX: 'scroll',
-              scrollbarWidth: 'none',
-              '&::-webkit-scrollbar': {
-                display: 'none',
-              },
             }}
           >
             {[
@@ -162,7 +151,7 @@ const CoursePage = () => {
                 />
               );
             })}
-          </Stack>
+          </Carousel>
           <Typography fontSize={16} bold>
             경포 아쿠아리움
           </Typography>
