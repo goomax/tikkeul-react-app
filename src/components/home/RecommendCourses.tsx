@@ -3,13 +3,20 @@ import Chip from '@/components/common/Chip';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
 import { Box, Stack } from '@mui/material';
-import Image from '../common/Image';
+import ImageWithSkeleton from '../common/ImageWithSkeleton';
+import { useInternalRouter } from '@/hooks';
+import { commaizeNumber } from '@/utils/formatter';
 
 interface RecommendCoursesProps {
   courses: GetRecommendedCoursesResponse['data'];
 }
 
 const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
+  const router = useInternalRouter();
+
+  const onClickCourse = (courseId: string) => {
+    router.push(`/courses/${courseId}`);
+  };
   return (
     <Box
       sx={{
@@ -26,8 +33,17 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
             alignItems="center"
             gap="12px"
             sx={{ height: '100%', padding: '8px 14px' }}
+            onClick={() => {
+              onClickCourse(course.id);
+            }}
           >
-            <Image src={course.image} width={80} height={80} alt={course.title} style={{ borderRadius: '16px' }} />
+            <ImageWithSkeleton
+              src={course.image}
+              width={80}
+              height={80}
+              alt={course.title}
+              style={{ borderRadius: '16px' }}
+            />
             <Stack
               gap="8px"
               sx={{
@@ -68,7 +84,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
                 <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
                   예상 평균 금액{' '}
                   <Typography fontSize={14} bold color="secondary" inline>
-                    {course.price}원
+                    {commaizeNumber(course.price)}원
                   </Typography>
                 </Typography>
               </Stack>

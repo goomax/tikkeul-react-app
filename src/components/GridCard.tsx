@@ -1,9 +1,10 @@
-import { Box, Grid, Stack } from '@mui/material';
-import Typography from './Typography';
-import Image from './Image';
-import Chip from './Chip';
+import { Grid, Stack } from '@mui/material';
+import Typography from './common/Typography';
+import ImageWithSkeleton from './common/ImageWithSkeleton';
+import Chip from './common/Chip';
 import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
 import { ReactNode } from 'react';
+import { commaizeNumber } from '@/utils/formatter';
 
 interface GridCardWrapperProps {
   children: ReactNode;
@@ -29,7 +30,13 @@ const GridCard = {
           height: '100%',
         }}
       >
-        <Image src={card.image} alt={card.name} width="148px" height="132px" style={{ borderRadius: '4px' }} />
+        <ImageWithSkeleton
+          src={card.image}
+          alt={card.name}
+          width="148px"
+          height="132px"
+          style={{ borderRadius: '4px' }}
+        />
         <Chip
           radiusVariant="square"
           color="default"
@@ -44,7 +51,7 @@ const GridCard = {
         <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
           예상 평균 금액{' '}
           <Typography fontSize={14} bold color="secondary" inline>
-            {card.price}원
+            {commaizeNumber(card.price)}원
           </Typography>
         </Typography>
         {bottom && bottom}

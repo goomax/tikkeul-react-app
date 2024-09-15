@@ -13,10 +13,12 @@ import {
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import CoursePage from './pages/CoursePage';
+import ScrollToTop from './components/ScrollToTop';
 
 function DynamicRouter() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AnimatePresence>
         <Routes>
           <Route element={<Layout />}>

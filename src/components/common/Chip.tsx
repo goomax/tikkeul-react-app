@@ -15,8 +15,9 @@ const Chip = ({ variant, color, sx, size = 'small', radiusVariant = 'square', ..
         ...(color === 'default'
           ? { backgroundColor: theme.palette.grey[100], color: theme.palette.grey[700] }
           : { color: 'white' }),
-        ...radius[radiusVariant],
         paddingLeft: '1px',
+        width: 'fit-content',
+        ...radius[radiusVariant],
         ...sizeConfig[size],
         ...sx,
       }}
@@ -41,7 +42,6 @@ const radius = {
 
 const sizeConfig = {
   small: {
-    width: '47px',
     height: '19px',
     '& .MuiChip-label': {
       padding: '1px',

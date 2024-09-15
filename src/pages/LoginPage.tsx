@@ -1,7 +1,7 @@
 import Typography from '@/components/common/Typography';
 import { Stack, useTheme } from '@mui/material';
 import LogoImg from '@/assets/logo.png';
-import Image from '@/components/common/Image';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import Button from '@/components/common/Button';
 import { useInternalRouter } from '@/hooks';
 
@@ -29,7 +29,7 @@ const LoginPage = () => {
           해 봐요
         </Typography>
       </Stack>
-      <Image src={LogoImg} />
+      <ImageWithSkeleton src={LogoImg} />
       <Stack sx={{ width: '100%' }} gap="5px">
         <Button
           fullWidth

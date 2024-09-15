@@ -5,6 +5,7 @@ import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
 import { Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
+import { Map } from 'react-kakao-maps-sdk';
 
 const MyCoursePage = () => {
   const theme = useTheme();
@@ -12,8 +13,12 @@ const MyCoursePage = () => {
     <PageTransformWrapper>
       <Stack sx={{ backgroundColor: theme.palette.primary.main }}>
         <Stack justifyContent="flex-start" alignItems="center" gap="16px" sx={{ padding: '19px 14px 43px 14px' }}>
-          <Skeleton variant="rectangular" width="100%" height={260} />
-
+          {/* <Skeleton variant="rectangular" width="100%" height={260} /> */}
+          <Map
+            center={{ lat: 33.5563, lng: 126.79581 }}
+            style={{ width: '100%', height: '260px', borderRadius: '5px' }}
+            level={7}
+          ></Map>
           <Stack flexDirection="row" justifyContent="space-between" sx={{ width: '100%' }}>
             <Stack alignItems="flex-start">
               <Typography fontSize={14} color="white" bold>
@@ -41,7 +46,7 @@ const MyCoursePage = () => {
         </Stack>
       </Stack>
       <Stack>
-        <Stack flexDirection="row" justifyContent="space-between" alignItems="center" sx={{ padding: '12px 14px' }}>
+        <Stack flexDirection="row" justifyContent="space-between" alignItems="center" sx={{ padding: '12px 14px ' }}>
           <Box>
             <Checkbox
               checked
@@ -112,7 +117,7 @@ const MyCoursePage = () => {
             <Button variant="outlined">장소 추가하기</Button>
           </Stack>
         </Stack>
-        <Stack sx={{ padding: '12px 14px' }}>
+        <Stack sx={{ padding: '12px 14px 100px 14px' }}>
           <Button variant="contained" fullWidth sx={{ height: '45px' }}>
             이대로 여행 시작하기
           </Button>
@@ -147,7 +152,6 @@ const StepCard = () => {
             radiusVariant="square"
             color="default"
             sx={{
-              width: '27px',
               height: '19px',
               '& .MuiChip-label': {
                 padding: '1px',
