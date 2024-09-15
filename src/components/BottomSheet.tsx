@@ -37,7 +37,7 @@ export function BottomSheet({ open, header, children, className, close }: PropsW
                 bottom: 0,
                 left: 0,
                 right: 0,
-                zIndex: 2,
+                zIndex: 9999,
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
               }}
             />
@@ -76,7 +76,7 @@ export function BottomSheet({ open, header, children, className, close }: PropsW
               </div>
               <div
                 style={{
-                  padding: '12px 24px 100px 24px',
+                  padding: '12px 24px 50px 24px',
                 }}
               >
                 {children}

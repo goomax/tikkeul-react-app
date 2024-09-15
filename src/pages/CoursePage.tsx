@@ -59,6 +59,7 @@ const CoursePage = () => {
               sx={{
                 backgroundColor: theme.palette.background.default,
                 padding: '8px 14px',
+                boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
               }}
               onClick={onClickLocation}
             >
@@ -66,6 +67,7 @@ const CoursePage = () => {
                 gap="12px"
                 sx={{
                   marginBottom: '5px',
+                  minHeight: '160px',
                 }}
               >
                 {[
