@@ -1,39 +1,46 @@
 import FixedBottomCTA from '@/components/common/FixedBottomCTA';
 import RatingInput from '@/components/RatingInput';
 import Typography from '@/components/common/Typography';
-import { useInputs, useInternalRouter } from '@/hooks';
+import { useInternalRouter } from '@/hooks';
 import { Stack } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { CreateGroupFormData, createGroupFormDataSchema } from '@/constants/schema';
+import { useFormContext } from '@/FormDataProvider';
+
+type PreferenceField = `preferences.${keyof CreateGroupFormData['preferences']}`;
 
 const PreferenceFormPage = () => {
   const router = useInternalRouter();
-  const [ratings, onChangeRatings] = useInputs<
-    Record<'foodRating' | 'experienceRating' | 'accommodationRating', number | null>
-  >({
-    foodRating: null,
-    experienceRating: null,
-    accommodationRating: null,
+  const { formData: createGroupFormData, updateFormData: updateCreateGroupFormData } =
+    useFormContext<CreateGroupFormData>();
+  const {
+    getValues,
+    formState: { errors, isValid },
+    setValue,
+    watch,
+    trigger,
+  } = useForm({
+    defaultValues: createGroupFormData,
+    resolver: yupResolver(createGroupFormDataSchema),
+    mode: 'onChange',
   });
 
-  const getHelperText = (rating: number | null) => {
-    switch (rating) {
-      case 1:
-        return '1점 (거의 신경쓰지 않아요)';
-      case 2:
-        return '2점 (별로 중요하지 않아요)';
-      case 3:
-        return '3점 (보통이에요)';
-      case 4:
-        return '4점 (많이 중요해요)';
-      case 5:
-        return '5점 (최우선 고려사항이에요)';
-      default:
-        return '별점을 선택해주세요';
-    }
+  const onChangeRatings = (event: React.SyntheticEvent, value: number | null) => {
+    const { name } = event.target as HTMLInputElement;
+
+    setValue(name as PreferenceField, value);
+    trigger(name as PreferenceField);
   };
 
   const onClickNextButton = () => {
+    const data = getValues();
+    updateCreateGroupFormData(data);
+
     router.push('/onboarding');
   };
+
+  const preferencesValue = watch('preferences');
 
   return (
     <Stack sx={{ paddingBottom: '100px' }}>
@@ -54,27 +61,34 @@ const PreferenceFormPage = () => {
         </Stack>
         <RatingInput
           label="음식 선호도"
-          name="foodRating"
-          value={ratings.foodRating}
+          name="preferences.foodRating"
           onChange={onChangeRatings}
-          helperText={getHelperText(ratings.foodRating)}
+          value={preferencesValue?.foodRating}
+          helperText={errors.preferences?.foodRating?.message ?? getHelperText(preferencesValue?.foodRating)}
+          error={!!errors.preferences?.foodRating}
         />
         <RatingInput
           label="관광 체험 선호도"
-          name="experienceRating"
-          value={ratings.experienceRating}
+          name="preferences.experienceRating"
           onChange={onChangeRatings}
-          helperText={getHelperText(ratings.experienceRating)}
+          value={preferencesValue?.experienceRating}
+          helperText={
+            errors.preferences?.experienceRating?.message ?? getHelperText(preferencesValue?.experienceRating)
+          }
+          error={!!errors.preferences?.experienceRating}
         />
         <RatingInput
           label="숙소 선호도"
-          name="accommodationRating"
-          value={ratings.accommodationRating}
+          name="preferences.accommodationRating"
           onChange={onChangeRatings}
-          helperText={getHelperText(ratings.accommodationRating)}
+          value={preferencesValue?.accommodationRating}
+          helperText={
+            errors.preferences?.accommodationRating?.message ?? getHelperText(preferencesValue?.accommodationRating)
+          }
+          error={!!errors.preferences?.accommodationRating}
         />
       </Stack>
-      <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton}>
+      <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton} disabled={!isValid}>
         다음
       </FixedBottomCTA>
     </Stack>
@@ -82,3 +96,20 @@ const PreferenceFormPage = () => {
 };
 
 export default PreferenceFormPage;
+
+const getHelperText = (rating: number | null | undefined) => {
+  switch (rating) {
+    case 1:
+      return '1점 (거의 신경쓰지 않아요)';
+    case 2:
+      return '2점 (별로 중요하지 않아요)';
+    case 3:
+      return '3점 (보통이에요)';
+    case 4:
+      return '4점 (많이 중요해요)';
+    case 5:
+      return '5점 (최우선 고려사항이에요)';
+    default:
+      return '별점을 선택해주세요';
+  }
+};
