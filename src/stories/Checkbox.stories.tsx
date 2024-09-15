@@ -2,7 +2,7 @@ import { StoryObj } from '@storybook/react';
 import Checkbox, { CheckboxProps } from '@/components/common/Checkbox';
 
 export default {
-  title: 'Example/Checkbox',
+  title: 'Common/Checkbox',
   component: Checkbox,
   tags: ['autodocs'],
   argTypes: {

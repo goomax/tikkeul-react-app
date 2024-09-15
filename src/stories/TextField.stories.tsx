@@ -2,7 +2,7 @@ import { StoryObj } from '@storybook/react';
 import TextField, { TextFieldProps } from '@/components/common/TextField';
 
 export default {
-  title: 'Example/TextField',
+  title: 'Common/TextField',
   component: TextField,
   tags: ['autodocs'],
 };

@@ -2,7 +2,7 @@ import ImageWithSkeleton, { ImageProps } from '@/components/common/ImageWithSkel
 import { StoryObj } from '@storybook/react';
 
 export default {
-  title: 'Example/ImageWithSkeleton',
+  title: 'Common/ImageWithSkeleton',
   component: ImageWithSkeleton,
   tags: ['autodocs'],
 };

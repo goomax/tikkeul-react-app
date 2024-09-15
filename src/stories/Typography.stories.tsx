@@ -2,7 +2,7 @@ import Typography from '@/components/common/Typography';
 import { Divider } from '@mui/material';
 
 export default {
-  title: 'Example/Typography',
+  title: 'Common/Typography',
   component: Typography,
   tags: ['autodocs'],
 };
