@@ -1,9 +1,9 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import Chip from '@/components/common/Chip';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import Typography from '@/components/common/Typography';
 import { Dialog, Stack, SxProps, Theme, useTheme } from '@mui/material';
-import { Map } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk';
 import Carousel from './common/Carousel';
 import { useDialog } from '@/hooks';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
@@ -14,6 +14,40 @@ import IconButton from './common/IconButton';
 import { commaizeNumber } from '@/utils/formatter';
 import Button from './common/Button';
 import { BottomSheet } from './BottomSheet';
+import axios from 'axios';
+import { ENV } from '@/constants/config';
+
+interface Vertex {
+  lat: number;
+  lng: number;
+}
+
+interface Road {
+  name: string;
+  distance: number;
+  duration: number;
+  traffic_speed: number;
+  traffic_state: number;
+  vertexes: number[];
+}
+
+interface Section {
+  distance: number;
+  duration: number;
+  bound: {
+    min_x: number;
+    min_y: number;
+    max_x: number;
+    max_y: number;
+  };
+  roads: Road[];
+}
+
+interface ApiResponse {
+  routes: {
+    sections: Section[];
+  }[];
+}
 
 interface TicketHeaderProps {
   label: string;
@@ -53,6 +87,64 @@ const Ticket = {
 
     const theme = useTheme();
 
+    const coordinates = [
+      { latitude: 37.1507494904, longitude: 129.2062296318 },
+      { latitude: 37.7726505813, longitude: 128.9473504054 },
+      { latitude: 37.7071731576, longitude: 128.7188396792 },
+      { latitude: 38.2188863049, longitude: 128.5916575733 },
+    ];
+
+    const [allVertexes, setAllVertexes] = useState<Vertex[]>([]);
+
+    const formatVertexes = (vertexes: number[]): Vertex[] => {
+      const formatted: Vertex[] = [];
+      for (let i = 0; i < vertexes.length; i += 2) {
+        formatted.push({ lat: vertexes[i + 1], lng: vertexes[i] });
+      }
+      return formatted;
+    };
+
+    useEffect(() => {
+      axios
+        .request<ApiResponse>({
+          method: 'post',
+          url: 'https://apis-navi.kakaomobility.com/v1/waypoints/directions',
+          headers: {
+            Authorization: `KakaoAK ${ENV.KAKAO_REST_KEY}`,
+          },
+          data: {
+            // 출발지
+            origin: {
+              x: 129.2062296318,
+              y: 37.1507494904,
+            },
+            // 도착지
+            destination: {
+              x: 128.5916575733,
+              y: 38.2188863049,
+            },
+            // 경유지
+            waypoints: [
+              {
+                x: 128.9473504054,
+                y: 37.7726505813,
+              },
+              {
+                x: 128.7188396792,
+                y: 37.7071731576,
+              },
+            ],
+          },
+        })
+        .then((res) => {
+          const combinedVertexes: Vertex[] = res.data.routes[0].sections.flatMap((section) =>
+            section.roads.flatMap((road) => formatVertexes(road.vertexes)),
+          );
+
+          setAllVertexes(combinedVertexes);
+        });
+    }, []);
+
     return (
       <>
         <Stack
@@ -76,14 +168,14 @@ const Ticket = {
 
           <div style={{ position: 'relative', width: '290px', height: '112px' }}>
             <Map
-              center={{ lat: 38.204275, lng: 128.5941667 }}
+              center={{ lat: 37.17364526353777, lng: 129.33560656383634 }}
               style={{
                 width: '290px',
                 height: '112px',
                 borderRadius: '12px',
                 marginTop: '10px',
               }}
-              level={8}
+              level={4}
             ></Map>
             <IconButton
               size="small"
@@ -113,7 +205,18 @@ const Ticket = {
                 height: '100%',
               }}
               level={8}
-            />
+            >
+              {coordinates.map((coord, index) => (
+                <MapMarker key={index} position={{ lat: coord.latitude, lng: coord.longitude }} />
+              ))}
+              <Polyline
+                path={allVertexes.map((coord) => ({ lat: coord.lat, lng: coord.lng }))}
+                strokeWeight={6}
+                strokeColor={theme.palette.secondary.main}
+                strokeOpacity={0.8}
+                strokeStyle="solid"
+              />
+            </Map>
             <IconButton
               size="small"
               onClick={onClose}
