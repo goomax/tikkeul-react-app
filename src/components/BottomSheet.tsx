@@ -3,7 +3,7 @@ import Typography from './common/Typography';
 import { GlobalPortal } from '@/GlobalProtal';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface Props {
+export interface BottomSheetProps {
   className?: string;
   open: boolean;
   close: () => void;
@@ -11,7 +11,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function BottomSheet({ open, header, children, className, close }: PropsWithChildren<Props>) {
+export function BottomSheet({ open, header, children, className, close }: PropsWithChildren<BottomSheetProps>) {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
