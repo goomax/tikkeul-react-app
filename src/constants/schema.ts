@@ -28,7 +28,6 @@ export const createGroupFormDataSchema = yup.object().shape({
       .number()
       .nullable()
       .test('is-required', '미입력 시 다음 단계로 넘어갈 수 없습니다', (value) => {
-        console.log(value);
         return value !== null;
       }),
     experienceRating: yup

@@ -16,8 +16,10 @@ const HeadcountFormPage = () => {
     useFormContext<CreateGroupFormData>();
   const {
     getValues,
+    setValue,
     register,
     formState: { errors },
+    watch,
   } = useForm({
     defaultValues: createGroupFormData,
     resolver: yupResolver(createGroupFormDataSchema),
@@ -30,12 +32,16 @@ const HeadcountFormPage = () => {
     router.push('/preference-form');
   };
 
+  const onInitHeadCount = () => {
+    setValue('headCount', null);
+  };
+
   return (
-    <>
-      <Typography fontSize={16} sx={{ textAlign: 'center', marginBottom: '60px' }}>
+    <Stack sx={{ paddingBottom: '100px' }}>
+      <Typography fontSize={16} sx={{ textAlign: 'center', marginBottom: '30px' }}>
         인원 수 입력
       </Typography>
-      <Stack gap="100px" sx={{ padding: '0 14px' }}>
+      <Stack gap="24px" sx={{ padding: '0 14px' }}>
         <Stack>
           <Typography fontSize={22}>
             여행{' '}
@@ -55,7 +61,7 @@ const HeadcountFormPage = () => {
           {...register('headCount')}
           InputProps={{
             endAdornment: (
-              <IconButton>
+              <IconButton onClick={onInitHeadCount}>
                 <CloseCircle />
               </IconButton>
             ),
@@ -64,10 +70,15 @@ const HeadcountFormPage = () => {
           error={!!errors.headCount}
         />
       </Stack>
-      <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton} disabled={!!errors.headCount}>
+      <FixedBottomCTA
+        fullWidth
+        sx={{ height: '44px' }}
+        onClick={onClickNextButton}
+        disabled={!watch('headCount') || !!errors.headCount}
+      >
         다음
       </FixedBottomCTA>
-    </>
+    </Stack>
   );
 };
 

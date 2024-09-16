@@ -4,8 +4,8 @@ import Chip from '@/components/common/Chip';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
+import KakaoMap from '@/components/KakaoMap';
 import { Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
-import { Map } from 'react-kakao-maps-sdk';
 
 const MyCoursePage = () => {
   const theme = useTheme();
@@ -14,11 +14,19 @@ const MyCoursePage = () => {
       <Stack sx={{ backgroundColor: theme.palette.primary.main }}>
         <Stack justifyContent="flex-start" alignItems="center" gap="16px" sx={{ padding: '19px 14px 43px 14px' }}>
           {/* <Skeleton variant="rectangular" width="100%" height={260} /> */}
-          <Map
-            center={{ lat: 38.204275, lng: 128.5941667 }}
-            style={{ width: '100%', height: '260px', borderRadius: '5px' }}
+          <KakaoMap
+            coordinates={[
+              { lat: 37.1507494904, lng: 129.2062296318 },
+              { lat: 37.7726505813, lng: 128.9473504054 },
+              { lat: 37.7071731576, lng: 128.7188396792 },
+              { lat: 37.3664313199, lng: 128.3949124655 },
+              { lat: 38.2188863049, lng: 128.5916575733 },
+            ]}
+            width="100%"
+            height="260px"
+            style={{ borderRadius: '5px' }}
             level={8}
-          ></Map>
+          />
           <Stack flexDirection="row" justifyContent="space-between" sx={{ width: '100%' }}>
             <Stack alignItems="flex-start">
               <Typography fontSize={14} color="white" bold>
