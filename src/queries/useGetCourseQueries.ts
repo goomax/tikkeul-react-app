@@ -1,24 +1,12 @@
 import { getCourseList } from '@/apis/course';
 import { QUERY_KEY } from '@/constants/key';
-import { useSuspenseQueries } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-export const useGetCourseQueries = ({ groupId }: Pick<Parameters<typeof getCourseList>[0], 'groupId'>) => {
-  const queries = useSuspenseQueries({
-    queries: [
-      {
-        queryKey: [QUERY_KEY.COURSES, 'recommend', groupId],
-        queryFn: () => getCourseList({ type: 'recommend', groupId }).then((res) => res.data.courseList),
-      },
-      {
-        queryKey: [QUERY_KEY.COURSES, 'hot'],
-        queryFn: () => getCourseList({ type: 'hot' }).then((res) => res.data.courseList),
-      },
-      {
-        queryKey: [QUERY_KEY.COURSES, 'like', groupId],
-        queryFn: () => getCourseList({ type: 'like', groupId }).then((res) => res.data.courseList),
-      },
-    ],
+export const useGetCourseQuery = ({ groupId, type }: Parameters<typeof getCourseList>[0]) => {
+  const { data: courseList = [], ...others } = useSuspenseQuery({
+    queryKey: [QUERY_KEY.COURSES, type, groupId],
+    queryFn: () => getCourseList({ type, groupId }).then((res) => res.data.courseList),
   });
 
-  return queries;
+  return { courseList, ...others };
 };

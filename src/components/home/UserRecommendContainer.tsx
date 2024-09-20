@@ -3,7 +3,7 @@ import { useQueryString } from '@/hooks';
 import { Skeleton, Stack, useTheme } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
 import { QUERY_PARAM_KEY } from '@/constants/key';
-import { useGetCourseQueries } from '@/queries/useGetCourseQueries';
+import { useGetCourseQuery } from '@/queries/useGetCourseQueries';
 import { mockArray } from '@/utils/generator';
 import { Suspense } from 'react';
 
@@ -72,7 +72,7 @@ const AsyncRecommendCourses = () => {
   const { getParams } = useQueryString();
 
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const [recommendedCourses] = useGetCourseQueries({ groupId: Number(groupId) });
+  const { courseList } = useGetCourseQuery({ groupId: Number(groupId), type: 'recommend' });
 
-  return <>{recommendedCourses.data && <RecommendCourses courses={recommendedCourses.data} />}</>;
+  return <RecommendCourses courses={courseList} />;
 };
