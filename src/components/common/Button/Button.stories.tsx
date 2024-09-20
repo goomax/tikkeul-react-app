@@ -23,4 +23,5 @@ export const PrimaryButton: StoryObj<ButtonProps> = {
     children: '여행 시작하기',
     shape: 'square',
   },
+  render: (args) => <Button {...args} />,
 };

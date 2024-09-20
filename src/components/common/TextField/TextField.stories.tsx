@@ -1,5 +1,5 @@
 import { StoryObj } from '@storybook/react';
-import TextField, { TextFieldProps } from '@/components/common/TextField';
+import TextField, { TextFieldProps } from '.';
 
 export default {
   title: 'Common/TextField',

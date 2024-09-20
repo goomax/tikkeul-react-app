@@ -1,5 +1,5 @@
 import FixedBottomCTA from '@/components/common/FixedBottomCTA';
-import RatingInput from '@/components/RatingInput';
+import RatingInput from '@/components/common/RatingInput';
 import Typography from '@/components/common/Typography';
 import { useInternalRouter } from '@/hooks';
 import { Stack } from '@mui/material';

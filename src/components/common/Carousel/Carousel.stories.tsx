@@ -1,7 +1,7 @@
-import Carousel from '@/components/common/Carousel';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import { Box } from '@mui/material';
 import { StoryObj } from '@storybook/react';
+import Carousel from '.';
 
 export default {
   title: 'Module/Carousel',

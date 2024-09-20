@@ -112,7 +112,7 @@ const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
     <>
       <GridCard.Wrapper>
         {tourSiteData.map((tourSite) => (
-          <GridCard.Card
+          <GridCard.Item
             key={tourSite.tourSiteId}
             thumbnail={tourSite.thumbnails[0]}
             title={tourSite.name}

@@ -1,6 +1,6 @@
 import { StoryObj } from '@storybook/react';
-import IconButton, { IconButtonProps } from '@/components/common/IconButton';
 import ShoppingCart from '@/components/icons/ShoppingCart';
+import IconButton, { IconButtonProps } from '.';
 
 export default {
   title: 'Common/IconButton',
@@ -14,4 +14,6 @@ export const PrimaryIconButton: StoryObj<IconButtonProps> = {
     textBadge: '3',
     children: <ShoppingCart />,
   },
+
+  render: (args) => <IconButton {...args} />,
 };

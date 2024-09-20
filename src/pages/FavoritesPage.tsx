@@ -40,7 +40,7 @@ const AsyncGridCards = () => {
   return (
     <>
       {courseList.map((course) => (
-        <GridCard.Card
+        <GridCard.Item
           key={course.courseId}
           thumbnail={course.thumbnails[0]}
           title={course.title}

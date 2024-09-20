@@ -23,10 +23,5 @@ export default defineConfig(({ mode }) => {
         '@': resolve(__dirname, './src'),
       },
     },
-    build: {
-      rollupOptions: {
-        external: ['src/stories/**', 'custom-script/**'],
-      },
-    },
   };
 });
