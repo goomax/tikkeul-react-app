@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
   baseURL: ENV.SERVER_URL,
+  withCredentials: true,
 });
 
 apiClient.interceptors.request.use((request) => {
