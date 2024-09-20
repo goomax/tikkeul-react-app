@@ -9,7 +9,7 @@ import { Stack } from '@mui/material';
 const FavoritesPage = () => {
   const { getParams } = useQueryString();
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const [, , likedCourses] = useGetCourseQueries({ groupId: Number(groupId) ?? 1111 });
+  const [, , likedCourses] = useGetCourseQueries({ groupId: Number(groupId) });
 
   return (
     <Stack sx={{ padding: '8px 14px' }}>
@@ -33,6 +33,7 @@ const FavoritesPage = () => {
                   disabled
                   sx={{
                     height: '26px',
+                    marginTop: '6px',
                   }}
                 >
                   삭제

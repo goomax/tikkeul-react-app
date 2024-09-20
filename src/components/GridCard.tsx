@@ -4,6 +4,7 @@ import ImageWithSkeleton from './common/ImageWithSkeleton';
 import Chip from './common/Chip';
 import { ReactNode } from 'react';
 import { commaizeNumber } from '@/utils/formatter';
+import { TourSite } from '@/apis/course';
 
 interface GridCardWrapperProps {
   children: ReactNode;
@@ -15,6 +16,7 @@ interface GridCardCardProps {
   tag: string;
   title: string;
   price: number;
+  onClick?: () => void;
 }
 
 const GridCard = {
@@ -23,14 +25,16 @@ const GridCard = {
       {children}
     </Grid>
   ),
-  Card: ({ thumbnail, title, price, tag, bottom }: GridCardCardProps) => (
-    <Grid item xs={6}>
+  Card: ({ thumbnail, title, price, tag, bottom, onClick }: GridCardCardProps) => (
+    <Grid item xs={6} sx={{}}>
       <Stack
         justifyContent="center"
         sx={{
           borderRadius: '8px',
           height: '100%',
+          cursor: 'pointer',
         }}
+        onClick={onClick}
       >
         <ImageWithSkeleton src={thumbnail} alt={title} width="148px" height="132px" style={{ borderRadius: '4px' }} />
         <Chip

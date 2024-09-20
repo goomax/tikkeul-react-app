@@ -14,4 +14,21 @@ apiClient.interceptors.request.use((request) => {
   return request;
 });
 
+apiClient.interceptors.response.use(
+  (response) => {
+    if (ENV.MOCK_MODE) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(response);
+        }, 3000);
+      });
+    }
+
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
 export default apiClient;

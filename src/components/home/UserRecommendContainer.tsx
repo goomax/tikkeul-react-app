@@ -1,15 +1,14 @@
 import Typography from '@/components/common/Typography';
 import { useQueryString } from '@/hooks';
-import { Stack, useTheme } from '@mui/material';
+import { Skeleton, Stack, useTheme } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
 import { QUERY_PARAM_KEY } from '@/constants/key';
 import { useGetCourseQueries } from '@/queries/useGetCourseQueries';
+import { mockArray } from '@/utils/generator';
+import { Suspense } from 'react';
 
 const UserRecommendContainer = () => {
   const theme = useTheme();
-  const { getParams } = useQueryString();
-  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const [recommendedCourses] = useGetCourseQueries({ groupId: Number(groupId) ?? 1111 });
 
   return (
     <>
@@ -25,7 +24,17 @@ const UserRecommendContainer = () => {
             같은 유형의 사용자들이 최근 일주일 간 가장 많이 본 코스입니다
           </Typography>
         </Stack>
-        {recommendedCourses.data && <RecommendCourses courses={recommendedCourses.data} />}
+        <Suspense
+          fallback={
+            <Stack gap="10px">
+              {mockArray(3).map((_, index) => (
+                <Skeleton key={index} variant="rectangular" width="100%" height={113} />
+              ))}
+            </Stack>
+          }
+        >
+          <AsyncRecommendCourses />
+        </Suspense>
       </Stack>
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Typography fontSize={14} lineHeight="21px" bold>
@@ -58,3 +67,12 @@ const UserRecommendContainer = () => {
 };
 
 export default UserRecommendContainer;
+
+const AsyncRecommendCourses = () => {
+  const { getParams } = useQueryString();
+
+  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
+  const [recommendedCourses] = useGetCourseQueries({ groupId: Number(groupId) });
+
+  return <>{recommendedCourses.data && <RecommendCourses courses={recommendedCourses.data} />}</>;
+};

@@ -6,6 +6,7 @@ import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { DragBar, Help, Location, Phone, Time } from '@/components/icons';
 import Ticket from '@/components/Ticket';
+import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
 import { useDialog } from '@/hooks';
 import { commaizeNumber } from '@/utils/formatter';
 import { alpha, Stack, useTheme } from '@mui/material';
@@ -126,6 +127,7 @@ const CoursePage = () => {
           );
         })}
       </Stack>
+      {/* <TourSiteBottomSheet /> */}
       <BottomSheet open={open} header={<DragBar />} close={onClose}>
         <Stack gap="5px">
           <Carousel

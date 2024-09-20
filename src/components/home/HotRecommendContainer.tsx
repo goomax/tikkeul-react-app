@@ -1,16 +1,13 @@
 import Typography from '@/components/common/Typography';
 import { useQueryString } from '@/hooks';
-import { Stack } from '@mui/material';
+import { Skeleton, Stack } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
 import { QUERY_PARAM_KEY } from '@/constants/key';
 import { useGetCourseQueries } from '@/queries/useGetCourseQueries';
+import { Suspense } from 'react';
+import { mockArray } from '@/utils/generator';
 
 const HotRecommendContainer = () => {
-  const { getParams } = useQueryString();
-
-  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const [, hotCourses] = useGetCourseQueries({ groupId: Number(groupId) ?? 1111 });
-
   return (
     <Stack gap="16px" sx={{ padding: '8px 14px' }}>
       <Stack>
@@ -24,9 +21,28 @@ const HotRecommendContainer = () => {
           최근 일주일 간 가장 담기가 많았던 코스입니다
         </Typography>
       </Stack>
-      {hotCourses.data && <RecommendCourses courses={hotCourses.data} />}
+      <Suspense
+        fallback={
+          <Stack gap="10px">
+            {mockArray(3).map((_, index) => (
+              <Skeleton key={index} variant="rectangular" width="100%" height={113} />
+            ))}
+          </Stack>
+        }
+      >
+        <AsyncRecommendCourses />
+      </Suspense>
     </Stack>
   );
 };
 
 export default HotRecommendContainer;
+
+const AsyncRecommendCourses = () => {
+  const { getParams } = useQueryString();
+
+  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
+  const [, hotCourses] = useGetCourseQueries({ groupId: Number(groupId) });
+
+  return <>{hotCourses.data && <RecommendCourses courses={hotCourses.data} />}</>;
+};
