@@ -3,7 +3,6 @@ import IconButton from '@/components/common/IconButton';
 import TextField from '@/components/common/TextField';
 import Typography from '@/components/common/Typography';
 import { Search } from '@/components/icons';
-import { STORAGE_KEY } from '@/constants/storageKey';
 import { Box, Grid, Stack, useTheme } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
@@ -13,6 +12,7 @@ import RestaurantImg from '@/assets/음식점.png';
 import { DUMMY_OF_POPULAR_SEARCHES, DUMMY_OF_RECOMMENDED_SEARCHES } from '@/constants/dummy';
 import { useInput } from '@/hooks';
 import { motion } from 'framer-motion';
+import { STORAGE_KEY } from '@/constants/key';
 
 const MAX_RECENT_SEARCHES = 5;
 

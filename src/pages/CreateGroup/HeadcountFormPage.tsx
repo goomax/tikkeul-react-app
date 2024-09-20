@@ -3,7 +3,7 @@ import IconButton from '@/components/common/IconButton';
 import TextField from '@/components/common/TextField';
 import Typography from '@/components/common/Typography';
 import { CloseCircle } from '@/components/icons';
-import { CreateGroupFormData, createGroupFormDataSchema } from '@/constants/schema';
+import { CreateGroupFormData, createGroupFormDataSchema } from '@/schemas/createGroup';
 import { useFormContext } from '@/FormDataProvider';
 import { useInternalRouter } from '@/hooks';
 import { Stack } from '@mui/material';

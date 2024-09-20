@@ -1,4 +1,3 @@
-import { GetRecommendedCoursesResponse } from '@/types/apiResponse';
 import Chip from '@/components/common/Chip';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
@@ -6,15 +5,16 @@ import { Box, Stack } from '@mui/material';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
 import { useInternalRouter } from '@/hooks';
 import { commaizeNumber } from '@/utils/formatter';
+import { Course } from '@/apis/course';
 
 interface RecommendCoursesProps {
-  courses: GetRecommendedCoursesResponse['data'];
+  courses: Course[];
 }
 
 const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
   const router = useInternalRouter();
 
-  const onClickCourse = (courseId: string) => {
+  const onClickCourse = (courseId: number) => {
     router.push(`/courses/${courseId}`);
   };
   return (
@@ -28,17 +28,25 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
       {courses.map((course) => {
         return (
           <Stack
-            key={course.id}
+            key={course.courseId}
             flexDirection="row"
             alignItems="center"
             gap="12px"
-            sx={{ height: '100%', padding: '8px 14px' }}
+            sx={{
+              height: '100%',
+              padding: '8px 14px',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s ease',
+              '&:hover': {
+                backgroundColor: '#f5f5f5',
+              },
+            }}
             onClick={() => {
-              onClickCourse(course.id);
+              onClickCourse(course.courseId);
             }}
           >
             <ImageWithSkeleton
-              src={course.image}
+              src={course.thumbnails[0]}
               width={80}
               height={80}
               alt={course.title}
@@ -50,33 +58,31 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
                 width: '202px',
               }}
             >
-              <Chip
-                radiusVariant="square"
-                color="default"
-                sx={{
-                  width: '56px',
-                }}
-                label={course.type}
-              />
+              {' '}
+              <Stack flexDirection="row" gap="4px">
+                {course.tags.map((tag) => {
+                  return <Chip key={tag} radiusVariant="square" color="default" label={tag} />;
+                })}
+              </Stack>
               <Stack gap="1px">
                 <Typography fontSize={12} bold noWrap>
                   {course.title}
                 </Typography>
-                <Typography fontSize={10} color="grey">
-                  {course.desc}
+                <Typography fontSize={10} color="grey" noWrap>
+                  {course.description}
                 </Typography>
               </Stack>
               <Stack flexDirection="row" gap="8px">
                 <Stack flexDirection="row" gap="4px">
                   <Heart svgProps={{ width: '15px', height: '15px' }} />
                   <Typography fontSize={12} color="grey">
-                    {course.heart}
+                    {course.likeCount}
                   </Typography>
                 </Stack>
                 <Stack flexDirection="row" gap="4px">
                   <ShoppingCart svgProps={{ width: '15px', height: '15px' }} pathProps={{ stroke: '#CCCCCC' }} />
                   <Typography fontSize={12} color="grey">
-                    {course.cart}
+                    {course.cartCount}
                   </Typography>
                 </Stack>
               </Stack>

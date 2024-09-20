@@ -5,7 +5,7 @@ import { useInternalRouter } from '@/hooks';
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CreateGroupFormData, createGroupFormDataSchema } from '@/constants/schema';
+import { CreateGroupFormData, createGroupFormDataSchema } from '@/schemas/createGroup';
 import { useFormContext } from '@/FormDataProvider';
 
 type PreferenceField = `preferences.${keyof CreateGroupFormData['preferences']}`;

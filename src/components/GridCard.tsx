@@ -2,17 +2,21 @@ import { Grid, Stack } from '@mui/material';
 import Typography from './common/Typography';
 import ImageWithSkeleton from './common/ImageWithSkeleton';
 import Chip from './common/Chip';
-import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
 import { ReactNode } from 'react';
 import { commaizeNumber } from '@/utils/formatter';
+import { TourSite } from '@/apis/course';
 
 interface GridCardWrapperProps {
   children: ReactNode;
 }
 
 interface GridCardCardProps {
-  card: GetRecommendedLocationsResponse['data'][0];
   bottom?: ReactNode;
+  thumbnail: string;
+  tag: string;
+  title: string;
+  price: number;
+  onClick?: () => void;
 }
 
 const GridCard = {
@@ -21,37 +25,33 @@ const GridCard = {
       {children}
     </Grid>
   ),
-  Card: ({ card, bottom }: GridCardCardProps) => (
-    <Grid item xs={6} key={card.id}>
+  Card: ({ thumbnail, title, price, tag, bottom, onClick }: GridCardCardProps) => (
+    <Grid item xs={6} sx={{}}>
       <Stack
         justifyContent="center"
         sx={{
           borderRadius: '8px',
           height: '100%',
+          cursor: 'pointer',
         }}
+        onClick={onClick}
       >
-        <ImageWithSkeleton
-          src={card.image}
-          alt={card.name}
-          width="148px"
-          height="132px"
-          style={{ borderRadius: '4px' }}
-        />
+        <ImageWithSkeleton src={thumbnail} alt={title} width="148px" height="132px" style={{ borderRadius: '4px' }} />
         <Chip
           radiusVariant="square"
           color="default"
           sx={{
             marginTop: '6px',
           }}
-          label={card.type}
+          label={tag}
         />
         <Typography fontSize={12} bold>
-          {card.name}
+          {title}
         </Typography>
         <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
           예상 평균 금액{' '}
           <Typography fontSize={14} bold color="secondary" inline>
-            {commaizeNumber(card.price)}원
+            {commaizeNumber(price)}원
           </Typography>
         </Typography>
         {bottom && bottom}

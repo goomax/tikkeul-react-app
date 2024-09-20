@@ -1,4 +1,4 @@
-export function commaizeNumber(value: number | string, locale = 'ko-KR') {
+export function commaizeNumber(value: number | string | null | undefined, locale = 'ko-KR') {
   if (isNaN(Number(value))) {
     return 'NaN';
   }

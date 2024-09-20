@@ -1,0 +1,38 @@
+{
+  "group": {
+    "groupId": 1,
+    "groupType": "Online Course",
+    "courseList": [
+      {
+        "courseId": 101,
+        "title": "JavaScript for Beginners",
+        "description": "Learn the basics of JavaScript, the most popular programming language in web development.",
+        "tags": ["JavaScript", "Web Development", "Beginner"],
+        "likeCount": 1200,
+        "cartCount": 340,
+        "isLike": true,
+        "price": 29.99
+      },
+      {
+        "courseId": 102,
+        "title": "Advanced React Patterns",
+        "description": "Master React with advanced patterns like render props, higher-order components, and hooks.",
+        "tags": ["React", "Frontend", "Advanced"],
+        "likeCount": 850,
+        "cartCount": 220,
+        "isLike": false,
+        "price": 49.99
+      },
+      {
+        "courseId": 103,
+        "title": "Node.js & Express Bootcamp",
+        "description": "A complete guide to building fast and scalable back-end services with Node.js and Express.",
+        "tags": ["Node.js", "Backend", "Fullstack"],
+        "likeCount": 430,
+        "cartCount": 150,
+        "isLike": true,
+        "price": 39.99
+      }
+    ]
+  }
+}

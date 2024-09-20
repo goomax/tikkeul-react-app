@@ -2,20 +2,24 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from '@/components/common/Layout';
 import {
+  AgeFormPage,
+  CoursePage,
+  FavoritesPage,
+  GenderFormPage,
   HeadcountFormPage,
   HomePage,
   LoginPage,
   MyCoursePage,
+  NameFormPage,
   OnboardingPage,
   PreferenceFormPage,
+  ProfilePage,
   SearchFormPage,
 } from '@/pages';
-import FavoritesPage from './pages/FavoritesPage';
-import ProfilePage from './pages/ProfilePage';
-import CoursePage from './pages/CoursePage';
 import ScrollToTop from './components/ScrollToTop';
 import { FormDataProvider } from './FormDataProvider';
-import { CreateGroupFormData, initialCreateGroupFormData } from './constants/schema';
+import { CreateGroupFormData, initialCreateGroupFormData } from './schemas/createGroup';
+import { initialSignUpFormData, SignUpFormData } from './schemas/signup';
 
 function DynamicRouter() {
   return (
@@ -26,13 +30,19 @@ function DynamicRouter() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/search-form" element={<SearchFormPage />} />
+            {/* 회원 가입 퍼넬 */}
+            <Route element={<FormDataProvider<SignUpFormData> initialData={initialSignUpFormData} />}>
+              <Route path="/signup" element={<NameFormPage />} />
+              <Route path="/signup-age" element={<AgeFormPage />} />
+              <Route path="/signup-gender" element={<GenderFormPage />} />
+            </Route>
+            {/* 그룹 생성 퍼넬 */}
             <Route element={<FormDataProvider<CreateGroupFormData> initialData={initialCreateGroupFormData} />}>
               <Route path="/headcount-form" element={<HeadcountFormPage />} />
               <Route path="/preference-form" element={<PreferenceFormPage />} />
               <Route path="/onboarding" element={<OnboardingPage />} />
             </Route>
-
+            <Route path="/search-form" element={<SearchFormPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/my-course/:courseId" element={<MyCoursePage />} />
