@@ -1,15 +1,15 @@
 import Typography from '@/components/common/Typography';
-import { useFetch } from '@/hooks';
-import { GetRecommendedCoursesResponse } from '@/types/apiResponse';
+import { useQueryString } from '@/hooks';
 import { Stack, useTheme } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
+import { QUERY_PARAM_KEY } from '@/constants/key';
+import { useGetCourseQueries } from '@/queries/useGetCourseQueries';
 
 const UserRecommendContainer = () => {
   const theme = useTheme();
-  const { payload: recommendedCourses } = useFetch<GetRecommendedCoursesResponse['data']>({
-    url: '/recommendedCourseByType',
-    defaultValue: [],
-  });
+  const { getParams } = useQueryString();
+  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
+  const [recommendedCourses] = useGetCourseQueries({ groupId: Number(groupId) ?? 1111 });
 
   return (
     <>
@@ -25,7 +25,7 @@ const UserRecommendContainer = () => {
             같은 유형의 사용자들이 최근 일주일 간 가장 많이 본 코스입니다
           </Typography>
         </Stack>
-        <RecommendCourses courses={recommendedCourses} />
+        {recommendedCourses.data && <RecommendCourses courses={recommendedCourses.data} />}
       </Stack>
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Typography fontSize={14} lineHeight="21px" bold>

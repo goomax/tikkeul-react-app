@@ -44,7 +44,7 @@ const sizeConfig = {
   small: {
     height: '19px',
     '& .MuiChip-label': {
-      padding: '1px',
+      padding: '1px 3px',
       fontSize: '10px',
     },
   },

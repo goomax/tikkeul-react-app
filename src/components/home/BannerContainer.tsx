@@ -8,8 +8,10 @@ import { Box, Stack } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Carousel from '../common/Carousel';
+import { useGetUserQuery } from '@/queries/useGetUserQuery';
 
 const BannerContainer = () => {
+  const { userData } = useGetUserQuery();
   const [benefits, setBenefits] = useState<(GetBenefitResponse['data'][number] & { isClose: boolean })[]>([]);
   const { payload: rawBenefits } = useFetch<GetBenefitResponse['data']>({ url: '/benefit', defaultValue: [] });
 
@@ -58,7 +60,7 @@ const BannerContainer = () => {
       <Stack>
         <Box sx={{ padding: '8px 14px' }}>
           <Typography fontSize={14} lineHeight="21px">
-            안녕하세요, 김티끌님!
+            안녕하세요, {userData ? userData.name : '김티끌'}님!
           </Typography>
           <Typography fontSize={14} lineHeight="21px" bold>
             오늘 받으실 수 있는 혜택은{' '}

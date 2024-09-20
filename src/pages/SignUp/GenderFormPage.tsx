@@ -5,11 +5,11 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } fr
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { initialSignUpFormData, SignUpFormData, signUpFormDataSchema } from '@/schemas/signup';
-import { usePostUser } from '@/queries/usePostUser';
+import { usePostUserMutation } from '@/queries/usePostUserMutation';
 
 const GenderFormPage = () => {
   const { formData: signUpFormData, updateFormData: updateSignUpFormData } = useFormContext<SignUpFormData>();
-  const { mutate: postUserMutate } = usePostUser();
+  const { mutate: postUserMutate } = usePostUserMutation();
 
   const {
     getValues,

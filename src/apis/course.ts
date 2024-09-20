@@ -9,6 +9,7 @@ export interface Course {
   cartCount: number;
   isLike: boolean;
   price: number;
+  thumbnails: string[];
 }
 
 export interface TourSite {
@@ -32,7 +33,7 @@ export interface TourSite {
 /**
  * 코스 리스트 불러오기 (수정 불가능한 코스들)
  */
-export const getCourseList = (params: { type: 'recommend' | 'like' | 'hot' }) => {
+export const getCourseList = (params: { type: 'recommend' | 'like' | 'hot'; groupId?: number }) => {
   return apiClient.request<{
     courseList: Course[];
   }>({

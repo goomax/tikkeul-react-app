@@ -1,0 +1,10 @@
+{
+  "user": {
+    "email": "harrypark.dev@gmail.com",
+    "name": "Jiheon Park",
+    "groupList": [
+      {"groupId": 1111,
+    "groupType": "열정적인 활동가들"}
+    ]
+  }
+}

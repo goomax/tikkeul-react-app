@@ -1,14 +1,15 @@
 import Typography from '@/components/common/Typography';
-import { useFetch } from '@/hooks';
-import { GetRecommendedCoursesResponse } from '@/types/apiResponse';
+import { useQueryString } from '@/hooks';
 import { Stack } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
+import { QUERY_PARAM_KEY } from '@/constants/key';
+import { useGetCourseQueries } from '@/queries/useGetCourseQueries';
 
 const HotRecommendContainer = () => {
-  const { payload: recommendedCourses } = useFetch<GetRecommendedCoursesResponse['data']>({
-    url: '/recommendedCourseByType',
-    defaultValue: [],
-  });
+  const { getParams } = useQueryString();
+
+  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
+  const [, hotCourses] = useGetCourseQueries({ groupId: Number(groupId) ?? 1111 });
 
   return (
     <Stack gap="16px" sx={{ padding: '8px 14px' }}>
@@ -23,7 +24,7 @@ const HotRecommendContainer = () => {
           최근 일주일 간 가장 담기가 많았던 코스입니다
         </Typography>
       </Stack>
-      <RecommendCourses courses={recommendedCourses} />
+      {hotCourses.data && <RecommendCourses courses={hotCourses.data} />}
     </Stack>
   );
 };
