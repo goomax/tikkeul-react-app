@@ -1,10 +1,9 @@
-import { BottomSheet } from '@/components/BottomSheet';
 import Carousel from '@/components/common/Carousel';
 import Chip from '@/components/common/Chip';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
-import { DragBar, Help, Location, Phone, Time } from '@/components/icons';
+import { Help, Location, Phone, Time } from '@/components/icons';
 import Ticket from '@/components/Ticket';
 import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
 import { useDialog } from '@/hooks';

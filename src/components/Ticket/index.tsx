@@ -3,17 +3,17 @@ import Chip from '@/components/common/Chip';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import Typography from '@/components/common/Typography';
 import { Dialog, Stack, SxProps, Theme, useTheme } from '@mui/material';
-import Carousel from './common/Carousel';
 import { useDialog } from '@/hooks';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
 import { Check, DragBar, Help, List, Location, Phone, Time } from '@/components/icons';
 
-import IconButton from './common/IconButton';
 import { commaizeNumber } from '@/utils/formatter';
-import Button from './common/Button';
-import { BottomSheet, BottomSheetProps } from './BottomSheet';
-import KakaoMap from './KakaoMap';
+import KakaoMap from '../KakaoMap';
+import IconButton from '../common/IconButton';
+import Carousel from '../common/Carousel';
+import Button from '../common/Button';
+import { BottomSheet, BottomSheetProps } from '../common/BottomSheet';
 
 interface TicketHeaderProps {
   label: string;

@@ -1,4 +1,3 @@
-// Icons.stories.tsx
 import * as Icons from '@/components/icons';
 
 export default {

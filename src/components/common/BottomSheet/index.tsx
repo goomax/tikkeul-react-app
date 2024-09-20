@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
-import Typography from './common/Typography';
+import Typography from '../Typography';
 import { GlobalPortal } from '@/GlobalProtal';
 import { AnimatePresence, motion } from 'framer-motion';
 

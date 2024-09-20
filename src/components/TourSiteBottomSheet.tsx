@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { BottomSheet } from './BottomSheet';
+import { BottomSheet } from './common/BottomSheet';
 import Carousel from './common/Carousel';
 import { DragBar, Phone, Time, Location } from './icons';
 import ImageWithSkeleton from './common/ImageWithSkeleton';

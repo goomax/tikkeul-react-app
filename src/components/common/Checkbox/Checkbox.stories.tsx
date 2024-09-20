@@ -1,9 +1,9 @@
-import Chip, { ChipProps } from '@/components/common/Chip';
 import { StoryObj } from '@storybook/react';
+import Checkbox, { CheckboxProps } from '.';
 
 export default {
-  title: 'Common/Chip',
-  component: Chip,
+  title: 'Common/Checkbox',
+  component: Checkbox,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,10 +15,12 @@ export default {
   },
 };
 
-export const PrimaryChip: StoryObj<ChipProps> = {
+export const PrimaryCheckbox: StoryObj<CheckboxProps> = {
   args: {
     color: 'primary',
-    label: '2.8km',
-    radiusVariant: 'half',
+    disabled: false,
+    checked: true,
+    label: '라벨',
   },
+  render: (args) => <Checkbox {...args} />,
 };

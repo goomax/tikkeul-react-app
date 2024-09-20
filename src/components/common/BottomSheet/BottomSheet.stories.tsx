@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { GlobalPortal } from '@/GlobalProtal';
-import { BottomSheet } from '@/components/BottomSheet';
 import Typography from '@/components/common/Typography';
 import Button from '@/components/common/Button';
+import { BottomSheet } from '.';
 
 const meta: Meta<typeof BottomSheet> = {
-  title: 'Module/BottomSheet',
+  title: 'Common/BottomSheet',
   component: BottomSheet,
   tags: ['autodocs'],
 };

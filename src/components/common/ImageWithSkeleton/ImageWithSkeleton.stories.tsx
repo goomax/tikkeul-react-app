@@ -1,5 +1,5 @@
-import ImageWithSkeleton, { ImageProps } from '@/components/common/ImageWithSkeleton';
 import { StoryObj } from '@storybook/react';
+import ImageWithSkeleton, { ImageProps } from '.';
 
 export default {
   title: 'Common/ImageWithSkeleton',
@@ -15,4 +15,5 @@ export const PrimaryImage: StoryObj<ImageProps> = {
     height: 200,
     alt: '샘플이미지',
   },
+  render: (args) => <ImageWithSkeleton {...args} />,
 };

@@ -1,5 +1,5 @@
-import Typography from '@/components/common/Typography';
 import { Divider } from '@mui/material';
+import Typography from '.';
 
 export default {
   title: 'Common/Typography',
