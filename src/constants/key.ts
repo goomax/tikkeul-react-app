@@ -12,4 +12,5 @@ export const QUERY_KEY = {
   USER: 'user',
   GROUP: 'group',
   COURSES: 'courses',
+  TOURSITES: 'toursites',
 };

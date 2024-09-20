@@ -1,15 +1,15 @@
 import Button from '@/components/common/Button';
 import Typography from '@/components/common/Typography';
 import GridCard from '@/components/GridCard';
-import { useFetch } from '@/hooks';
-import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
+import { QUERY_PARAM_KEY } from '@/constants/key';
+import { useQueryString } from '@/hooks';
+import { useGetCourseQueries } from '@/queries/useGetCourseQueries';
 import { Stack } from '@mui/material';
 
 const FavoritesPage = () => {
-  const { payload: recommendedLocations } = useFetch<GetRecommendedLocationsResponse['data']>({
-    url: '/recommendedLocationsByCategory',
-    defaultValue: [],
-  });
+  const { getParams } = useQueryString();
+  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
+  const [, , likedCourses] = useGetCourseQueries({ groupId: Number(groupId) ?? 1111 });
 
   return (
     <Stack sx={{ padding: '8px 14px' }}>
@@ -18,17 +18,28 @@ const FavoritesPage = () => {
       </Typography>
 
       <GridCard.Wrapper>
-        {recommendedLocations.map((location) => (
-          <GridCard.Card
-            key={location.id}
-            card={location}
-            bottom={
-              <Button fullWidth variant="outlined" disabled>
-                삭제
-              </Button>
-            }
-          />
-        ))}
+        {likedCourses.data &&
+          likedCourses.data.map((course) => (
+            <GridCard.Card
+              key={course.courseId}
+              thumbnail={course.thumbnails[0]}
+              title={course.title}
+              tag={course.tags[0]}
+              price={course.price}
+              bottom={
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  disabled
+                  sx={{
+                    height: '26px',
+                  }}
+                >
+                  삭제
+                </Button>
+              }
+            />
+          ))}
       </GridCard.Wrapper>
     </Stack>
   );

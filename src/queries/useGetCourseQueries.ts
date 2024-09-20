@@ -6,12 +6,16 @@ export const useGetCourseQueries = ({ groupId }: Pick<Parameters<typeof getCours
   const queries = useQueries({
     queries: [
       {
-        queryKey: [QUERY_KEY.COURSES, 'recommend'],
+        queryKey: [QUERY_KEY.COURSES, 'recommend', groupId],
         queryFn: () => getCourseList({ type: 'recommend', groupId }).then((res) => res.data.courseList),
       },
       {
         queryKey: [QUERY_KEY.COURSES, 'hot'],
         queryFn: () => getCourseList({ type: 'hot' }).then((res) => res.data.courseList),
+      },
+      {
+        queryKey: [QUERY_KEY.COURSES, 'like', groupId],
+        queryFn: () => getCourseList({ type: 'like', groupId }).then((res) => res.data.courseList),
       },
     ],
   });

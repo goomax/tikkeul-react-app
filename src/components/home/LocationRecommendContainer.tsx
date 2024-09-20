@@ -1,22 +1,27 @@
 import Typography from '@/components/common/Typography';
-import { useFetch } from '@/hooks';
-import { GetRecommendedLocationsResponse } from '@/types/apiResponse';
 import { Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { SyntheticEvent, useState } from 'react';
 import GridCard from '../GridCard';
+import { useGetTourSiteListQuery } from '@/queries/useGetTourSiteListQuery';
+
+const TABS = [
+  { label: '숙소', value: 'lodging' },
+  { label: '음식점', value: 'restaurant' },
+  { label: '명소', value: 'activity' },
+] as const;
+
+type TabValue = (typeof TABS)[number]['value'];
 
 const LocationRecommendContainer = () => {
   const theme = useTheme();
+  const [tabValue, setTabValue] = useState<TabValue>(TABS[0].value);
 
-  const { payload: recommendedLocations } = useFetch<GetRecommendedLocationsResponse['data']>({
-    url: '/recommendedLocationsByCategory',
-    defaultValue: [],
+  const { tourSiteData } = useGetTourSiteListQuery({
+    filter: tabValue,
   });
 
-  const [value, setValue] = useState(0);
-
-  const handleChange = (_event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const handleChange = (_event: SyntheticEvent, newValue: string) => {
+    setTabValue(newValue as TabValue);
   };
 
   return (
@@ -30,7 +35,7 @@ const LocationRecommendContainer = () => {
         </Typography>
       </Stack>
       <Tabs
-        value={value}
+        value={tabValue}
         centered
         onChange={handleChange}
         textColor="inherit"
@@ -55,13 +60,27 @@ const LocationRecommendContainer = () => {
           },
         }}
       >
-        <Tab label="숙소" {...a11yProps(0)} sx={{ minHeight: '28px', height: '28px' }} />
-        <Tab label="음식점" {...a11yProps(1)} sx={{ minHeight: '28px', height: '28px' }} />
-        <Tab label="명소" {...a11yProps(2)} sx={{ minHeight: '28px', height: '28px' }} />
+        {TABS.map((tab) => {
+          return (
+            <Tab
+              label={tab.label}
+              value={tab.value}
+              key={tab.value}
+              {...a11yProps(tab.label)}
+              sx={{ minHeight: '28px', height: '28px' }}
+            />
+          );
+        })}
       </Tabs>
       <GridCard.Wrapper>
-        {recommendedLocations.map((location) => (
-          <GridCard.Card key={location.id} card={location} />
+        {tourSiteData.map((tourSite) => (
+          <GridCard.Card
+            key={tourSite.tourSiteId}
+            thumbnail={tourSite.thumbnails[0]}
+            title={tourSite.name}
+            tag={tourSite.tags[0]}
+            price={tourSite.price}
+          />
         ))}
       </GridCard.Wrapper>
     </Stack>
@@ -70,9 +89,9 @@ const LocationRecommendContainer = () => {
 
 export default LocationRecommendContainer;
 
-function a11yProps(index: number) {
+function a11yProps(label: string) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `simple-tab-${label}`,
+    'aria-controls': `simple-tabpanel-${label}`,
   };
 }
