@@ -4,14 +4,11 @@ import LogoImg from '@/assets/logo.png';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import Button from '@/components/common/Button';
 import { useInternalRouter } from '@/hooks';
+import { ENV } from '@/constants/config';
 
 const LoginPage = () => {
   const theme = useTheme();
   const router = useInternalRouter();
-
-  const onClickLoginButton = () => {
-    router.push('/headcount-form');
-  };
 
   const onClickGuestModeButton = () => {
     router.push('/?guest=true');
@@ -34,7 +31,8 @@ const LoginPage = () => {
         <Button
           fullWidth
           sx={{ backgroundColor: '#FBEA00', color: '#111111', height: '44px' }}
-          onClick={onClickLoginButton}
+          href={`${ENV.SERVER_URL}/auth/login`}
+          component="a"
         >
           카카오로 로그인
         </Button>
