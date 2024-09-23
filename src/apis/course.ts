@@ -56,21 +56,6 @@ export const getCourse = ({ courseId }: { courseId: number }) => {
 };
 
 /**
- * 코스 담기
- */
-export const postCourse = ({ courseId, groupId }: { courseId: number; groupId: number }) => {
-  return apiClient.request<{
-    courseId: number;
-  }>({
-    method: 'post',
-    url: `/courses/${courseId}`,
-    data: {
-      groupId,
-    },
-  });
-};
-
-/**
  * 코스 수정
  */
 export const updateCourse = ({
@@ -91,18 +76,6 @@ export const updateCourse = ({
       groupId,
       updatedList,
     },
-  });
-};
-
-/**
- * 코스 좋아요 토글
- */
-export const toggleCourseLike = ({ courseId }: { courseId: number }) => {
-  return apiClient.request<{
-    courseId: number;
-  }>({
-    method: 'put',
-    url: `/courses/${courseId}`,
   });
 };
 

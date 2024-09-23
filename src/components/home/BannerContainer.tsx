@@ -15,6 +15,7 @@ const BannerContainer = () => {
   const [benefits, setBenefits] = useState<(GetBenefitResponse['data'][number] & { isClose: boolean })[]>([]);
   const { payload: rawBenefits } = useFetch<GetBenefitResponse['data']>({ url: '/benefit', defaultValue: [] });
 
+  console.log(userData);
   const router = useInternalRouter();
 
   useEffect(() => {

@@ -2,8 +2,11 @@ import apiClient from './apiClient';
 
 export interface Group {
   groupId: number;
-  groupType: string;
-  courseList: {
+  groupName: string;
+  cost: number;
+  duration: number;
+  courseDescription: string;
+  courseDetails: {
     courseId: number;
     title: string;
     description: string;
@@ -30,7 +33,7 @@ export const getGroup = ({ groupId }: { groupId: number }) => {
 /**
  * 그룹 생성
  */
-export const postGroup = (data: {
+export const createGroup = (data: {
   headCount: number;
   restaurantPrefer: 1 | 2 | 3 | 4 | 5;
   activityPrefer: 1 | 2 | 3 | 4 | 5;
@@ -39,10 +42,34 @@ export const postGroup = (data: {
   endDate: Date;
 }) => {
   return apiClient.request<{
-    group: Group;
+    id: number;
   }>({
     method: 'post',
     url: '/group',
     data,
+  });
+};
+
+/**
+ * 코스 담기
+ */
+export const pickCourseToGroup = ({ courseId, groupId }: { courseId: number; groupId: number }) => {
+  return apiClient.request<{
+    courseId: number;
+  }>({
+    method: 'post',
+    url: `/group/${groupId}/pick/${courseId}`,
+  });
+};
+
+/**
+ * 코스 좋아요 토글
+ */
+export const toggleCourseLike = ({ courseId, groupId }: { courseId: number; groupId: number }) => {
+  return apiClient.request<{
+    courseId: number;
+  }>({
+    method: 'post',
+    url: `/group/${groupId}/like/${courseId}`,
   });
 };

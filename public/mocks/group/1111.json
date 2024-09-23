@@ -1,38 +1,31 @@
 {
-  "group": {
-    "groupId": 1,
-    "groupType": "Online Course",
-    "courseList": [
-      {
-        "courseId": 101,
-        "title": "JavaScript for Beginners",
-        "description": "Learn the basics of JavaScript, the most popular programming language in web development.",
-        "tags": ["JavaScript", "Web Development", "Beginner"],
-        "likeCount": 1200,
-        "cartCount": 340,
-        "isLike": true,
-        "price": 29.99
-      },
-      {
-        "courseId": 102,
-        "title": "Advanced React Patterns",
-        "description": "Master React with advanced patterns like render props, higher-order components, and hooks.",
-        "tags": ["React", "Frontend", "Advanced"],
-        "likeCount": 850,
-        "cartCount": 220,
-        "isLike": false,
-        "price": 49.99
-      },
-      {
-        "courseId": 103,
-        "title": "Node.js & Express Bootcamp",
-        "description": "A complete guide to building fast and scalable back-end services with Node.js and Express.",
-        "tags": ["Node.js", "Backend", "Fullstack"],
-        "likeCount": 430,
-        "cartCount": 150,
-        "isLike": true,
-        "price": 39.99
-      }
-    ]
-  }
+	"group_id":1,
+	"name":"group1",
+	"cost":0,
+	"duration":3,
+	"course_description":"group1 description",
+	"course_details":[
+		{
+			"tour_site_id":1,
+			"latitude":34.5678,
+			"longitude":123.4567,
+			"day":1,
+			"order":1,
+			"name":"tourSite1",
+			"recommend_type":5,
+			"photo_url":"photo1-url",
+			"address":"서울시 강남구"
+		},
+		{
+			"tour_site_id":2,
+			"latitude":34.5679,
+			"longitude":123.4568,
+			"day":2,
+		  "order":2,
+			"name":"tourSite2",
+			"recommend_type":5,
+			"photo_url":"photo3-url",
+			"address":"서울시 강남구"
+			}
+  ]
 }
