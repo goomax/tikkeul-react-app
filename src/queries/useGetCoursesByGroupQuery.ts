@@ -1,4 +1,3 @@
-import { getCourseList } from '@/apis/course';
 import { getCoursesByGroup } from '@/apis/group';
 import { QUERY_KEY } from '@/constants/key';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';

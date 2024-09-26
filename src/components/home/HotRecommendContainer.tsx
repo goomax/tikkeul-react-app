@@ -37,7 +37,7 @@ const HotRecommendContainer = () => {
 export default HotRecommendContainer;
 
 const AsyncRecommendCourses = () => {
-  const { courseList } = useGetHotCourseQuery();
+  const { courseList } = useGetHotCourseQuery({ count: 3 });
 
   return <RecommendCourses courses={courseList} />;
 };

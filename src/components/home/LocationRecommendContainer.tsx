@@ -3,7 +3,7 @@ import { Grid, Skeleton, Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { Suspense, SyntheticEvent, useState } from 'react';
 import GridCard from '../GridCard';
 import { useGetTourSiteListQuery } from '@/queries/useGetTourSiteListQuery';
-import { TourSite } from '@/apis/course';
+import { TourSite } from '@/schemas/types';
 import { useDialog, useSelectableState } from '@/hooks';
 import TourSiteBottomSheet from '../TourSiteBottomSheet';
 import { mockArray } from '@/utils/generator';
@@ -114,10 +114,10 @@ const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
         {tourSiteData.map((tourSite) => (
           <GridCard.Item
             key={tourSite.tourSiteId}
-            thumbnail={tourSite.thumbnails[0]}
+            thumbnail={tourSite.photoUrls[0]}
             title={tourSite.name}
-            tag={tourSite.tags[0]}
-            price={tourSite.price}
+            tag={'맛을 아는'}
+            price={tourSite.cost}
             onClick={() => {
               onSelect(tourSite);
               onOpen();

@@ -1,31 +1,11 @@
+import { Course, Group } from '@/schemas/types';
 import apiClient from './apiClient';
-import { TourSite2 } from './course';
-
-export interface Group {
-  groupId: number;
-  groupName: string;
-  cost: number;
-  duration: number;
-  courseDescription: string;
-  courseDetails: {
-    courseId: number;
-    title: string;
-    description: string;
-    tags: string[];
-    likeCount: number;
-    cartCount: number;
-    isLike: boolean;
-    price: number;
-  }[];
-}
 
 /**
  * 특정 그룹 정보 불러오기
  */
 export const getGroup = ({ groupId }: { groupId: number }) => {
-  return apiClient.request<{
-    group: Group;
-  }>({
+  return apiClient.request<Group>({
     method: 'get',
     url: `/group/${groupId}`,
   });
@@ -35,7 +15,7 @@ export const getGroup = ({ groupId }: { groupId: number }) => {
  * 그룹 생성
  */
 export const createGroup = (data: {
-  headCount: number;
+  peopleCount: number;
   restaurantPrefer: 1 | 2 | 3 | 4 | 5;
   activityPrefer: 1 | 2 | 3 | 4 | 5;
   lodgingPrefer: 1 | 2 | 3 | 4 | 5;
@@ -76,12 +56,109 @@ export const toggleCourseLike = ({ courseId, groupId }: { courseId: number; grou
 
 export const getCoursesByGroup = ({ type, groupId }: { type: 'recommend' | 'like'; groupId: number }) => {
   return apiClient.request<{
-    toursites: TourSite2[];
+    toursites: Course[];
   }>({
     method: 'get',
     url: `/group/${groupId}/course`,
     params: {
       type,
+    },
+  });
+};
+
+/**
+ * 그룹 순서 변경
+ */
+export const updateCourseOrder = ({
+  groupId,
+  from,
+  to,
+  day,
+  tourSites,
+}: {
+  groupId: number;
+  from: number;
+  to: number;
+  day: number;
+  tourSites: number[][];
+}) => {
+  return apiClient.request({
+    method: 'put',
+    url: `/group/${groupId}/order`,
+    params: {
+      from,
+      to,
+      day,
+    },
+    data: {
+      tourSites,
+    },
+  });
+};
+
+/**
+ * 장소 추가
+ */
+export const addToursiteToCourse = ({
+  groupId,
+  day,
+  toursiteId,
+  tourSites,
+}: {
+  groupId: number;
+  day: number;
+  toursiteId: number;
+  tourSites: number[][];
+}) => {
+  return apiClient.request({
+    method: 'post',
+    url: `/group/${groupId}/toursite/${toursiteId}`,
+    params: {
+      day,
+    },
+    data: {
+      tourSites,
+    },
+  });
+};
+
+/**
+ * 장소 제거
+ */
+export const deleteToursite = ({
+  groupId,
+  toursiteId,
+}: {
+  groupId: number;
+  day: number;
+  toursiteId: number;
+  tourSites: number[][];
+}) => {
+  return apiClient.request({
+    method: 'delete',
+    url: `/group/${groupId}/toursite/${toursiteId}`,
+  });
+};
+
+/**
+ * 그룹 코스 내보내기
+ */
+export const exportCourse = ({ groupId }: { groupId: number }) => {
+  return apiClient.request({
+    method: 'get',
+    url: `/group/${groupId}/export`,
+  });
+};
+
+/**
+ * 그룹 코스 불러오기
+ */
+export const importCourse = ({ token }: { token: string }) => {
+  return apiClient.request({
+    method: 'get',
+    url: `/import`,
+    params: {
+      token,
     },
   });
 };

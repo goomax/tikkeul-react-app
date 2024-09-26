@@ -1,16 +1,19 @@
 import { PropsWithChildren } from 'react';
-import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
+import { CircularProgress, Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 
 export interface ButtonProps extends Omit<PropsWithChildren<MuiButtonProps>, 'color'> {
   color?: 'primary' | 'secondary' | 'inherit';
   shape?: 'circle' | 'square';
+  isLoading?: boolean;
 }
 
 const Button = ({
   color = 'primary',
   variant = 'contained',
   shape = 'square',
+  isLoading,
   children,
+  disabled,
   sx,
   ...others
 }: ButtonProps) => {
@@ -18,6 +21,7 @@ const Button = ({
     <MuiButton
       color={color}
       variant={variant}
+      disabled={disabled || isLoading}
       sx={{
         textTransform: 'none',
         boxShadow: 'none',
@@ -27,7 +31,7 @@ const Button = ({
       }}
       {...others}
     >
-      {children}
+      {isLoading ? <CircularProgress /> : children}
     </MuiButton>
   );
 };

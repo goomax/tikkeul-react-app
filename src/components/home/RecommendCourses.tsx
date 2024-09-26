@@ -5,10 +5,10 @@ import { Box, Stack } from '@mui/material';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
 import { useInternalRouter } from '@/hooks';
 import { commaizeNumber } from '@/utils/formatter';
-import { TourSite2 } from '@/apis/course';
+import { Course } from '@/schemas/types';
 
 interface RecommendCoursesProps {
-  courses: TourSite2[];
+  courses: Course[];
 }
 
 const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
@@ -62,9 +62,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
               >
                 {' '}
                 <Stack flexDirection="row" gap="4px">
-                  {course.tags?.map((tag) => {
-                    return <Chip key={tag} radiusVariant="square" color="default" label={tag} />;
-                  })}
+                  <Chip radiusVariant="square" color="default" label={course.tourSites[0].type} />
                 </Stack>
                 <Stack gap="1px">
                   <Typography fontSize={12} bold noWrap>

@@ -6,7 +6,7 @@ export const useGetTourSiteListQuery = (params: Parameters<typeof getTourSiteLis
   const { data: tourSiteData = [], ...others } = useQuery({
     queryKey: [QUERY_KEY.TOURSITES, params],
     queryFn: () => {
-      return getTourSiteList(params).then((res) => res.data.tourSiteList);
+      return getTourSiteList(params).then((res) => res.data.tourSites);
     },
   });
 

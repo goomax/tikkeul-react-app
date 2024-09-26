@@ -17,6 +17,8 @@ export const postUser = (data: { gender: 'M' | 'F'; age: number; name: string })
 export const getUser = () => {
   return apiClient.request<{
     name: string;
+    age: number;
+    gender: 'M' | 'F';
     groups: {
       groupId: number;
       groupName: string;

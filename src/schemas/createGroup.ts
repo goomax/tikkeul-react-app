@@ -1,13 +1,13 @@
 import * as yup from 'yup';
 
 export interface CreateGroupFormData {
-  headCount: string | null;
+  peopleCount: string | null;
   preferences: Partial<Record<'restaurantPrefer' | 'activityPrefer' | 'lodgingPrefer', number | null>>;
   duration: string | null;
 }
 
 export const initialCreateGroupFormData: CreateGroupFormData = {
-  headCount: null,
+  peopleCount: null,
   preferences: {
     restaurantPrefer: null,
     activityPrefer: null,
@@ -17,7 +17,7 @@ export const initialCreateGroupFormData: CreateGroupFormData = {
 };
 
 export const createGroupFormDataSchema = yup.object().shape({
-  headCount: yup
+  peopleCount: yup
     .string()
     .required('미입력 시 다음 단계로 넘어갈 수 없습니다')
     .test('valid-number', '인원 수는 숫자만 입력 가능해요', (value) => {

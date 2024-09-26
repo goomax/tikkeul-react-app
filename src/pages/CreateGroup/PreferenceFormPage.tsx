@@ -37,10 +37,10 @@ const PreferenceFormPage = () => {
   };
 
   const onClickNextButton = () => {
-    const { duration, headCount, preferences } = getValues();
+    const { duration, peopleCount, preferences } = getValues();
     const submitData = {
       duration: Number(duration),
-      headCount: Number(headCount),
+      peopleCount: Number(peopleCount),
       ...preferences,
     };
     console.log(submitData);

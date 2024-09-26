@@ -37,30 +37,36 @@ const AsyncGridCards = () => {
   // TODO: 목 그룹 아이디
   const { courseList } = useGetCoursesByGroupQuery({ groupId: Number(1), type: 'like' });
 
+  console.log(courseList.length);
+
   return (
     <>
-      {courseList.map((course) => (
-        <GridCard.Item
-          key={course.id}
-          thumbnail={course.tourSites[0].photoUrls[0]}
-          title={course.name}
-          tag={course.tags[0]}
-          price={course.cost}
-          bottom={
-            <Button
-              fullWidth
-              variant="outlined"
-              disabled
-              sx={{
-                height: '26px',
-                marginTop: '6px',
-              }}
-            >
-              삭제
-            </Button>
-          }
-        />
-      ))}
+      {courseList.length > 0 ? (
+        courseList.map((course) => (
+          <GridCard.Item
+            key={course.id}
+            thumbnail={course.tourSites[0].photoUrls[0]}
+            title={course.name}
+            tag={course.tourSites[0].type}
+            price={course.cost}
+            bottom={
+              <Button
+                fullWidth
+                variant="outlined"
+                disabled
+                sx={{
+                  height: '26px',
+                  marginTop: '6px',
+                }}
+              >
+                삭제
+              </Button>
+            }
+          />
+        ))
+      ) : (
+        <>ss</>
+      )}
     </>
   );
 };

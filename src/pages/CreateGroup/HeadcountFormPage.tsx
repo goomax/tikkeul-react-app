@@ -33,7 +33,7 @@ const HeadcountFormPage = () => {
   };
 
   const onInitHeadCount = () => {
-    setValue('headCount', null);
+    setValue('peopleCount', null);
   };
 
   return (
@@ -57,8 +57,8 @@ const HeadcountFormPage = () => {
         <TextField
           variant="standard"
           label="여행 총 인원을 입력해 주세요"
-          id="headCount"
-          {...register('headCount')}
+          id="peopleCount"
+          {...register('peopleCount')}
           InputProps={{
             endAdornment: (
               <IconButton onClick={onInitHeadCount}>
@@ -66,15 +66,15 @@ const HeadcountFormPage = () => {
               </IconButton>
             ),
           }}
-          helperText={errors.headCount?.message}
-          error={!!errors.headCount}
+          helperText={errors.peopleCount?.message}
+          error={!!errors.peopleCount}
         />
       </Stack>
       <FixedBottomCTA
         fullWidth
         sx={{ height: '44px' }}
         onClick={onClickNextButton}
-        disabled={!watch('headCount') || !!errors.headCount}
+        disabled={!watch('peopleCount') || !!errors.peopleCount}
       >
         다음
       </FixedBottomCTA>
