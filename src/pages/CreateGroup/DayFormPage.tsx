@@ -10,7 +10,7 @@ import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const HeadcountFormPage = () => {
+const DayFormPagge = () => {
   const router = useInternalRouter();
   const { formData: createGroupFormData, updateFormData: updateCreateGroupFormData } =
     useFormContext<CreateGroupFormData>();
@@ -29,52 +29,52 @@ const HeadcountFormPage = () => {
   const onClickNextButton = () => {
     const data = getValues();
     updateCreateGroupFormData(data);
-    router.push('/day-form');
+    router.push('/preference-form');
   };
 
-  const onInitHeadCount = () => {
-    setValue('headCount', null);
+  const onInitDuration = () => {
+    setValue('duration', null);
   };
 
   return (
     <Stack sx={{ paddingBottom: '100px' }}>
       <Typography fontSize={16} sx={{ textAlign: 'center', marginBottom: '30px' }}>
-        인원 수 입력
+        기간 입력
       </Typography>
       <Stack gap="24px" sx={{ padding: '0 14px' }}>
         <Stack>
           <Typography fontSize={22}>
             여행{' '}
             <Typography inline color="primary" bold>
-              인원 수
+              기간
             </Typography>
-            를 입력해 주세요.
+            을 입력해 주세요.
           </Typography>
           <Typography color="grey" fontSize={12}>
-            그룹을 설정하고 나중에 추가할 수 있어요!
+            기간을 입력해야 다음 단계로 갈 수 있어요!{' '}
           </Typography>
         </Stack>
         <TextField
           variant="standard"
-          label="여행 총 인원을 입력해 주세요"
-          id="headCount"
-          {...register('headCount')}
+          label="여행 기간을 입력해 주세요"
+          id="duration"
+          {...register('duration')}
           InputProps={{
             endAdornment: (
-              <IconButton onClick={onInitHeadCount}>
+              <IconButton onClick={onInitDuration}>
                 <CloseCircle />
               </IconButton>
             ),
           }}
-          helperText={errors.headCount?.message}
-          error={!!errors.headCount}
+          helperText={errors.duration?.message}
+          error={!!errors.duration}
         />
       </Stack>
       <FixedBottomCTA
         fullWidth
         sx={{ height: '44px' }}
         onClick={onClickNextButton}
-        disabled={!watch('headCount') || !!errors.headCount}
+        disabled={!watch('duration') || !!errors.duration}
       >
         다음
       </FixedBottomCTA>
@@ -82,4 +82,4 @@ const HeadcountFormPage = () => {
   );
 };
 
-export default HeadcountFormPage;
+export default DayFormPagge;

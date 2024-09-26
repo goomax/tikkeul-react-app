@@ -1,28 +1,21 @@
 import { ENV } from '@/constants/config';
-import { ApiAdapter } from '@/utils/apiAdapter';
+import { Adapter, toCamelCase, toSnakeCase } from '@/utils/adapter';
 import axios from 'axios';
-import { camelCase } from 'lodash-es';
 
 const apiClient = axios.create({
-  baseURL: ENV.SERVER_URL,
+  baseURL: ENV.MOCK_MODE ? '' : ENV.SERVER_URL,
   withCredentials: true,
 });
-
-const toCamelCase = (obj: any): any => {
-  if (Array.isArray(obj)) {
-    return obj.map((v) => toCamelCase(v));
-  } else if (obj !== null && obj.constructor === Object) {
-    return Object.keys(obj).reduce((result: any, key: string) => {
-      result[camelCase(key)] = toCamelCase(obj[key]);
-      return result;
-    }, {});
-  }
-  return obj;
-};
 
 apiClient.interceptors.request.use((request) => {
   if (ENV.MOCK_MODE) {
     request['url'] = '/mocks' + request['url'] + '.json';
+  }
+  const cookies = document.cookie;
+  console.log(cookies);
+
+  if (request.data) {
+    request.data = Adapter.from(request.data).to(toSnakeCase);
   }
 
   return request;
@@ -30,7 +23,7 @@ apiClient.interceptors.request.use((request) => {
 
 apiClient.interceptors.response.use(
   (response) => {
-    response.data = ApiAdapter.toCamelCase(response.data);
+    response.data = Adapter.from(response.data).to(toCamelCase);
 
     if (ENV.MOCK_MODE) {
       return new Promise((resolve) => {

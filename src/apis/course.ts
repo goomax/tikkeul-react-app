@@ -31,6 +31,34 @@ export interface TourSite {
 }
 
 /**
+ * 추천 코스 리스트
+ */
+export interface TourSite2 {
+  id: number;
+  name: string;
+  description: string;
+  cost: number;
+  picked: number;
+  liked: number;
+  tags: string[];
+  tourSites: {
+    tourSiteId: number;
+    latitude: number;
+    longitude: number;
+    name: string;
+    cost: number;
+    startTime: string;
+    endTime: string;
+    phone: string;
+    type: string;
+    address: string;
+    recommendType: number;
+    description: string;
+    photoUrls: string[];
+  }[];
+}
+
+/**
  * 코스 리스트 불러오기 (수정 불가능한 코스들)
  */
 export const getCourseList = (params: { type: 'recommend' | 'like' | 'hot'; groupId?: number }) => {
@@ -91,5 +119,14 @@ export const getTourSiteList = (params: {
     method: 'get',
     url: '/toursites',
     params,
+  });
+};
+
+export const getHotCourse = () => {
+  return apiClient.request<{
+    toursites: TourSite2[];
+  }>({
+    method: 'get',
+    url: '/course/hot',
   });
 };

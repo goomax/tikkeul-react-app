@@ -1,4 +1,5 @@
 import apiClient from './apiClient';
+import { TourSite2 } from './course';
 
 export interface Group {
   groupId: number;
@@ -38,8 +39,7 @@ export const createGroup = (data: {
   restaurantPrefer: 1 | 2 | 3 | 4 | 5;
   activityPrefer: 1 | 2 | 3 | 4 | 5;
   lodgingPrefer: 1 | 2 | 3 | 4 | 5;
-  startDate: Date;
-  endDate: Date;
+  duration: number;
 }) => {
   return apiClient.request<{
     id: number;
@@ -71,5 +71,17 @@ export const toggleCourseLike = ({ courseId, groupId }: { courseId: number; grou
   }>({
     method: 'post',
     url: `/group/${groupId}/like/${courseId}`,
+  });
+};
+
+export const getCoursesByGroup = ({ type, groupId }: { type: 'recommend' | 'like'; groupId: number }) => {
+  return apiClient.request<{
+    toursites: TourSite2[];
+  }>({
+    method: 'get',
+    url: `/group/${groupId}/course`,
+    params: {
+      type,
+    },
   });
 };

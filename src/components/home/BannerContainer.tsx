@@ -2,32 +2,27 @@ import TextField from '@/components/common/TextField';
 import Typography from '@/components/common/Typography';
 import BenefitCard from '@/components/home/BenefitCard';
 import { Search } from '@/components/icons';
-import { useInternalRouter, useFetch } from '@/hooks';
+import { useInternalRouter } from '@/hooks';
 import { GetBenefitResponse } from '@/types/apiResponse';
 import { Box, Stack } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Carousel from '../common/Carousel';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
+import { DUMMY_OF_BENEFITS } from '@/constants/dummy';
 
 const BannerContainer = () => {
   const { userData } = useGetUserQuery();
-  const [benefits, setBenefits] = useState<(GetBenefitResponse['data'][number] & { isClose: boolean })[]>([]);
-  const { payload: rawBenefits } = useFetch<GetBenefitResponse['data']>({ url: '/benefit', defaultValue: [] });
+  const [benefits, setBenefits] = useState<(GetBenefitResponse['data'][number] & { isClose: boolean })[]>(
+    DUMMY_OF_BENEFITS.map((benefit) => {
+      return {
+        ...benefit,
+        isClose: false,
+      };
+    }),
+  );
 
-  console.log(userData);
   const router = useInternalRouter();
-
-  useEffect(() => {
-    setBenefits(
-      rawBenefits.map((benefit) => {
-        return {
-          ...benefit,
-          isClose: false,
-        };
-      }),
-    );
-  }, [rawBenefits]);
 
   const onCloseBenefit = (benefitId: string) => {
     setBenefits((prevBenefits) =>
@@ -96,6 +91,7 @@ const BannerContainer = () => {
           </AnimatePresence>
         </Carousel>
       </Stack>
+      {/* dd */}
     </Stack>
   );
 };

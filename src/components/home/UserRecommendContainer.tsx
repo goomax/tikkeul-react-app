@@ -3,9 +3,9 @@ import { useQueryString } from '@/hooks';
 import { Skeleton, Stack, useTheme } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
 import { QUERY_PARAM_KEY } from '@/constants/key';
-import { useGetCourseQuery } from '@/queries/useGetCourseQueries';
 import { mockArray } from '@/utils/generator';
 import { Suspense } from 'react';
+import { useGetCoursesByGroupQuery } from '@/queries/useGetCoursesByGroupQuery';
 
 const UserRecommendContainer = () => {
   const theme = useTheme();
@@ -72,7 +72,7 @@ const AsyncRecommendCourses = () => {
   const { getParams } = useQueryString();
 
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const { courseList } = useGetCourseQuery({ groupId: Number(groupId), type: 'recommend' });
+  const { courseList } = useGetCoursesByGroupQuery({ groupId: Number(groupId), type: 'recommend' });
 
   return <RecommendCourses courses={courseList} />;
 };

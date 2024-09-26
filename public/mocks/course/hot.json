@@ -1,0 +1,157 @@
+{
+  "toursites": [
+    {
+      "id": 1,
+      "name": "Seoul City Tour",
+      "tags": ["tag1", "tag2"],
+      "description": "A comprehensive city tour of Seoul's main attractions.",
+      "cost": 5000,
+      "picked": 100,
+      "liked": 80,
+      "tour_sites": [
+        {
+          "tour_site_id": 101,
+          "latitude": 37.5665,
+          "longitude": 126.9780,
+          "name": "Gyeongbokgung Palace",
+          "cost": 3000,
+          "start_time": "09:00",
+          "end_time": "18:00",
+          "phone": "02-3700-3900",
+          "type": "historical site",
+          "address": "Seoul, Jongno-gu",
+          "recommend_type": 5,
+          "description": "The main royal palace of the Joseon dynasty.",
+          "photo_urls": [
+            "https://picsum.photos/200",
+            "https://picsum.photos/200"
+          ]
+        },
+        {
+          "tour_site_id": 102,
+          "latitude": 37.5512,
+          "longitude": 126.9882,
+          "name": "Namsan Seoul Tower",
+          "cost": 1500,
+          "start_time": "10:00",
+          "end_time": "22:00",
+          "phone": "02-3455-9277",
+          "type": "landmark",
+          "address": "Seoul, Yongsan-gu",
+          "recommend_type": 4,
+          "description": "Iconic Seoul observation tower offering panoramic views.",
+          "photo_urls": [
+            "https://example.com/namsan1.jpg"
+          ]
+        },
+        {
+          "tour_site_id": 103,
+          "latitude": 37.5343,
+          "longitude": 126.9941,
+          "name": "Itaewon",
+          "cost": 0,
+          "start_time": "00:00",
+          "end_time": "24:00",
+          "phone": "N/A",
+          "type": "shopping district",
+          "address": "Seoul, Yongsan-gu",
+          "recommend_type": 3,
+          "description": "Vibrant neighborhood known for its nightlife, restaurants, and diverse culture.",
+          "photo_urls": [
+            "https://picsum.photos/200"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Busan Beach Tour",
+      "description": "Explore the beautiful beaches and landmarks of Busan.",
+      "cost": 6000,
+      "tags": ["tag1", "tag2"],
+      "picked": 50,
+      "liked": 45,
+      "tour_sites": [
+        {
+          "tour_site_id": 201,
+          "latitude": 35.1587,
+          "longitude": 129.1604,
+          "name": "Haeundae Beach",
+          "cost": 0,
+          "start_time": "06:00",
+          "end_time": "22:00",
+          "phone": "051-749-7611",
+          "type": "beach",
+          "address": "Busan, Haeundae-gu",
+          "recommend_type": 5,
+          "description": "One of South Korea's most famous and popular beaches.",
+          "photo_urls": [
+            "https://picsum.photos/200"
+          ]
+        },
+        {
+          "tour_site_id": 202,
+          "latitude": 35.1019,
+          "longitude": 129.0403,
+          "name": "Gamcheon Culture Village",
+          "cost": 1000,
+          "start_time": "09:00",
+          "end_time": "18:00",
+          "phone": "051-291-1444",
+          "type": "cultural site",
+          "address": "Busan, Saha-gu",
+          "recommend_type": 4,
+          "description": "A colorful hillside village known for its artistic vibe and scenic views.",
+          "photo_urls": [
+            "https://picsum.photos/200"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Busan Beach Tour",
+      "description": "Explore the beautiful beaches and landmarks of Busan.",
+      "cost": 6000,
+      "tags": ["tag1", "tag2"],
+      "picked": 50,
+      "liked": 45,
+      "tour_sites": [
+        {
+          "tour_site_id": 201,
+          "latitude": 35.1587,
+          "longitude": 129.1604,
+          "name": "Haeundae Beach",
+          "cost": 0,
+          "start_time": "06:00",
+          "end_time": "22:00",
+          "phone": "051-749-7611",
+          "type": "beach",
+          "address": "Busan, Haeundae-gu",
+          "recommend_type": 5,
+          "description": "One of South Korea's most famous and popular beaches.",
+          "photo_urls": [
+            "https://picsum.photos/200"
+          ]
+        },
+        {
+          "tour_site_id": 202,
+          "latitude": 35.1019,
+          "longitude": 129.0403,
+          "name": "Gamcheon Culture Village",
+          "cost": 1000,
+          "start_time": "09:00",
+          "end_time": "18:00",
+          "phone": "051-291-1444",
+          "type": "cultural site",
+          "address": "Busan, Saha-gu",
+          "recommend_type": 4,
+          "description": "A colorful hillside village known for its artistic vibe and scenic views.",
+          "photo_urls": [
+            "https://picsum.photos/200"
+          ]
+        }
+      ]
+    }
+  ]
+}
