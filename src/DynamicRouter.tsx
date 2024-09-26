@@ -15,6 +15,7 @@ import {
   PreferenceFormPage,
   ProfilePage,
   SearchFormPage,
+  DayFormPage,
 } from '@/pages';
 import ScrollToTop from './components/ScrollToTop';
 import { FormDataProvider } from './FormDataProvider';
@@ -39,6 +40,7 @@ function DynamicRouter() {
             {/* 그룹 생성 퍼넬 */}
             <Route element={<FormDataProvider<CreateGroupFormData> initialData={initialCreateGroupFormData} />}>
               <Route path="/headcount-form" element={<HeadcountFormPage />} />
+              <Route path="/day-form" element={<DayFormPage />} />
               <Route path="/preference-form" element={<PreferenceFormPage />} />
               <Route path="/onboarding" element={<OnboardingPage />} />
             </Route>

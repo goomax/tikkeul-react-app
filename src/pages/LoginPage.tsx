@@ -31,7 +31,7 @@ const LoginPage = () => {
         <Button
           fullWidth
           sx={{ backgroundColor: '#FBEA00', color: '#111111', height: '44px' }}
-          href={`${ENV.SERVER_URL}/auth/login`}
+          href={`${ENV.SERVER_URL}/auth/login?state=${window.location.origin}`}
           component="a"
         >
           카카오로 로그인

@@ -1,108 +1,28 @@
+import { Course, TourSite } from '@/schemas/types';
 import apiClient from './apiClient';
-
-export interface Course {
-  courseId: number;
-  title: string;
-  description: string;
-  tags: string[];
-  likeCount: number;
-  cartCount: number;
-  isLike: boolean;
-  price: number;
-  thumbnails: string[];
-}
-
-export interface TourSite {
-  tourSiteId: number;
-  days: number;
-  type: 'restaurant' | 'activity' | 'lodging';
-  name: string;
-  tags: string[];
-  startTime: `${number}:${number}`;
-  endTime: `${number}:${number}`;
-  phoneNumber: string;
-  price: number;
-  address: string;
-  description: string;
-  lat: number; // 위도
-  lng: number; // 경도
-  order: number;
-  thumbnails: string[];
-}
-
-/**
- * 코스 리스트 불러오기 (수정 불가능한 코스들)
- */
-export const getCourseList = (params: { type: 'recommend' | 'like' | 'hot'; groupId?: number }) => {
-  return apiClient.request<{
-    courseList: Course[];
-  }>({
-    method: 'get',
-    url: '/courses',
-    params,
-  });
-};
 
 /**
  * 코스 상세보기 (수정 불가능한 코스 + 수정 가능한 코스)
  */
 export const getCourse = ({ courseId }: { courseId: number }) => {
-  return apiClient.request<{
-    course: Course & { tourSiteList: TourSite };
-  }>({
+  return apiClient.request<Course>({
     method: 'get',
     url: `/courses/${courseId}`,
   });
 };
 
 /**
- * 코스 담기
+ * 인기 코스 리스트 불러오기
  */
-export const postCourse = ({ courseId, groupId }: { courseId: number; groupId: number }) => {
+export const getHotCourse = ({ count }: { count: number }) => {
   return apiClient.request<{
-    courseId: number;
+    toursites: Course[];
   }>({
-    method: 'post',
-    url: `/courses/${courseId}`,
-    data: {
-      groupId,
+    method: 'get',
+    url: '/course/hot',
+    params: {
+      count,
     },
-  });
-};
-
-/**
- * 코스 수정
- */
-export const updateCourse = ({
-  groupId,
-  courseId,
-  updatedList,
-}: {
-  updatedList: Pick<TourSite, 'tourSiteId' | 'days' | 'order'>[];
-  groupId: number;
-  courseId: number;
-}) => {
-  return apiClient.request<{
-    courseId: number;
-  }>({
-    method: 'post',
-    url: `/courses/${courseId}`,
-    data: {
-      groupId,
-      updatedList,
-    },
-  });
-};
-
-/**
- * 코스 좋아요 토글
- */
-export const toggleCourseLike = ({ courseId }: { courseId: number }) => {
-  return apiClient.request<{
-    courseId: number;
-  }>({
-    method: 'put',
-    url: `/courses/${courseId}`,
   });
 };
 
@@ -112,11 +32,21 @@ export const toggleCourseLike = ({ courseId }: { courseId: number }) => {
 export const getTourSiteList = (params: {
   filter?: 'restaurant' | 'activity' | 'lodging';
   count?: number;
-  searchKeyword?: string;
+  keyword?: string;
 }) => {
-  return apiClient.request<{ tourSiteList: Omit<TourSite, 'order'>[] }>({
+  return apiClient.request<{ tourSites: TourSite[] }>({
     method: 'get',
-    url: '/toursites',
+    url: '/toursite',
     params,
+  });
+};
+
+/**
+ *  특정 장소 불러오기
+ */
+export const getTourSite = ({ tourSiteId }: { tourSiteId: number }) => {
+  return apiClient.request<TourSite>({
+    method: 'get',
+    url: `/toursite/${tourSiteId}`,
   });
 };

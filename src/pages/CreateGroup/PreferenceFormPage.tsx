@@ -7,13 +7,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CreateGroupFormData, createGroupFormDataSchema } from '@/schemas/createGroup';
 import { useFormContext } from '@/FormDataProvider';
+import { useCreateGroupMutation } from '@/queries/useCreateGroupMutation';
+import { createGroup } from '@/apis/group';
 
 type PreferenceField = `preferences.${keyof CreateGroupFormData['preferences']}`;
 
 const PreferenceFormPage = () => {
   const router = useInternalRouter();
-  const { formData: createGroupFormData, updateFormData: updateCreateGroupFormData } =
-    useFormContext<CreateGroupFormData>();
+  const { formData: createGroupFormData } = useFormContext<CreateGroupFormData>();
   const {
     getValues,
     formState: { errors, isValid },
@@ -26,6 +27,8 @@ const PreferenceFormPage = () => {
     mode: 'onChange',
   });
 
+  const { mutate: createGroupMutate } = useCreateGroupMutation();
+
   const onChangeRatings = (event: React.SyntheticEvent, value: number | null) => {
     const { name } = event.target as HTMLInputElement;
 
@@ -34,9 +37,15 @@ const PreferenceFormPage = () => {
   };
 
   const onClickNextButton = () => {
-    const data = getValues();
-    updateCreateGroupFormData(data);
+    const { duration, peopleCount, preferences } = getValues();
+    const submitData = {
+      duration: Number(duration),
+      peopleCount: Number(peopleCount),
+      ...preferences,
+    };
+    console.log(submitData);
 
+    createGroupMutate(submitData as Parameters<typeof createGroup>[0]);
     router.push('/onboarding');
   };
 
@@ -61,31 +70,29 @@ const PreferenceFormPage = () => {
         </Stack>
         <RatingInput
           label="음식 선호도"
-          name="preferences.foodRating"
+          name="preferences.restaurantPrefer"
           onChange={onChangeRatings}
-          value={preferencesValue?.foodRating}
-          helperText={errors.preferences?.foodRating?.message ?? getHelperText(preferencesValue?.foodRating)}
-          error={!!errors.preferences?.foodRating}
+          value={preferencesValue?.restaurantPrefer}
+          helperText={
+            errors.preferences?.restaurantPrefer?.message ?? getHelperText(preferencesValue?.restaurantPrefer)
+          }
+          error={!!errors.preferences?.restaurantPrefer}
         />
         <RatingInput
           label="관광 체험 선호도"
-          name="preferences.experienceRating"
+          name="preferences.activityPrefer"
           onChange={onChangeRatings}
-          value={preferencesValue?.experienceRating}
-          helperText={
-            errors.preferences?.experienceRating?.message ?? getHelperText(preferencesValue?.experienceRating)
-          }
-          error={!!errors.preferences?.experienceRating}
+          value={preferencesValue?.activityPrefer}
+          helperText={errors.preferences?.activityPrefer?.message ?? getHelperText(preferencesValue?.activityPrefer)}
+          error={!!errors.preferences?.activityPrefer}
         />
         <RatingInput
           label="숙소 선호도"
-          name="preferences.accommodationRating"
+          name="preferences.lodgingPrefer"
           onChange={onChangeRatings}
-          value={preferencesValue?.accommodationRating}
-          helperText={
-            errors.preferences?.accommodationRating?.message ?? getHelperText(preferencesValue?.accommodationRating)
-          }
-          error={!!errors.preferences?.accommodationRating}
+          value={preferencesValue?.lodgingPrefer}
+          helperText={errors.preferences?.lodgingPrefer?.message ?? getHelperText(preferencesValue?.lodgingPrefer)}
+          error={!!errors.preferences?.lodgingPrefer}
         />
       </Stack>
       <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickNextButton} disabled={!isValid}>

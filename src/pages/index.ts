@@ -8,6 +8,8 @@ export { default as SearchFormPage } from './SearchFormPage';
 export { default as HeadcountFormPage } from './CreateGroup/HeadcountFormPage';
 export { default as OnboardingPage } from './CreateGroup/OnboardingPage';
 export { default as PreferenceFormPage } from './CreateGroup/PreferenceFormPage';
+export { default as DayFormPage } from './CreateGroup/DayFormPage';
+
 export { default as AgeFormPage } from './SignUp/AgeFormPage';
 export { default as GenderFormPage } from './SignUp/GenderFormPage';
 export { default as NameFormPage } from './SignUp/NameFormPage';

@@ -16,8 +16,8 @@ const HomePage = () => {
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
 
   useEffect(() => {
-    if (!groupId && userData?.groupList[0]) {
-      setParams(QUERY_PARAM_KEY.GROUP_ID, String(userData.groupList[0].groupId));
+    if (!groupId && userData?.groups[0]) {
+      setParams(QUERY_PARAM_KEY.GROUP_ID, String(userData.groups[0].groupId));
     }
   }, [groupId, userData]);
 

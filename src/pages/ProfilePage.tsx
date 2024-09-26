@@ -17,7 +17,7 @@ const ProfilePage = () => {
       <Stack
         sx={{
           backgroundColor: theme.palette.primary.main,
-          padding: '19px 14px ',
+          padding: '19px 14px',
           borderRadius: '0 0 10px 10px',
         }}
       >
@@ -85,8 +85,9 @@ const ProfilePage = () => {
       </Stack>
       <Stack
         sx={{
-          padding: '28px 14px',
+          padding: '28px 14px 100px 14px',
         }}
+        gap="20px"
       >
         <Stack
           alignItems="center"
@@ -135,15 +136,14 @@ const ProfilePage = () => {
             })}
           </Stack>
         </Stack>
-        <Button
-          disabled
-          variant="outlined"
-          sx={{
-            marginTop: '40px',
-          }}
-        >
-          회원 탈퇴
-        </Button>
+        <Stack gap="10px">
+          <Button variant="outlined" sx={{}}>
+            로그아웃
+          </Button>
+          <Button disabled variant="outlined" sx={{}}>
+            회원 탈퇴
+          </Button>
+        </Stack>
       </Stack>
     </PageTransformWrapper>
   );

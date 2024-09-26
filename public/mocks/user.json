@@ -1,10 +1,19 @@
 {
-  "user": {
-    "email": "harrypark.dev@gmail.com",
-    "name": "Jiheon Park",
-    "groupList": [
-      {"groupId": 1111,
-    "groupType": "열정적인 활동가들"}
-    ]
-  }
+  "name": "user1",
+  "age": 20,
+  "gender": "M",
+  "groups": [
+    {
+      "group_id": 1,
+      "group_name": "group1"
+    },
+    {
+      "group_id": 4,
+      "group_name": "group1"
+    },
+    {
+      "group_id": 5,
+      "group_name": "group2"
+    }
+  ]
 }

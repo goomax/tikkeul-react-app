@@ -5,16 +5,13 @@ import { DragBar, Phone, Time, Location } from './icons';
 import ImageWithSkeleton from './common/ImageWithSkeleton';
 import Typography from './common/Typography';
 import { commaizeNumber } from '@/utils/formatter';
-import { TourSite } from '@/apis/course';
 import { formatTimeToAMPM, getIsBusinessOpen } from '@/utils/dateHelper';
+import { TourSite } from '@/schemas/types';
 
 interface TourSiteBottomSheetProps {
   open: boolean;
   onClose: () => void;
-  tourSite: Pick<
-    TourSite,
-    'thumbnails' | 'name' | 'price' | 'description' | 'startTime' | 'endTime' | 'phoneNumber' | 'address'
-  > | null;
+  tourSite: TourSite | null;
 }
 
 const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetProps) => {
@@ -29,11 +26,11 @@ const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetPro
             marginBottom: '30px',
           }}
         >
-          {tourSite?.thumbnails.map((thumbnail, index) => {
+          {tourSite?.photoUrls.map((photoUrl, index) => {
             return (
               <ImageWithSkeleton
                 key={index}
-                src={thumbnail}
+                src={photoUrl}
                 width={304}
                 height={200}
                 style={{
@@ -49,7 +46,7 @@ const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetPro
         <Typography fontSize={12} display="inline-flex" alignItems="center" gap="8px" color="grey">
           예상 평균 금액{' '}
           <Typography fontSize={16} bold color="secondary" inline>
-            {commaizeNumber(tourSite?.price)}원
+            {commaizeNumber(tourSite?.cost)}원
           </Typography>
         </Typography>
         <Typography fontSize={12}>{tourSite?.description}</Typography>
@@ -60,7 +57,7 @@ const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetPro
           </Stack>
           <Stack flexDirection="row" gap="7px" alignItems="center">
             <Phone />
-            <Typography fontSize={12}>{tourSite?.phoneNumber}</Typography>
+            <Typography fontSize={12}>{tourSite?.phone}</Typography>
           </Stack>
           <Stack flexDirection="row" gap="7px" alignItems="center">
             <Time />

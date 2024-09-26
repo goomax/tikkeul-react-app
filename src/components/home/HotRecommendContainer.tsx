@@ -1,11 +1,9 @@
 import Typography from '@/components/common/Typography';
-import { useQueryString } from '@/hooks';
 import { Skeleton, Stack } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
-import { QUERY_PARAM_KEY } from '@/constants/key';
-import { useGetCourseQuery } from '@/queries/useGetCourseQueries';
 import { Suspense } from 'react';
 import { mockArray } from '@/utils/generator';
+import { useGetHotCourseQuery } from '@/queries/useGetHotCourseQuerie';
 
 const HotRecommendContainer = () => {
   return (
@@ -39,10 +37,7 @@ const HotRecommendContainer = () => {
 export default HotRecommendContainer;
 
 const AsyncRecommendCourses = () => {
-  const { getParams } = useQueryString();
-
-  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const { courseList } = useGetCourseQuery({ groupId: Number(groupId), type: 'hot' });
+  const { courseList } = useGetHotCourseQuery({ count: 3 });
 
   return <RecommendCourses courses={courseList} />;
 };

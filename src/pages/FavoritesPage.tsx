@@ -3,7 +3,7 @@ import Typography from '@/components/common/Typography';
 import GridCard from '@/components/GridCard';
 import { QUERY_PARAM_KEY } from '@/constants/key';
 import { useQueryString } from '@/hooks';
-import { useGetCourseQuery } from '@/queries/useGetCourseQueries';
+import { useGetCoursesByGroupQuery } from '@/queries/useGetCoursesByGroupQuery';
 import { mockArray } from '@/utils/generator';
 import { Grid, Skeleton, Stack } from '@mui/material';
 import { Suspense } from 'react';
@@ -14,7 +14,6 @@ const FavoritesPage = () => {
       <Typography bold fontSize={16} mb="20px">
         내가 찜한 코스
       </Typography>
-
       <GridCard.Wrapper>
         <Suspense
           fallback={mockArray(4).map((_, index) => (
@@ -35,32 +34,39 @@ export default FavoritesPage;
 const AsyncGridCards = () => {
   const { getParams } = useQueryString();
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const { courseList } = useGetCourseQuery({ groupId: Number(groupId), type: 'like' });
+  // TODO: 목 그룹 아이디
+  const { courseList } = useGetCoursesByGroupQuery({ groupId: Number(1), type: 'like' });
+
+  console.log(courseList.length);
 
   return (
     <>
-      {courseList.map((course) => (
-        <GridCard.Item
-          key={course.courseId}
-          thumbnail={course.thumbnails[0]}
-          title={course.title}
-          tag={course.tags[0]}
-          price={course.price}
-          bottom={
-            <Button
-              fullWidth
-              variant="outlined"
-              disabled
-              sx={{
-                height: '26px',
-                marginTop: '6px',
-              }}
-            >
-              삭제
-            </Button>
-          }
-        />
-      ))}
+      {courseList.length > 0 ? (
+        courseList.map((course) => (
+          <GridCard.Item
+            key={course.id}
+            thumbnail={course.tourSites[0].photoUrls[0]}
+            title={course.name}
+            tag={course.tourSites[0].type}
+            price={course.cost}
+            bottom={
+              <Button
+                fullWidth
+                variant="outlined"
+                disabled
+                sx={{
+                  height: '26px',
+                  marginTop: '6px',
+                }}
+              >
+                삭제
+              </Button>
+            }
+          />
+        ))
+      ) : (
+        <>ss</>
+      )}
     </>
   );
 };
