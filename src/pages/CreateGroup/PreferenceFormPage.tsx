@@ -43,7 +43,6 @@ const PreferenceFormPage = () => {
       peopleCount: Number(peopleCount),
       ...preferences,
     };
-    console.log(submitData);
 
     createGroupMutate(submitData as Parameters<typeof createGroup>[0]);
     router.push('/onboarding');

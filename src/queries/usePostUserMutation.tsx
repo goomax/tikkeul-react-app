@@ -7,7 +7,7 @@ export const usePostUserMutation = () => {
   const mutation = useMutation({
     mutationFn: (data: Parameters<typeof postUser>[0]) => postUser(data),
     onSuccess: () => {
-      router.push('/');
+      router.replace('/');
     },
   });
 

@@ -6,12 +6,19 @@ import Typography from '@/components/common/Typography';
 import { Help, Location, Phone, Time } from '@/components/icons';
 import Ticket from '@/components/Ticket';
 import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
-import { useDialog } from '@/hooks';
-import { commaizeNumber } from '@/utils/formatter';
+import { useDialog, useSelectableState } from '@/hooks';
+import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
+import { Toursite } from '@/schemas/types';
+import { formatTimeToAMPM } from '@/utils/dateHelper';
+import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
 import { alpha, Stack, useTheme } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 const CoursePage = () => {
   const theme = useTheme();
+  const { courseId } = useParams<{ courseId: string }>();
+  const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
+  const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
   const { open, onOpen, onClose } = useDialog();
 
   const onClickLocation = () => {
@@ -25,22 +32,20 @@ const CoursePage = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Ticket.Wrapper>
-          <Ticket.Header
-            label="열정적인 활동가에게 추천하는"
-            title="산에서 한적하게 맛집을 즐기는 휴양 여행"
-            description="도심 속에서 시원한 공기와 미식 여행을 할 수 있는 곳"
-          />
-          <Ticket.Bottom
-            images={[
-              'https://picsum.photos/80',
-              'https://picsum.photos/80',
-              'https://picsum.photos/80',
-              'https://picsum.photos/80',
-              'https://picsum.photos/80',
-            ]}
-          />
-        </Ticket.Wrapper>
+        {courseData?.tourSites && courseData?.tourSites.length > 0 && (
+          <Ticket.Wrapper>
+            <Ticket.Header
+              label="열정적인 활동가에게 추천하는"
+              title={courseData?.name || 'title'}
+              description={courseData?.description || 'description'}
+              coordinates={courseData?.tourSites.map((toursite) => ({
+                lat: toursite.latitude,
+                lng: toursite.longitude,
+              }))}
+            />
+            <Ticket.Bottom images={courseData?.tourSites.flatMap((site) => site.photoUrls) || []} />
+          </Ticket.Wrapper>
+        )}
       </Stack>
       <Stack
         gap="8px"
@@ -51,17 +56,20 @@ const CoursePage = () => {
         }}
       >
         {/* 장소 카드 */}
-        {[1, 2, 3].map((t) => {
+        {courseData?.tourSites.map((toursite) => {
           return (
             <Stack
-              key={t}
+              key={toursite.tourSiteId}
               gap="1px"
               sx={{
                 backgroundColor: theme.palette.background.default,
                 padding: '8px 14px',
                 boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
               }}
-              onClick={onClickLocation}
+              onClick={() => {
+                onSelect(toursite);
+                onClickLocation();
+              }}
             >
               <Carousel
                 gap="12px"
@@ -70,17 +78,11 @@ const CoursePage = () => {
                   minHeight: '160px',
                 }}
               >
-                {[
-                  'https://picsum.photos/200',
-                  'https://picsum.photos/200',
-                  'https://picsum.photos/200',
-                  'https://picsum.photos/200',
-                  'https://picsum.photos/200',
-                ].map((src, index) => {
+                {toursite.photoUrls.map((url, index) => {
                   return (
                     <ImageWithSkeleton
                       key={index}
-                      src={src}
+                      src={url}
                       width={240}
                       height={160}
                       style={{
@@ -91,27 +93,25 @@ const CoursePage = () => {
                 })}
               </Carousel>
               <Stack flexDirection="row" gap="12px">
-                {['식당', '맛을 아는'].map((label) => {
-                  return <Chip key={label} label={label} radiusVariant="square" color="default" />;
-                })}
+                <Chip label={formatToursiteType(toursite.type)} radiusVariant="square" color="default" />
               </Stack>
               <Typography bold fontSize={14}>
-                큰 기와집
+                {toursite.name}
               </Typography>
               <Typography fontSize={12} display="inline-flex" alignItems="center" gap="8px">
                 예상 평균 금액{' '}
                 <Typography fontSize={16} bold color="secondary" inline>
-                  {commaizeNumber(33000)}원
+                  {commaizeNumber(toursite.cost)}원
                 </Typography>
                 <Help />
               </Typography>
               <Stack flexDirection="row" gap="7px" alignItems="center">
                 <Location />
-                <Typography fontSize={10}>강원도 강릉시 난설헌로 234-6</Typography>
+                <Typography fontSize={10}>{toursite.address}</Typography>
               </Stack>
               <Stack flexDirection="row" gap="7px" alignItems="center">
                 <Phone />
-                <Typography fontSize={10}>033-842-4150</Typography>
+                <Typography fontSize={10}>{toursite.phone}</Typography>
               </Stack>
               <Stack flexDirection="row" gap="7px" alignItems="center">
                 <Time />
@@ -119,14 +119,21 @@ const CoursePage = () => {
                   <Typography bold color="secondary" inline>
                     영업중{` `}
                   </Typography>
-                  10am ~ 7pm
+                  {`${formatTimeToAMPM(toursite.startTime)} ~ ${formatTimeToAMPM(toursite.endTime)}`}
                 </Typography>
               </Stack>
             </Stack>
           );
         })}
       </Stack>
-      <TourSiteBottomSheet open={open} onClose={onClose} tourSite={null} />
+      <TourSiteBottomSheet
+        open={open}
+        onClose={() => {
+          onClose();
+          onReset();
+        }}
+        toursite={selectedState}
+      />
     </PageTransformWrapper>
   );
 };

@@ -11,8 +11,6 @@ apiClient.interceptors.request.use((request) => {
   if (ENV.MOCK_MODE) {
     request['url'] = '/mocks' + request['url'] + '.json';
   }
-  const cookies = document.cookie;
-  console.log(cookies);
 
   if (request.data) {
     request.data = Adapter.from(request.data).to(toSnakeCase);

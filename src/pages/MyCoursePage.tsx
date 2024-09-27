@@ -1,39 +1,47 @@
 import Button from '@/components/common/Button';
 import Checkbox from '@/components/common/Checkbox';
 import Chip from '@/components/common/Chip';
+import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
 import KakaoMap from '@/components/KakaoMap';
+import { useGetGroupQuery } from '@/queries/useGetGroupQuery';
+import { Group } from '@/schemas/types';
 import { Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
 
 const MyCoursePage = () => {
   const theme = useTheme();
+  const { groupData } = useGetGroupQuery({ groupId: 1 });
+
   return (
     <PageTransformWrapper>
       <Stack sx={{ backgroundColor: theme.palette.primary.main }}>
         <Stack justifyContent="flex-start" alignItems="center" gap="16px" sx={{ padding: '19px 14px 43px 14px' }}>
-          {/* <Skeleton variant="rectangular" width="100%" height={260} /> */}
-          <KakaoMap
-            coordinates={[
-              { lat: 37.1507494904, lng: 129.2062296318 },
-              { lat: 37.7726505813, lng: 128.9473504054 },
-              { lat: 37.7071731576, lng: 128.7188396792 },
-              { lat: 37.3664313199, lng: 128.3949124655 },
-              { lat: 38.2188863049, lng: 128.5916575733 },
-            ]}
-            width="100%"
-            height="260px"
-            style={{ borderRadius: '5px' }}
-            level={8}
-          />
+          {groupData?.courseDetails && groupData?.courseDetails.length > 0 ? (
+            <KakaoMap
+              coordinates={groupData?.courseDetails.flatMap((dayDetails) =>
+                dayDetails.map((toursite) => ({
+                  lat: toursite.latitude,
+                  lng: toursite.longitude,
+                })),
+              )}
+              width="100%"
+              height="260px"
+              style={{ borderRadius: '5px' }}
+              level={8}
+            />
+          ) : (
+            <Skeleton variant="rectangular" width="100%" height={260} />
+          )}
+
           <Stack flexDirection="row" justifyContent="space-between" sx={{ width: '100%' }}>
             <Stack alignItems="flex-start">
               <Typography fontSize={14} color="white" bold>
-                산에서 한적하게 맛집을 즐기는 휴양 여행
+                {groupData?.name}
               </Typography>
               <Typography fontSize={10} color="white">
-                도심 속에서 시원한 공기와 미식 여행을 할 수 있는 곳
+                {groupData?.courseDescription}
               </Typography>
             </Stack>
             <Stack flexDirection="row" gap="16px">
@@ -71,60 +79,36 @@ const MyCoursePage = () => {
             편집하기 &gt;
           </Button>
         </Stack>
-        <Stack sx={{ padding: '12px 14px' }}>
-          <Typography fontSize={12}>1일차</Typography>
-          <Stack gap="12px">
-            <Stepper activeStep={-1} orientation="vertical">
-              <Step>
-                <StepLabel>
-                  <StepCard />
-                </StepLabel>
-              </Step>
-              <Step>
-                <StepLabel>
-                  <StepCard />
-                </StepLabel>
-              </Step>
-              <Step>
-                <StepLabel>
-                  <StepCard />
-                </StepLabel>
-              </Step>
-            </Stepper>
-            <Button variant="outlined">장소 추가하기</Button>
-          </Stack>
-        </Stack>
-        <Divider />
-        <Stack sx={{ padding: '12px 14px' }}>
-          <Typography fontSize={12}>2일차</Typography>
-          <Stack gap="12px">
-            <Stepper
-              activeStep={-1}
-              orientation="vertical"
-              sx={{
-                '& .MuiStepper-dot': { backgroundColor: '#CCCCCC' },
-                '& .MuiStepper-dotActive': { backgroundColor: '#666666' },
-              }}
-            >
-              <Step>
-                <StepLabel>
-                  <StepCard />
-                </StepLabel>
-              </Step>
-              <Step>
-                <StepLabel>
-                  <StepCard />
-                </StepLabel>
-              </Step>
-              <Step>
-                <StepLabel>
-                  <StepCard />
-                </StepLabel>
-              </Step>
-            </Stepper>
-            <Button variant="outlined">장소 추가하기</Button>
-          </Stack>
-        </Stack>
+        {groupData?.courseDetails.map((day, index) => {
+          return (
+            <>
+              <Stack sx={{ padding: '12px 14px' }}>
+                <Typography fontSize={12}>{index + 1}일차</Typography>
+                <Stack gap="12px">
+                  <Stepper activeStep={-1} orientation="vertical">
+                    {day.map((toursite) => {
+                      return (
+                        <Step key={toursite.tourSiteId}>
+                          <StepLabel>
+                            <StepCard
+                              name={toursite.name}
+                              address={toursite.address}
+                              recommendType={toursite.recommendType}
+                              photoUrl={toursite.photoUrl}
+                            />
+                          </StepLabel>
+                        </Step>
+                      );
+                    })}
+                  </Stepper>
+                  <Button variant="outlined">장소 추가하기</Button>
+                </Stack>
+              </Stack>
+              {index + 1 !== groupData?.courseDetails.length && <Divider />}
+            </>
+          );
+        })}
+
         <Stack sx={{ padding: '12px 14px 100px 14px' }}>
           <Button variant="contained" fullWidth sx={{ height: '45px' }}>
             이대로 여행 시작하기
@@ -137,7 +121,12 @@ const MyCoursePage = () => {
 
 export default MyCoursePage;
 
-const StepCard = () => {
+const StepCard = ({
+  name,
+  address,
+  recommendType,
+  photoUrl,
+}: Pick<Group['courseDetails'][number], 'name' | 'photoUrl' | 'address' | 'recommendType'>) => {
   const theme = useTheme();
 
   return (
@@ -153,7 +142,7 @@ const StepCard = () => {
         marginLeft: '10px',
       }}
     >
-      <Skeleton width={52} height={52} variant="rectangular" />
+      <ImageWithSkeleton width={52} height={52} variant="rectangular" src={photoUrl} alt={name} />
       <Stack gap="8px">
         <Stack flexDirection="row" gap="8px">
           <Chip
@@ -166,14 +155,14 @@ const StepCard = () => {
                 fontSize: '10px',
               },
             }}
-            label="명소"
+            label={recommendType}
           />
           <Typography fontSize={12} bold>
-            경포대
+            {name}
           </Typography>
         </Stack>
         <Typography fontSize={10} color="grey">
-          강원도 강릉시 경포로 365
+          {address}
         </Typography>
       </Stack>
     </Stack>

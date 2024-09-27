@@ -18,7 +18,8 @@ export const DUMMY_OF_BENEFITS = [
     isClear: false,
     title: '출석하고 리워드 10p 받기',
     description: '이번달 10일만 더 출석하면 500p 달성',
-    deadline: '2024-09-24T14:35:00Z',
+    deadline: '2025-09-24T14:35:00Z',
+    isClose: false,
   },
   {
     id: '2',
@@ -26,7 +27,8 @@ export const DUMMY_OF_BENEFITS = [
     isClear: true,
     title: '공유하고 리워드 20p 받기',
     description: '사진과 함께 공유하면 추가 10p 달성',
-    deadline: '2024-09-24T14:35:00Z',
+    deadline: '2025-09-24T14:35:00Z',
+    isClose: false,
   },
   {
     id: '3',
@@ -34,6 +36,7 @@ export const DUMMY_OF_BENEFITS = [
     isClear: false,
     title: '출석하고 리워드 10p 받기',
     description: '이번달 10일만 더 출석하면 500p 달성',
-    deadline: '2024-09-24T14:35:00Z',
+    deadline: '2025-09-24T14:35:00Z',
+    isClose: false,
   },
 ];

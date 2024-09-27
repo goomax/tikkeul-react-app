@@ -3,10 +3,11 @@ import { Grid, Skeleton, Stack, Tab, Tabs, useTheme } from '@mui/material';
 import { Suspense, SyntheticEvent, useState } from 'react';
 import GridCard from '../GridCard';
 import { useGetTourSiteListQuery } from '@/queries/useGetTourSiteListQuery';
-import { TourSite } from '@/schemas/types';
+import { Toursite } from '@/schemas/types';
 import { useDialog, useSelectableState } from '@/hooks';
 import TourSiteBottomSheet from '../TourSiteBottomSheet';
 import { mockArray } from '@/utils/generator';
+import { formatToursiteType } from '@/utils/formatter';
 
 const TABS = [
   { label: '숙소', value: 'lodging' },
@@ -105,21 +106,21 @@ const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
     filter: currentTab,
   });
 
-  const { selectedState, onSelect, onReset } = useSelectableState<Omit<TourSite, 'order'>>(null);
+  const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
   const { open, onOpen, onClose } = useDialog();
 
   return (
     <>
       <GridCard.Wrapper>
-        {tourSiteData.map((tourSite) => (
+        {tourSiteData.map((toursite) => (
           <GridCard.Item
-            key={tourSite.tourSiteId}
-            thumbnail={tourSite.photoUrls[0]}
-            title={tourSite.name}
-            tag={'맛을 아는'}
-            price={tourSite.cost}
+            key={toursite.tourSiteId}
+            thumbnail={toursite.photoUrls[0]}
+            title={toursite.name}
+            tag={formatToursiteType(toursite.type)}
+            price={toursite.cost}
             onClick={() => {
-              onSelect(tourSite);
+              onSelect(toursite);
               onOpen();
             }}
           />
@@ -131,7 +132,7 @@ const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
           onClose();
           onReset();
         }}
-        tourSite={selectedState}
+        toursite={selectedState}
       />
     </>
   );

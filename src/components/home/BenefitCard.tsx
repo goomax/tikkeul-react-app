@@ -4,14 +4,14 @@ import Chip from '../common/Chip';
 import IconButton from '../common/IconButton';
 import { Close } from '../icons';
 import Button from '../common/Button';
-import { GetBenefitResponse } from '@/types/apiResponse';
 import { formatTimeRemaining } from '@/utils/dateHelper';
 import Typography from '../common/Typography';
 import { useRequestAnimationFrame } from '@/hooks';
 import { motion } from 'framer-motion';
+import { DUMMY_OF_BENEFITS } from '@/constants/dummy';
 
 interface BenefitCardProps {
-  benefit: GetBenefitResponse['data'][number] & { isClose: boolean };
+  benefit: (typeof DUMMY_OF_BENEFITS)[number];
   onClose: (benefitId: string) => void;
 }
 

@@ -6,19 +6,19 @@ import ImageWithSkeleton from './common/ImageWithSkeleton';
 import Typography from './common/Typography';
 import { commaizeNumber } from '@/utils/formatter';
 import { formatTimeToAMPM, getIsBusinessOpen } from '@/utils/dateHelper';
-import { TourSite } from '@/schemas/types';
+import { Toursite } from '@/schemas/types';
 
 interface TourSiteBottomSheetProps {
   open: boolean;
   onClose: () => void;
-  tourSite: TourSite | null;
+  toursite: Toursite | null;
 }
 
-const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetProps) => {
-  const isBusinessOpen = tourSite ? getIsBusinessOpen(tourSite.startTime, tourSite.endTime) : false;
+const TourSiteBottomSheet = ({ open, onClose, toursite }: TourSiteBottomSheetProps) => {
+  const isBusinessOpen = toursite ? getIsBusinessOpen(toursite.startTime, toursite.endTime) : false;
 
   return (
-    <BottomSheet open={open && !!tourSite} header={<DragBar />} close={onClose}>
+    <BottomSheet open={open && !!toursite} header={<DragBar />} close={onClose}>
       <Stack gap="7px">
         <Carousel
           gap="12px"
@@ -26,13 +26,14 @@ const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetPro
             marginBottom: '30px',
           }}
         >
-          {tourSite?.photoUrls.map((photoUrl, index) => {
+          {toursite?.photoUrls.map((photoUrl, index) => {
             return (
               <ImageWithSkeleton
                 key={index}
                 src={photoUrl}
                 width={304}
                 height={200}
+                // alt={`${toursite?.name}-${index}`}
                 style={{
                   borderRadius: '5px',
                 }}
@@ -41,23 +42,23 @@ const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetPro
           })}
         </Carousel>
         <Typography fontSize={16} bold>
-          {tourSite?.name}
+          {toursite?.name}
         </Typography>
         <Typography fontSize={12} display="inline-flex" alignItems="center" gap="8px" color="grey">
           예상 평균 금액{' '}
           <Typography fontSize={16} bold color="secondary" inline>
-            {commaizeNumber(tourSite?.cost)}원
+            {commaizeNumber(toursite?.cost)}원
           </Typography>
         </Typography>
-        <Typography fontSize={12}>{tourSite?.description}</Typography>
+        <Typography fontSize={12}>{toursite?.description}</Typography>
         <Stack gap="1px">
           <Stack flexDirection="row" gap="7px" alignItems="center">
             <Location />
-            <Typography fontSize={12}>{tourSite?.address}</Typography>
+            <Typography fontSize={12}>{toursite?.address}</Typography>
           </Stack>
           <Stack flexDirection="row" gap="7px" alignItems="center">
             <Phone />
-            <Typography fontSize={12}>{tourSite?.phone}</Typography>
+            <Typography fontSize={12}>{toursite?.phone}</Typography>
           </Stack>
           <Stack flexDirection="row" gap="7px" alignItems="center">
             <Time />
@@ -65,7 +66,7 @@ const TourSiteBottomSheet = ({ open, onClose, tourSite }: TourSiteBottomSheetPro
               <Typography bold color="secondary" inline>
                 {isBusinessOpen ? '영업중 ' : '영업종료 '}
               </Typography>
-              {formatTimeToAMPM(tourSite?.startTime)} ~ {formatTimeToAMPM(tourSite?.endTime)}
+              {formatTimeToAMPM(toursite?.startTime)} ~ {formatTimeToAMPM(toursite?.endTime)}
             </Typography>
           </Stack>
         </Stack>
