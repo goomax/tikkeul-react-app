@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button';
-import Checkbox from '@/components/common/Checkbox';
 import Chip from '@/components/common/Chip';
+import IconButton from '@/components/common/IconButton';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
@@ -8,11 +8,28 @@ import { Heart, ShoppingCart } from '@/components/icons';
 import KakaoMap from '@/components/KakaoMap';
 import { useGetGroupQuery } from '@/queries/useGetGroupQuery';
 import { Group } from '@/schemas/types';
-import { Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
+import { Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useToggle } from '@/hooks';
+import { useDeleteToursiteMutation } from '@/queries/useDeleteToursiteMutation';
+import { deleteToursite } from '@/apis/group';
+import { Fragment } from 'react';
 
 const MyCoursePage = () => {
   const theme = useTheme();
   const { groupData } = useGetGroupQuery({ groupId: 1 });
+  const { value: isEditMode, toggle } = useToggle({ initialValue: false });
+  const { mutate: deleteToursiteMutate } = useDeleteToursiteMutation({
+    groupId: 1,
+    onSuccess: () => {
+      toggle();
+    },
+  });
+
+  const onDelete = (data: Parameters<typeof deleteToursite>[0]) => {
+    deleteToursiteMutate(data);
+  };
 
   return (
     <PageTransformWrapper>
@@ -62,57 +79,84 @@ const MyCoursePage = () => {
         </Stack>
       </Stack>
       <Stack>
-        <Stack flexDirection="row" justifyContent="space-between" alignItems="center" sx={{ padding: '12px 14px ' }}>
-          <Box>
-            <Checkbox
-              checked
-              color="primary"
-              label={
-                <Typography fontSize={12} color="grey">
-                  장소 전체 선택
-                </Typography>
-              }
-              size="small"
-            />
-          </Box>
-          <Button variant="text" sx={{ fontSize: '10px' }}>
-            편집하기 &gt;
-          </Button>
+        <Stack flexDirection="row" justifyContent="flex-end" alignItems="center" sx={{ padding: '12px 14px ' }}>
+          {isEditMode ? (
+            <Button variant="text" sx={{ fontSize: '10px' }} onClick={toggle}>
+              돌아가기 &gt;
+            </Button>
+          ) : (
+            <Button variant="text" sx={{ fontSize: '10px' }} onClick={toggle}>
+              편집하기 &gt;
+            </Button>
+          )}
         </Stack>
-        {groupData?.courseDetails.map((day, index) => {
+        {groupData?.courseDetails.map((day, dayIndex) => {
           return (
-            <>
+            <Fragment key={dayIndex}>
               <Stack sx={{ padding: '12px 14px' }}>
-                <Typography fontSize={12}>{index + 1}일차</Typography>
-                <Stack gap="12px">
-                  <Stepper activeStep={-1} orientation="vertical">
-                    {day.map((toursite) => {
-                      return (
-                        <Step key={toursite.tourSiteId}>
-                          <StepLabel>
-                            <StepCard
-                              name={toursite.name}
-                              address={toursite.address}
-                              recommendType={toursite.recommendType}
-                              photoUrl={toursite.photoUrl}
-                            />
-                          </StepLabel>
-                        </Step>
-                      );
-                    })}
-                  </Stepper>
-                  <Button variant="outlined">장소 추가하기</Button>
+                <Typography fontSize={12}>{dayIndex + 1}일차</Typography>
+                <Stack gap="20px">
+                  {!isEditMode ? (
+                    <Stepper activeStep={-1} orientation="vertical">
+                      {day.map((toursite) => {
+                        return (
+                          <Step key={toursite.tourSiteId}>
+                            <StepLabel>
+                              <StepCard
+                                name={toursite.name}
+                                address={toursite.address}
+                                recommendType={toursite.recommendType}
+                                photoUrl={toursite.photoUrl}
+                              />
+                            </StepLabel>
+                          </Step>
+                        );
+                      })}
+                    </Stepper>
+                  ) : (
+                    <>
+                      {day.map((toursite) => (
+                        <Stack
+                          key={toursite.tourSiteId}
+                          flexDirection="row"
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <IconButton sx={{ cursor: 'grab' }}>
+                            <DragIndicatorIcon sx={{ color: 'grey.400' }} />
+                          </IconButton>
+                          <StepCard
+                            key={toursite.tourSiteId}
+                            name={toursite.name}
+                            address={toursite.address}
+                            recommendType={toursite.recommendType}
+                            photoUrl={toursite.photoUrl}
+                          />
+                          <IconButton
+                            onClick={() => {
+                              onDelete({ groupId: 1, toursiteId: toursite.tourSiteId });
+                            }}
+                          >
+                            <DeleteIcon sx={{ color: theme.palette.grey[400] }} />
+                          </IconButton>
+                        </Stack>
+                      ))}
+                    </>
+                  )}
+                  {!isEditMode && <Button variant="outlined">장소 추가하기</Button>}
                 </Stack>
               </Stack>
-              {index + 1 !== groupData?.courseDetails.length && <Divider />}
-            </>
+              {dayIndex + 1 !== groupData?.courseDetails.length && <Divider />}
+            </Fragment>
           );
         })}
 
         <Stack sx={{ padding: '12px 14px 100px 14px' }}>
-          <Button variant="contained" fullWidth sx={{ height: '45px' }}>
-            이대로 여행 시작하기
-          </Button>
+          {!isEditMode && (
+            <Button variant="contained" fullWidth sx={{ height: '45px' }}>
+              이대로 여행 시작하기
+            </Button>
+          )}
         </Stack>
       </Stack>
     </PageTransformWrapper>
@@ -136,6 +180,7 @@ const StepCard = ({
       gap="20px"
       bgcolor={theme.palette.background.default}
       sx={{
+        width: '260px',
         padding: '8px 14px',
         borderRadius: '4px',
         boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',

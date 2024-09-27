@@ -16,7 +16,7 @@ export const getCourse = ({ courseId }: { courseId: number }) => {
  */
 export const getHotCourse = ({ count }: { count: number }) => {
   return apiClient.request<{
-    toursites: Course[];
+    courseList: Course[];
   }>({
     method: 'get',
     url: '/course/hot',

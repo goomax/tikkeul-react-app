@@ -125,15 +125,7 @@ export const addToursiteToCourse = ({
 /**
  * 장소 제거
  */
-export const deleteToursite = ({
-  groupId,
-  toursiteId,
-}: {
-  groupId: number;
-  day: number;
-  toursiteId: number;
-  tourSites: number[][];
-}) => {
+export const deleteToursite = ({ groupId, toursiteId }: { groupId: number; toursiteId: number }) => {
   return apiClient.request({
     method: 'delete',
     url: `/group/${groupId}/toursite/${toursiteId}`,

@@ -27,7 +27,7 @@ apiClient.interceptors.response.use(
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(response);
-        }, 2000);
+        }, 1000);
       });
     }
 
