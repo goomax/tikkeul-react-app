@@ -16,7 +16,7 @@ import Button from '../common/Button';
 import { BottomSheet, BottomSheetProps } from '../common/BottomSheet';
 import { useParams } from 'react-router-dom';
 import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
-import { Course, Toursite } from '@/schemas/types';
+import { Toursite } from '@/schemas/types';
 import { formatTimeToAMPM } from '@/utils/dateHelper';
 
 interface TicketHeaderProps {
