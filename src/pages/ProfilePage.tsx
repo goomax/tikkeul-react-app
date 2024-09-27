@@ -2,11 +2,13 @@ import Button from '@/components/common/Button';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { useInternalRouter } from '@/hooks';
+import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { Avatar, Stack, useTheme } from '@mui/material';
 
 const ProfilePage = () => {
   const theme = useTheme();
   const router = useInternalRouter();
+  const { userData } = useGetUserQuery();
 
   const onClickRetest = () => {
     router.push('/headcount-form');
@@ -32,7 +34,7 @@ const ProfilePage = () => {
           >
             <Stack>
               <Typography fontSize={16} bold>
-                김티끌님
+                {userData?.name} 님
               </Typography>
               <Typography fontSize={10} bold color="grey">
                 ticklemoa@naver.com
@@ -114,10 +116,10 @@ const ProfilePage = () => {
             </Button>
           </Stack>
           <Stack width="100%">
-            {['바다를 사랑하는 대문자 E의 모임', '먹기 위한 여행을 즐기는 여행가들'].map((group) => {
+            {userData?.groups.map((group) => {
               return (
                 <Stack
-                  key={group}
+                  key={group.groupId}
                   flexDirection="row"
                   alignItems="center"
                   justifyContent="flex-start"
@@ -129,7 +131,7 @@ const ProfilePage = () => {
                 >
                   <Avatar sx={{ width: '40x', height: '40px' }} />
                   <Typography fontSize={12} color="grey">
-                    {group}
+                    {group.groupName}
                   </Typography>
                 </Stack>
               );

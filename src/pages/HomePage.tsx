@@ -1,4 +1,5 @@
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
+import ProtectedContents from '@/components/hoc/ProtectedContents';
 import {
   BannerContainer,
   HotRecommendContainer,
@@ -6,12 +7,13 @@ import {
   UserRecommendContainer,
 } from '@/components/home';
 import { QUERY_PARAM_KEY } from '@/constants/key';
-import { useQueryString } from '@/hooks';
+import { useInternalRouter, useQueryString } from '@/hooks';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { useEffect } from 'react';
 
 const HomePage = () => {
-  const { userData } = useGetUserQuery();
+  const { userData, hasGroup, isLogin } = useGetUserQuery();
+  const router = useInternalRouter();
   const { getParams, setParams } = useQueryString();
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
 
@@ -19,12 +21,18 @@ const HomePage = () => {
     if (!groupId && userData?.groups[0]) {
       setParams(QUERY_PARAM_KEY.GROUP_ID, String(userData.groups[0].groupId));
     }
-  }, [groupId, userData]);
+
+    if (isLogin && userData?.groups && userData?.groups.length < 1) {
+      router.replace('/headcount-form');
+    }
+  }, [groupId, userData, isLogin]);
 
   return (
     <PageTransformWrapper>
       <BannerContainer />
-      <UserRecommendContainer />
+      <ProtectedContents hide={!hasGroup}>
+        <UserRecommendContainer />
+      </ProtectedContents>
       <HotRecommendContainer />
       <LocationRecommendContainer />
     </PageTransformWrapper>

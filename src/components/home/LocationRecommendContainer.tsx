@@ -105,7 +105,7 @@ const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
     filter: currentTab,
   });
 
-  const { selectedState, onSelect, onReset } = useSelectableState<Omit<TourSite, 'order'>>(null);
+  const { selectedState, onSelect, onReset } = useSelectableState<TourSite>(null);
   const { open, onOpen, onClose } = useDialog();
 
   return (
@@ -116,7 +116,7 @@ const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
             key={tourSite.tourSiteId}
             thumbnail={tourSite.photoUrls[0]}
             title={tourSite.name}
-            tag={'맛을 아는'}
+            tag={tourSite.type}
             price={tourSite.cost}
             onClick={() => {
               onSelect(tourSite);

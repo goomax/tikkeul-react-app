@@ -5,35 +5,40 @@ import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { Heart, ShoppingCart } from '@/components/icons';
 import KakaoMap from '@/components/KakaoMap';
+import { useGetGroupQuery } from '@/queries/useGetGroupQuery';
 import { Box, Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
 
 const MyCoursePage = () => {
   const theme = useTheme();
+  const { groupData } = useGetGroupQuery({ groupId: 1 });
   return (
     <PageTransformWrapper>
       <Stack sx={{ backgroundColor: theme.palette.primary.main }}>
         <Stack justifyContent="flex-start" alignItems="center" gap="16px" sx={{ padding: '19px 14px 43px 14px' }}>
-          {/* <Skeleton variant="rectangular" width="100%" height={260} /> */}
-          <KakaoMap
-            coordinates={[
-              { lat: 37.1507494904, lng: 129.2062296318 },
-              { lat: 37.7726505813, lng: 128.9473504054 },
-              { lat: 37.7071731576, lng: 128.7188396792 },
-              { lat: 37.3664313199, lng: 128.3949124655 },
-              { lat: 38.2188863049, lng: 128.5916575733 },
-            ]}
-            width="100%"
-            height="260px"
-            style={{ borderRadius: '5px' }}
-            level={8}
-          />
+          {groupData?.courseDetails && groupData?.courseDetails.length > 0 ? (
+            <KakaoMap
+              coordinates={groupData?.courseDetails.map((toursite) => {
+                return {
+                  lat: toursite.latitude,
+                  lng: toursite.longitude,
+                };
+              })}
+              width="100%"
+              height="260px"
+              style={{ borderRadius: '5px' }}
+              level={8}
+            />
+          ) : (
+            <Skeleton variant="rectangular" width="100%" height={260} />
+          )}
+
           <Stack flexDirection="row" justifyContent="space-between" sx={{ width: '100%' }}>
             <Stack alignItems="flex-start">
               <Typography fontSize={14} color="white" bold>
-                산에서 한적하게 맛집을 즐기는 휴양 여행
+                {groupData?.name}
               </Typography>
               <Typography fontSize={10} color="white">
-                도심 속에서 시원한 공기와 미식 여행을 할 수 있는 곳
+                {groupData?.courseDescription}
               </Typography>
             </Stack>
             <Stack flexDirection="row" gap="16px">

@@ -1,6 +1,6 @@
 import { getTourSiteList } from '@/apis/course';
 import { QUERY_KEY } from '@/constants/key';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const useGetTourSiteListQuery = (params: Parameters<typeof getTourSiteList>[0]) => {
   const { data: tourSiteData = [], ...others } = useQuery({

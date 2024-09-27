@@ -1,8 +1,6 @@
 import Button from '@/components/common/Button';
 import Typography from '@/components/common/Typography';
 import GridCard from '@/components/GridCard';
-import { QUERY_PARAM_KEY } from '@/constants/key';
-import { useQueryString } from '@/hooks';
 import { useGetCoursesByGroupQuery } from '@/queries/useGetCoursesByGroupQuery';
 import { mockArray } from '@/utils/generator';
 import { Grid, Skeleton, Stack } from '@mui/material';
@@ -32,12 +30,7 @@ const FavoritesPage = () => {
 export default FavoritesPage;
 
 const AsyncGridCards = () => {
-  const { getParams } = useQueryString();
-  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  // TODO: 목 그룹 아이디
   const { courseList } = useGetCoursesByGroupQuery({ groupId: Number(1), type: 'like' });
-
-  console.log(courseList.length);
 
   return (
     <>

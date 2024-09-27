@@ -12,5 +12,15 @@ export const useGetUserQuery = () => {
     gcTime: Infinity,
   });
 
-  return { userData, ...others };
+  const findGroupById = (id: number) => {
+    return userData?.groups.find((group) => group.groupId === id);
+  };
+
+  return {
+    userData,
+    isLogin: !!userData,
+    hasGroup: userData?.groups && userData?.groups.length > 0,
+    findGroupById,
+    ...others,
+  };
 };

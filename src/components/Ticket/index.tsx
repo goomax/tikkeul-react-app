@@ -19,6 +19,10 @@ interface TicketHeaderProps {
   label: string;
   title: string;
   description: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  }[];
 }
 
 interface TicketBottomProps {
@@ -55,7 +59,7 @@ const Ticket = {
       </Stack>
     );
   },
-  Header: ({ label, title, description }: TicketHeaderProps) => {
+  Header: ({ label, title, description, coordinates }: TicketHeaderProps) => {
     const { open, onOpen, onClose } = useDialog();
 
     return (

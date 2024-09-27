@@ -23,10 +23,8 @@ const GenderFormPage = () => {
 
   const onClickCompleteButton = () => {
     const data = getValues();
-    console.log(data);
     updateSignUpFormData(data);
     postUserMutate(data);
-    // router.push('/gender-form');
   };
 
   return (
@@ -62,7 +60,13 @@ const GenderFormPage = () => {
           {errors.gender && <Typography color="warning">{errors.gender.message}</Typography>}
         </FormControl>
       </Stack>
-      <FixedBottomCTA fullWidth sx={{ height: '44px' }} onClick={onClickCompleteButton} disabled={!isValid}>
+      <FixedBottomCTA
+        type="button"
+        fullWidth
+        sx={{ height: '44px' }}
+        onClick={onClickCompleteButton}
+        disabled={!isValid}
+      >
         회원가입 완료하기
       </FixedBottomCTA>
     </Stack>

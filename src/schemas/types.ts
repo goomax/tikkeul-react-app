@@ -4,12 +4,11 @@ export interface Group {
   cost: number;
   duration: number;
   courseDescription: string;
-  courseDetails: Pick<TourSite, 'tourSiteId' | 'latitude' | 'longitude' | 'name' | 'recommendType' | 'address'> &
-    {
-      photoUrl: string;
-      day: number;
-      order: number;
-    }[];
+  courseDetails: (Pick<TourSite, 'tourSiteId' | 'latitude' | 'longitude' | 'name' | 'recommendType' | 'address'> & {
+    photoUrl: string;
+    day: number;
+    order: number;
+  })[];
 }
 
 export interface TourSite {
