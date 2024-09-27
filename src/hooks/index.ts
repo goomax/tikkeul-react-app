@@ -6,3 +6,4 @@ export { default as useLazyState } from './useLazyState';
 export { default as useQueryString } from './useQueryString';
 export { default as useRequestAnimationFrame } from './useRequestAnimationFrame';
 export { default as useSelectableState } from './useSelectableState';
+export { default as useToggle } from './useToggle';

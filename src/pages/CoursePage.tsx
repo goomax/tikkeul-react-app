@@ -1,5 +1,6 @@
 import Carousel from '@/components/common/Carousel';
 import Chip from '@/components/common/Chip';
+import FixedBottomCTA from '@/components/common/FixedBottomCTA';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
@@ -8,6 +9,7 @@ import Ticket from '@/components/Ticket';
 import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
 import { useDialog, useSelectableState } from '@/hooks';
 import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
+import { usePickCourseToGroup } from '@/queries/usePickCourseToGroup';
 import { Toursite } from '@/schemas/types';
 import { formatTimeToAMPM } from '@/utils/dateHelper';
 import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
@@ -20,6 +22,7 @@ const CoursePage = () => {
   const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
   const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
   const { open, onOpen, onClose } = useDialog();
+  const { mutate: pickCourseToGroupMutate } = usePickCourseToGroup({ groupId: 1 });
 
   const onClickLocation = () => {
     onOpen();
@@ -85,6 +88,7 @@ const CoursePage = () => {
                       src={url}
                       width={240}
                       height={160}
+                      alt={toursite.name + (index + 1)}
                       style={{
                         borderRadius: '5px',
                       }}
@@ -126,6 +130,14 @@ const CoursePage = () => {
           );
         })}
       </Stack>
+      <FixedBottomCTA
+        fullWidth
+        onClick={() => {
+          pickCourseToGroupMutate({ courseId: Number(courseId), groupId: 1 });
+        }}
+      >
+        내 코스에 담기
+      </FixedBottomCTA>
       <TourSiteBottomSheet
         open={open}
         onClose={() => {

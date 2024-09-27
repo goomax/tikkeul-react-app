@@ -4,7 +4,7 @@ import { Heart, ShoppingCart } from '@/components/icons';
 import { Box, Stack } from '@mui/material';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
 import { useInternalRouter } from '@/hooks';
-import { commaizeNumber } from '@/utils/formatter';
+import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
 import { Course } from '@/schemas/types';
 
 interface RecommendCoursesProps {
@@ -62,7 +62,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
               >
                 {' '}
                 <Stack flexDirection="row" gap="4px">
-                  <Chip radiusVariant="square" color="default" label={course.tourSites[0].type} />
+                  <Chip radiusVariant="square" color="default" label={formatToursiteType(course.tourSites[0].type)} />
                 </Stack>
                 <Stack gap="1px">
                   <Typography fontSize={12} bold noWrap>

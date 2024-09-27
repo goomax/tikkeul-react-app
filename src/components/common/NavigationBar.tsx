@@ -16,7 +16,7 @@ const navItems = [
     label: '찜',
   },
   {
-    path: '/my-course/temp',
+    path: '/my-course',
     icon: Map,
     label: '내 코스',
   },

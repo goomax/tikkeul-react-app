@@ -47,7 +47,7 @@ function DynamicRouter() {
             <Route path="/search-form" element={<SearchFormPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/courses/:courseId" element={<CoursePage />} />
-            <Route path="/my-course/:courseId" element={<MyCoursePage />} />
+            <Route path="/my-course" element={<MyCoursePage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Routes>

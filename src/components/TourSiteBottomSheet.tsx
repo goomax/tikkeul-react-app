@@ -33,7 +33,7 @@ const TourSiteBottomSheet = ({ open, onClose, toursite }: TourSiteBottomSheetPro
                 src={photoUrl}
                 width={304}
                 height={200}
-                // alt={`${toursite?.name}-${index}`}
+                alt={`${toursite?.name}-${index + 1}`}
                 style={{
                   borderRadius: '5px',
                 }}

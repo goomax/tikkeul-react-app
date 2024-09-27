@@ -104,6 +104,7 @@ function a11yProps(label: string) {
 const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
   const { tourSiteData } = useGetTourSiteListQuery({
     filter: currentTab,
+    count: 4,
   });
 
   const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
