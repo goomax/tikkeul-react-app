@@ -4,14 +4,14 @@ export interface Group {
   cost: number;
   duration: number;
   courseDescription: string;
-  courseDetails: (Pick<TourSite, 'tourSiteId' | 'latitude' | 'longitude' | 'name' | 'recommendType' | 'address'> & {
+  courseDetails: (Pick<Toursite, 'tourSiteId' | 'latitude' | 'longitude' | 'name' | 'recommendType' | 'address'> & {
     photoUrl: string;
     day: number;
     order: number;
   })[];
 }
 
-export interface TourSite {
+export interface Toursite {
   tourSiteId: number;
   latitude: number;
   longitude: number;
@@ -37,5 +37,5 @@ export interface Course {
   cost: number;
   picked: number;
   liked: number;
-  tourSites: TourSite[];
+  tourSites: Toursite[];
 }

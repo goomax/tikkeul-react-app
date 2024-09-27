@@ -8,15 +8,17 @@ import Ticket from '@/components/Ticket';
 import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
 import { useDialog, useSelectableState } from '@/hooks';
 import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
-import { TourSite } from '@/schemas/types';
+import { Toursite } from '@/schemas/types';
 import { formatTimeToAMPM } from '@/utils/dateHelper';
-import { commaizeNumber } from '@/utils/formatter';
+import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
 import { alpha, Stack, useTheme } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 const CoursePage = () => {
   const theme = useTheme();
-  const { selectedState, onSelect, onReset } = useSelectableState<TourSite>(null);
-  const { courseData } = useGetCourseByCourseIdQuery({ courseId: 1 });
+  const { courseId } = useParams<{ courseId: string }>();
+  const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
+  const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
   const { open, onOpen, onClose } = useDialog();
 
   const onClickLocation = () => {
@@ -41,7 +43,7 @@ const CoursePage = () => {
                 lng: toursite.longitude,
               }))}
             />
-            <Ticket.Bottom images={courseData?.tourSites[0].photoUrls || []} />
+            <Ticket.Bottom images={courseData?.tourSites.flatMap((site) => site.photoUrls) || []} />
           </Ticket.Wrapper>
         )}
       </Stack>
@@ -91,7 +93,7 @@ const CoursePage = () => {
                 })}
               </Carousel>
               <Stack flexDirection="row" gap="12px">
-                <Chip label={toursite.type} radiusVariant="square" color="default" />
+                <Chip label={formatToursiteType(toursite.type)} radiusVariant="square" color="default" />
               </Stack>
               <Typography bold fontSize={14}>
                 {toursite.name}
@@ -130,7 +132,7 @@ const CoursePage = () => {
           onClose();
           onReset();
         }}
-        tourSite={selectedState}
+        toursite={selectedState}
       />
     </PageTransformWrapper>
   );

@@ -1,4 +1,4 @@
-import { Course, TourSite } from '@/schemas/types';
+import { Course, Toursite } from '@/schemas/types';
 import apiClient from './apiClient';
 
 /**
@@ -7,7 +7,7 @@ import apiClient from './apiClient';
 export const getCourse = ({ courseId }: { courseId: number }) => {
   return apiClient.request<Course>({
     method: 'get',
-    url: `/courses/${courseId}`,
+    url: `/course/${courseId}`,
   });
 };
 
@@ -34,7 +34,7 @@ export const getTourSiteList = (params: {
   count?: number;
   keyword?: string;
 }) => {
-  return apiClient.request<{ tourSites: TourSite[] }>({
+  return apiClient.request<{ tourSites: Toursite[] }>({
     method: 'get',
     url: '/toursite',
     params,
@@ -45,7 +45,7 @@ export const getTourSiteList = (params: {
  *  특정 장소 불러오기
  */
 export const getTourSite = ({ tourSiteId }: { tourSiteId: number }) => {
-  return apiClient.request<TourSite>({
+  return apiClient.request<Toursite>({
     method: 'get',
     url: `/toursite/${tourSiteId}`,
   });

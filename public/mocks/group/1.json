@@ -1,0 +1,53 @@
+{
+  "groupId": 1,
+  "name": "Mountain Adventure",
+  "cost": 1000,
+  "duration": 7,
+  "courseDescription": "A thrilling week-long adventure across beautiful mountain trails.",
+  "courseDetails": [
+    {
+      "tourSiteId": 101,
+      "latitude": 37.5665,
+      "longitude": 126.9780,
+      "name": "Trail Start Point",
+      "recommendType": 1,
+      "address": "123 Mountain Rd, Seoul",
+      "photoUrl": "https://example.com/photos/trail-start.jpg",
+      "day": 1,
+      "order": 0
+    },
+    {
+      "tourSiteId": 104,
+      "latitude": 37.5665,
+      "longitude": 126.9780,
+      "name": "Trail Start Point",
+      "recommendType": 1,
+      "address": "123 Mountain Rd, Seoul",
+      "photoUrl": "https://example.com/photos/trail-start.jpg",
+      "day": 1,
+      "order": 1
+    },
+    {
+      "tourSiteId": 102,
+      "latitude": 37.5651,
+      "longitude": 126.9895,
+      "name": "Sunrise Viewpoint",
+      "recommendType": 2,
+      "address": "456 Viewpoint St, Seoul",
+      "photoUrl": "https://example.com/photos/viewpoint.jpg",
+      "day": 2,
+      "order": 2
+    },
+    {
+      "tourSiteId": 103,
+      "latitude": 37.5725,
+      "longitude": 126.9930,
+      "name": "Mountain Peak",
+      "recommendType": 3,
+      "address": "789 Peak Rd, Seoul",
+      "photoUrl": "https://example.com/photos/peak.jpg",
+      "day": 2,
+      "order": 3
+    }
+  ]
+}

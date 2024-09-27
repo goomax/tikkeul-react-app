@@ -1,0 +1,62 @@
+{
+  "id": 1,
+  "name": "Seaside Adventure",
+  "description": "An exciting adventure by the sea.",
+  "cost": 2000,
+  "picked": 20,
+  "liked": 20,
+  "tour_sites": [
+    {
+      "tour_site_id": 118,
+      "latitude": 34.5678,
+      "longitude": 123.4567,
+      "name": "Seaside Restaurant",
+      "cost": 1000,
+      "start_time": "09:00",
+      "end_time": "21:00",
+      "phone": "010-1234-5678",
+      "type": "restaurant",
+      "address": "서울시 강남구",
+      "recommend_type": 5,
+      "description": "A beautiful seaside restaurant with fresh seafood.",
+      "photo_urls": [
+        "https://example.com/photo1.jpg"
+      ]
+    },
+    {
+      "tour_site_id": 119,
+      "latitude": 34.5679,
+      "longitude": 123.4568,
+      "name": "Seaside Park",
+      "cost": 500,
+      "start_time": "06:00",
+      "end_time": "18:00",
+      "phone": "010-9876-5432",
+      "type": "activity",
+      "address": "서울시 마포구",
+      "recommend_type": 4,
+      "description": "A lovely park by the sea, perfect for morning walks.",
+      "photo_urls": [
+        "https://example.com/photo2.jpg"
+      ]
+    },
+    {
+      "tour_site_id": 120,
+      "latitude": 34.5680,
+      "longitude": 123.4569,
+      "name": "Seaside Hotel",
+      "cost": 2000,
+      "start_time": "14:00",
+      "end_time": "12:00",
+      "phone": "010-1122-3344",
+      "type": "lodging",
+      "address": "서울시 종로구",
+      "recommend_type": 3,
+      "description": "A luxurious hotel with stunning sea views.",
+      "photo_urls": [
+        "https://example.com/photo3.jpg",
+        "https://example.com/photo4.jpg"
+      ]
+    }
+  ]
+}

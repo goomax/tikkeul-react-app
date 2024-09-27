@@ -1,0 +1,57 @@
+{
+  "tourSites": [
+    {
+      "tourSiteId": 1,
+      "latitude": 37.5665,
+      "longitude": 126.9780,
+      "name": "Seoul Tower",
+      "cost": 15000,
+      "startTime": "09:00",
+      "endTime": "22:00",
+      "phone": "010-1234-5678",
+      "type": "activity",
+      "address": "서울특별시 중구 남산공원길 105",
+      "recommendType": 3,
+      "description": "A popular tourist attraction in Seoul offering panoramic views.",
+      "photoUrls": [
+        "https://example.com/photos/seoul-tower1.jpg",
+        "https://example.com/photos/seoul-tower2.jpg"
+      ]
+    },
+    {
+      "tourSiteId": 2,
+      "latitude": 37.5796,
+      "longitude": 126.9770,
+      "name": "Gyeongbokgung Palace",
+      "cost": 3000,
+      "startTime": "09:00",
+      "endTime": "18:00",
+      "phone": "010-8765-4321",
+      "type": "activity",
+      "address": "서울특별시 종로구 사직로 161",
+      "recommendType": 5,
+      "description": "A beautiful and historic palace located in the heart of Seoul.",
+      "photoUrls": [
+        "https://example.com/photos/gyeongbokgung1.jpg",
+        "https://example.com/photos/gyeongbokgung2.jpg"
+      ]
+    },
+    {
+      "tourSiteId": 3,
+      "latitude": 37.5109,
+      "longitude": 127.0331,
+      "name": "Gangnam BBQ Restaurant",
+      "cost": 20000,
+      "startTime": "11:00",
+      "endTime": "23:00",
+      "phone": "010-5555-8888",
+      "type": "restaurant",
+      "address": "서울특별시 강남구 테헤란로 123",
+      "recommendType": 4,
+      "description": "Famous Korean BBQ restaurant in Gangnam.",
+      "photoUrls": [
+        "https://example.com/photos/gangnam-bbq1.jpg"
+      ]
+    }
+  ]
+}

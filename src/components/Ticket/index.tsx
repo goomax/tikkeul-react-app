@@ -14,6 +14,10 @@ import IconButton from '../common/IconButton';
 import Carousel from '../common/Carousel';
 import Button from '../common/Button';
 import { BottomSheet, BottomSheetProps } from '../common/BottomSheet';
+import { useParams } from 'react-router-dom';
+import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
+import { Course, Toursite } from '@/schemas/types';
+import { formatTimeToAMPM } from '@/utils/dateHelper';
 
 interface TicketHeaderProps {
   label: string;
@@ -28,14 +32,6 @@ interface TicketHeaderProps {
 interface TicketBottomProps {
   images: string[];
 }
-
-const coordinates = [
-  { lat: 37.1507494904, lng: 129.2062296318 },
-  { lat: 37.7726505813, lng: 128.9473504054 },
-  { lat: 37.7071731576, lng: 128.7188396792 },
-  { lat: 37.3664313199, lng: 128.3949124655 },
-  { lat: 38.2188863049, lng: 128.5916575733 },
-];
 
 const Ticket = {
   Wrapper: ({ children }: PropsWithChildren) => {
@@ -157,13 +153,25 @@ const Ticket = {
 export default Ticket;
 
 const FullScreenMap = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+  const { courseId } = useParams<{ courseId: string }>();
+  const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
+
   const { open: bottomSheetOpen, onOpen: onOpenBottomSheet, onClose: onCloseBottomSheet } = useDialog();
   const theme = useTheme();
 
   return (
     <Dialog fullScreen open={open}>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <KakaoMap coordinates={coordinates} correctRoute />
+        {courseData?.tourSites && courseData?.tourSites.length > 0 && (
+          <KakaoMap
+            coordinates={courseData?.tourSites.map((toursite) => ({
+              lat: toursite.latitude,
+              lng: toursite.longitude,
+            }))}
+            correctRoute
+          />
+        )}
+
         <IconButton
           size="small"
           onClick={onClose}
@@ -217,7 +225,15 @@ const FullScreenMap = ({ open, onClose }: { open: boolean; onClose: () => void }
             bottom: '73px',
           }}
         >
-          <LocationCard />
+          <LocationCard
+            name={courseData?.tourSites[0].name || ''}
+            cost={courseData?.tourSites[0].cost || 0}
+            address={courseData?.tourSites[0].address || ''}
+            phone={courseData?.tourSites[0].phone || ''}
+            endTime={courseData?.tourSites[0].endTime || '00:00'}
+            startTime={courseData?.tourSites[0].startTime || '00:00'}
+            photoUrl={courseData?.tourSites[0].photoUrls[0] || ''}
+          />
         </div>
         <ListBottomSheet open={bottomSheetOpen} close={onCloseBottomSheet} />
       </div>
@@ -226,6 +242,9 @@ const FullScreenMap = ({ open, onClose }: { open: boolean; onClose: () => void }
 };
 
 const ListBottomSheet = ({ open, close }: Pick<BottomSheetProps, 'open' | 'close'>) => {
+  const { courseId } = useParams<{ courseId: string }>();
+  const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
+
   return (
     <BottomSheet open={open} header={<DragBar />} close={close}>
       <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
@@ -247,10 +266,17 @@ const ListBottomSheet = ({ open, close }: Pick<BottomSheetProps, 'open' | 'close
           </Typography>
         </Stack>
       </Stack>
-      {[1, 2, 3, 4, 5, 6, 7].map((location) => {
+      {courseData?.tourSites.map((toursite) => {
         return (
           <LocationCard
-            key={location}
+            key={toursite.tourSiteId}
+            name={toursite.name || ''}
+            cost={toursite.cost || 0}
+            address={toursite.address || ''}
+            phone={toursite.phone || ''}
+            endTime={toursite.endTime || '00:00'}
+            startTime={toursite.startTime || '00:00'}
+            photoUrl={toursite.photoUrls[0] || ''}
             sx={{
               boxShadow: 'none',
               padding: '12px 0',
@@ -262,7 +288,19 @@ const ListBottomSheet = ({ open, close }: Pick<BottomSheetProps, 'open' | 'close
   );
 };
 
-const LocationCard = ({ sx }: { sx?: SxProps<Theme> }) => {
+const LocationCard = ({
+  name,
+  cost,
+  address,
+  phone,
+  startTime,
+  endTime,
+  photoUrl,
+  sx,
+}: { sx?: SxProps<Theme>; photoUrl: string } & Pick<
+  Toursite,
+  'name' | 'cost' | 'address' | 'startTime' | 'endTime' | 'phone'
+>) => {
   const theme = useTheme();
 
   return (
@@ -280,26 +318,26 @@ const LocationCard = ({ sx }: { sx?: SxProps<Theme> }) => {
         ...sx,
       }}
     >
-      <ImageWithSkeleton src="https://picsum.photos/100" width={80} height={80} />
+      <ImageWithSkeleton src={photoUrl} width={80} height={80} />
       <Stack gap="2px">
         <Typography fontSize={14} bold>
           <Chip label="명소" radiusVariant="square" color="default" sx={{ marginRight: '5px' }} />
-          산토리니 카페
+          {name}
         </Typography>
         <Typography fontSize={12} display="inline-flex" alignItems="center" gap="8px" color="grey">
           예상 평균 금액{' '}
           <Typography fontSize={14} bold color="secondary" inline>
-            {commaizeNumber(33000)}원
+            {commaizeNumber(cost)}원
           </Typography>
           <Help />
         </Typography>
         <Stack flexDirection="row" gap="7px" alignItems="center">
           <Location />
-          <Typography fontSize={10}>강원도 강릉시 난설헌로 234-6</Typography>
+          <Typography fontSize={10}>{address}</Typography>
         </Stack>
         <Stack flexDirection="row" gap="7px" alignItems="center">
           <Phone />
-          <Typography fontSize={10}>033-842-4150</Typography>
+          <Typography fontSize={10}>{phone}</Typography>
         </Stack>
         <Stack flexDirection="row" gap="7px" alignItems="center">
           <Time />
@@ -307,7 +345,7 @@ const LocationCard = ({ sx }: { sx?: SxProps<Theme> }) => {
             <Typography bold color="secondary" inline>
               영업중{` `}
             </Typography>
-            10am ~ 7pm
+            {`${formatTimeToAMPM(startTime)} ~ ${formatTimeToAMPM(endTime)}`}
           </Typography>
         </Stack>
       </Stack>
