@@ -11,7 +11,7 @@ const FixedBottomCTA = forwardRef(function FixedBottomCTA(props: ButtonProps, fo
         sx={{
           position: 'fixed',
           left: 0,
-          bottom: 80,
+          bottom: 60,
           width: '100%',
         }}
       >

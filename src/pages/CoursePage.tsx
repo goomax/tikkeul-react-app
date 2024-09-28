@@ -7,7 +7,8 @@ import Typography from '@/components/common/Typography';
 import { Help, Location, Phone, Time } from '@/components/icons';
 import Ticket from '@/components/Ticket';
 import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
-import { useDialog, useSelectableState } from '@/hooks';
+import { QUERY_PARAM_KEY } from '@/constants/key';
+import { useDialog, useQueryString, useSelectableState } from '@/hooks';
 import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
 import { usePickCourseToGroup } from '@/queries/usePickCourseToGroup';
 import { Toursite } from '@/schemas/types';
@@ -19,10 +20,12 @@ import { useParams } from 'react-router-dom';
 const CoursePage = () => {
   const theme = useTheme();
   const { courseId } = useParams<{ courseId: string }>();
+  const { getParams } = useQueryString();
+  const currentGroupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
   const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
   const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
   const { open, onOpen, onClose } = useDialog();
-  const { mutate: pickCourseToGroupMutate } = usePickCourseToGroup({ groupId: 1 });
+  const { mutate: pickCourseToGroupMutate } = usePickCourseToGroup({ groupId: Number(currentGroupId) });
 
   const onClickLocation = () => {
     onOpen();
@@ -53,7 +56,7 @@ const CoursePage = () => {
       <Stack
         gap="8px"
         sx={{
-          padding: '10px 0 100px 0',
+          padding: '10px 0 140px 0',
           backgroundColor: alpha(theme.palette.primary.light, 0.1),
           minHeight: '800px',
         }}
@@ -130,14 +133,17 @@ const CoursePage = () => {
           );
         })}
       </Stack>
-      <FixedBottomCTA
-        fullWidth
-        onClick={() => {
-          pickCourseToGroupMutate({ courseId: Number(courseId), groupId: 1 });
-        }}
-      >
-        내 코스에 담기
-      </FixedBottomCTA>
+
+      {currentGroupId && (
+        <FixedBottomCTA
+          fullWidth
+          onClick={() => {
+            pickCourseToGroupMutate({ courseId: Number(courseId), groupId: Number(currentGroupId) });
+          }}
+        >
+          내 코스에 담기
+        </FixedBottomCTA>
+      )}
       <TourSiteBottomSheet
         open={open}
         onClose={() => {

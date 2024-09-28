@@ -56,7 +56,7 @@ export const toggleCourseLike = ({ courseId, groupId }: { courseId: number; grou
 
 export const getCoursesByGroup = ({ type, groupId }: { type: 'recommend' | 'like'; groupId: number }) => {
   return apiClient.request<{
-    toursites: Course[];
+    courseList: Course[];
   }>({
     method: 'get',
     url: `/group/${groupId}/course`,

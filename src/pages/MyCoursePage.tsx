@@ -15,13 +15,18 @@ import { useToggle } from '@/hooks';
 import { useDeleteToursiteMutation } from '@/queries/useDeleteToursiteMutation';
 import { deleteToursite } from '@/apis/group';
 import { Fragment } from 'react';
+import { useGetUserQuery } from '@/queries/useGetUserQuery';
+import { mockArray } from '@/utils/generator';
+import ProtectedContents from '@/components/hoc/ProtectedContents';
 
 const MyCoursePage = () => {
   const theme = useTheme();
-  const { groupData } = useGetGroupQuery({ groupId: 1 });
+  const { currentGroup } = useGetUserQuery();
+
+  const { groupData } = useGetGroupQuery({ groupId: Number(currentGroup?.groupId) });
   const { value: isEditMode, toggle } = useToggle({ initialValue: false });
   const { mutate: deleteToursiteMutate } = useDeleteToursiteMutation({
-    groupId: 1,
+    groupId: currentGroup?.groupId ?? 1,
     onSuccess: () => {
       toggle();
     },
@@ -37,12 +42,10 @@ const MyCoursePage = () => {
         <Stack justifyContent="flex-start" alignItems="center" gap="16px" sx={{ padding: '19px 14px 43px 14px' }}>
           {groupData?.courseDetails && groupData?.courseDetails.length > 0 ? (
             <KakaoMap
-              coordinates={groupData?.courseDetails.flatMap((dayDetails) =>
-                dayDetails.map((toursite) => ({
-                  lat: toursite.latitude,
-                  lng: toursite.longitude,
-                })),
-              )}
+              coordinates={groupData?.courseDetails.map((toursite) => ({
+                lat: toursite.latitude,
+                lng: toursite.longitude,
+              }))}
               width="100%"
               height="260px"
               style={{ borderRadius: '5px' }}
@@ -79,7 +82,7 @@ const MyCoursePage = () => {
         </Stack>
       </Stack>
       <Stack>
-        <Stack flexDirection="row" justifyContent="flex-end" alignItems="center" sx={{ padding: '12px 14px ' }}>
+        <Stack flexDirection="row" justifyContent="flex-end" alignItems="center" sx={{ padding: '10px 14px ' }}>
           {isEditMode ? (
             <Button variant="text" sx={{ fontSize: '10px' }} onClick={toggle}>
               돌아가기 &gt;
@@ -90,63 +93,91 @@ const MyCoursePage = () => {
             </Button>
           )}
         </Stack>
-        {groupData?.courseDetails.map((day, dayIndex) => {
+        {mockArray(groupData?.duration ?? 0).map((_, index) => {
+          const day = index + 1;
+          const dayCourse = groupData?.courseDetails.filter((detail) => detail.day === day);
+
           return (
-            <Fragment key={dayIndex}>
-              <Stack sx={{ padding: '12px 14px' }}>
-                <Typography fontSize={12}>{dayIndex + 1}일차</Typography>
-                <Stack gap="20px">
+            <Fragment key={day}>
+              <Stack sx={{ padding: '8px 14px' }}>
+                <Typography fontSize={12}>{day}일차</Typography>
+                <Stack gap="12px">
                   {!isEditMode ? (
-                    <Stepper activeStep={-1} orientation="vertical">
-                      {day.map((toursite) => {
-                        return (
-                          <Step key={toursite.tourSiteId}>
-                            <StepLabel>
+                    <>
+                      {(dayCourse || []).length > 0 ? (
+                        <Stepper activeStep={-1} orientation="vertical">
+                          {(dayCourse ?? []).map((toursite) => {
+                            return (
+                              <Step key={toursite.tourSiteId}>
+                                <StepLabel>
+                                  <StepCard
+                                    name={toursite.name}
+                                    address={toursite.address}
+                                    recommendType={toursite.recommendType}
+                                    photoUrl={toursite.photoUrl}
+                                  />
+                                </StepLabel>
+                              </Step>
+                            );
+                          })}
+                        </Stepper>
+                      ) : (
+                        <Typography
+                          fontSize={11}
+                          color="grey"
+                          textAlign="center"
+                          sx={{
+                            marginBottom: '15px',
+                          }}
+                        >
+                          아직 담은 장소가 없어요!
+                        </Typography>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {(dayCourse || []).length > 0 ? (
+                        <>
+                          {(dayCourse ?? []).map((toursite) => (
+                            <Stack
+                              key={toursite.tourSiteId}
+                              flexDirection="row"
+                              justifyContent="space-between"
+                              alignItems="center"
+                            >
+                              <IconButton sx={{ cursor: 'grab' }}>
+                                <DragIndicatorIcon sx={{ color: 'grey.400' }} />
+                              </IconButton>
                               <StepCard
+                                key={toursite.tourSiteId}
                                 name={toursite.name}
                                 address={toursite.address}
                                 recommendType={toursite.recommendType}
                                 photoUrl={toursite.photoUrl}
                               />
-                            </StepLabel>
-                          </Step>
-                        );
-                      })}
-                    </Stepper>
-                  ) : (
-                    <>
-                      {day.map((toursite) => (
-                        <Stack
-                          key={toursite.tourSiteId}
-                          flexDirection="row"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <IconButton sx={{ cursor: 'grab' }}>
-                            <DragIndicatorIcon sx={{ color: 'grey.400' }} />
-                          </IconButton>
-                          <StepCard
-                            key={toursite.tourSiteId}
-                            name={toursite.name}
-                            address={toursite.address}
-                            recommendType={toursite.recommendType}
-                            photoUrl={toursite.photoUrl}
-                          />
-                          <IconButton
-                            onClick={() => {
-                              onDelete({ groupId: 1, toursiteId: toursite.tourSiteId });
-                            }}
-                          >
-                            <DeleteIcon sx={{ color: theme.palette.grey[400] }} />
-                          </IconButton>
-                        </Stack>
-                      ))}
+                              <IconButton
+                                onClick={() => {
+                                  onDelete({ groupId: Number(currentGroup?.groupId), toursiteId: toursite.tourSiteId });
+                                }}
+                              >
+                                <DeleteIcon sx={{ color: theme.palette.grey[400] }} />
+                              </IconButton>
+                            </Stack>
+                          ))}
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </>
                   )}
-                  {!isEditMode && <Button variant="outlined">장소 추가하기</Button>}
                 </Stack>
+                <ProtectedContents hide={isEditMode}>
+                  <Button variant="outlined">장소 추가하기</Button>
+                </ProtectedContents>
               </Stack>
-              {dayIndex + 1 !== groupData?.courseDetails.length && <Divider />}
+              <ProtectedContents hide={day === groupData?.duration}>
+                <Divider />
+              </ProtectedContents>
             </Fragment>
           );
         })}
