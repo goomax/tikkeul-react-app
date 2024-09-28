@@ -16,6 +16,7 @@ import { Phone, Time, Location } from '@/components/icons';
 import { formatTimeToAMPM } from '@/utils/dateHelper';
 import { queryClient } from '@/queries/queryClient';
 import { exportCourse } from '@/apis/group';
+import { notifyToast } from '@/utils/subject';
 
 const MyCourseResultPage = () => {
   const { currentGroup } = useGetUserQuery();
@@ -38,6 +39,11 @@ const MyCourseResultPage = () => {
       .then((code) => {
         const shareUrl = `${window.location.origin}/share?day=1&token=${code}`;
         navigator.clipboard.writeText(shareUrl);
+
+        notifyToast({
+          message: 'URL 복사 완료: 채팅방에 공유하세요!',
+          type: 'success',
+        });
 
         console.log('복사완료', shareUrl);
       });

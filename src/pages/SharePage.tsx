@@ -42,7 +42,7 @@ const SharePage = () => {
         navigator.clipboard.writeText(shareUrl);
 
         notifyToast({
-          message: '🚀 URL 복사 완료: 채팅방에 공유하세요!',
+          message: 'URL 복사 완료: 채팅방에 공유하세요!',
           type: 'success',
         });
       });

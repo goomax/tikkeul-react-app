@@ -2,6 +2,10 @@ import { ToastObserverParam, ToastSubject } from '@/utils/subject';
 import { SnackbarContent, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import InfoIcon from '@mui/icons-material/Info';
+import Typography from './common/Typography';
 
 export interface IToast extends ToastObserverParam {
   id: number;
@@ -49,9 +53,46 @@ const ToastsObserver = () => {
         zIndex: '1000',
       }}
     >
-      {toasts.map((toast) => (
-        <SnackbarContent key={toast.id} message={toast.message} />
-      ))}
+      {toasts.map((toast) => {
+        let backgroundColor;
+        let icon;
+
+        switch (toast.type) {
+          case 'error':
+            backgroundColor = 'red';
+            icon = <ErrorIcon sx={{ width: '20px', height: '20px', marginRight: '8px', color: 'white' }} />;
+            break;
+          case 'success':
+            backgroundColor = 'green';
+            icon = <CheckCircleIcon sx={{ width: '20px', height: '20px', marginRight: '8px', color: 'white' }} />;
+            break;
+
+          default:
+            backgroundColor = 'blue';
+            icon = <InfoIcon sx={{ width: '20px', height: '20px', marginRight: '8px', color: 'white' }} />;
+            break;
+        }
+
+        return (
+          <SnackbarContent
+            key={toast.id}
+            message={
+              <Stack direction="row" alignItems="center">
+                {icon}
+                <Typography color="white" fontSize={14}>
+                  {toast.message}
+                </Typography>
+              </Stack>
+            }
+            sx={{
+              backgroundColor,
+              borderRadius: '4px',
+              marginBottom: '10px', // 여러 Toast가 있을 때 간격을 줌
+              padding: '8px 16px',
+            }}
+          />
+        );
+      })}
     </Stack>,
     document.body,
   );
