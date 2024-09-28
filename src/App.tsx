@@ -4,6 +4,7 @@ import ThemeProvider from './components/common/ThemeProvider';
 import { GlobalPortal } from './GlobalProtal';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/queries/queryClient';
+import ToastsObserver from './components/ToastsObserver';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         />
         <QueryClientProvider client={queryClient}>
           <DynamicRouter />
+          <ToastsObserver />
         </QueryClientProvider>
       </ThemeProvider>
     </GlobalPortal.Provider>

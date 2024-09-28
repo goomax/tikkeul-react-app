@@ -16,6 +16,8 @@ import {
   ProfilePage,
   SearchFormPage,
   DayFormPage,
+  MyCourseResultPage,
+  SharePage,
 } from '@/pages';
 import ScrollToTop from './components/ScrollToTop';
 import { FormDataProvider } from './FormDataProvider';
@@ -48,6 +50,8 @@ function DynamicRouter() {
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/my-course" element={<MyCoursePage />} />
+            <Route path="/my-course-result" element={<MyCourseResultPage />} />
+            <Route path="/share" element={<SharePage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Routes>

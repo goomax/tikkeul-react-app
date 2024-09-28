@@ -11,16 +11,18 @@ import { Group } from '@/schemas/types';
 import { Divider, Skeleton, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useToggle } from '@/hooks';
+import { useInternalRouter, useToggle } from '@/hooks';
 import { useDeleteToursiteMutation } from '@/queries/useDeleteToursiteMutation';
 import { deleteToursite } from '@/apis/group';
 import { Fragment } from 'react';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { mockArray } from '@/utils/generator';
 import ProtectedContents from '@/components/hoc/ProtectedContents';
+import { QUERY_PARAM_KEY } from '@/constants/key';
 
 const MyCoursePage = () => {
   const theme = useTheme();
+  const router = useInternalRouter();
   const { currentGroup } = useGetUserQuery();
 
   const { groupData } = useGetGroupQuery({ groupId: Number(currentGroup?.groupId) });
@@ -105,7 +107,15 @@ const MyCoursePage = () => {
                   {!isEditMode ? (
                     <>
                       {(dayCourse || []).length > 0 ? (
-                        <Stepper activeStep={-1} orientation="vertical">
+                        <Stepper
+                          activeStep={-1}
+                          orientation="vertical"
+                          sx={{
+                            '& .MuiStepIcon-text': {
+                              fill: 'white',
+                            },
+                          }}
+                        >
                           {(dayCourse ?? []).map((toursite) => {
                             return (
                               <Step key={toursite.tourSiteId}>
@@ -172,7 +182,16 @@ const MyCoursePage = () => {
                   )}
                 </Stack>
                 <ProtectedContents hide={isEditMode}>
-                  <Button variant="outlined">장소 추가하기</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      router.push(
+                        `/search-form?${QUERY_PARAM_KEY.TARGET_ID}=${currentGroup?.groupId}&${QUERY_PARAM_KEY.TARGET_DAY}=${day}`,
+                      );
+                    }}
+                  >
+                    장소 추가하기
+                  </Button>
                 </ProtectedContents>
               </Stack>
               <ProtectedContents hide={day === groupData?.duration}>
@@ -184,7 +203,14 @@ const MyCoursePage = () => {
 
         <Stack sx={{ padding: '12px 14px 100px 14px' }}>
           {!isEditMode && (
-            <Button variant="contained" fullWidth sx={{ height: '45px' }}>
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ height: '45px' }}
+              onClick={() => {
+                router.push(`/my-course-result?${QUERY_PARAM_KEY.DAY}=1`);
+              }}
+            >
               이대로 여행 시작하기
             </Button>
           )}

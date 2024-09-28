@@ -5,6 +5,9 @@ export { default as LoginPage } from './LoginPage';
 export { default as MyCoursePage } from './MyCoursePage';
 export { default as ProfilePage } from './ProfilePage';
 export { default as SearchFormPage } from './SearchFormPage';
+export { default as MyCourseResultPage } from './MyCourseResultPage';
+export { default as SharePage } from './SharePage';
+
 export { default as HeadcountFormPage } from './CreateGroup/HeadcountFormPage';
 export { default as OnboardingPage } from './CreateGroup/OnboardingPage';
 export { default as PreferenceFormPage } from './CreateGroup/PreferenceFormPage';

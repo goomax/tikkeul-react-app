@@ -103,21 +103,16 @@ export const addToursiteToCourse = ({
   groupId,
   day,
   toursiteId,
-  tourSites,
 }: {
   groupId: number;
   day: number;
   toursiteId: number;
-  tourSites: number[][];
 }) => {
   return apiClient.request({
     method: 'post',
     url: `/group/${groupId}/toursite/${toursiteId}`,
     params: {
       day,
-    },
-    data: {
-      tourSites,
     },
   });
 };
@@ -136,7 +131,9 @@ export const deleteToursite = ({ groupId, toursiteId }: { groupId: number; tours
  * 그룹 코스 내보내기
  */
 export const exportCourse = ({ groupId }: { groupId: number }) => {
-  return apiClient.request({
+  return apiClient.request<{
+    code: string;
+  }>({
     method: 'get',
     url: `/group/${groupId}/export`,
   });
@@ -146,7 +143,7 @@ export const exportCourse = ({ groupId }: { groupId: number }) => {
  * 그룹 코스 불러오기
  */
 export const importCourse = ({ token }: { token: string }) => {
-  return apiClient.request({
+  return apiClient.request<Group>({
     method: 'get',
     url: `/import`,
     params: {

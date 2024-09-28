@@ -24,7 +24,7 @@ const useInput = <T,>(initialValue: T, debounceDuration = 0) => {
     }
   }, [value, debounceDuration]);
 
-  return { value, onChange, onInit, debouncedValue };
+  return { value, onChange, onInit, debouncedValue, setValue };
 };
 
 export default useInput;
