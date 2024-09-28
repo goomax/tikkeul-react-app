@@ -1,7 +1,6 @@
 import FixedBottomCTA from '@/components/common/FixedBottomCTA';
 import RatingInput from '@/components/common/RatingInput';
 import Typography from '@/components/common/Typography';
-import { useInternalRouter } from '@/hooks';
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,7 +12,6 @@ import { createGroup } from '@/apis/group';
 type PreferenceField = `preferences.${keyof CreateGroupFormData['preferences']}`;
 
 const PreferenceFormPage = () => {
-  const router = useInternalRouter();
   const { formData: createGroupFormData } = useFormContext<CreateGroupFormData>();
   const {
     getValues,
@@ -45,7 +43,6 @@ const PreferenceFormPage = () => {
     };
 
     createGroupMutate(submitData as Parameters<typeof createGroup>[0]);
-    router.push('/onboarding');
   };
 
   const preferencesValue = watch('preferences');

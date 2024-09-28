@@ -43,7 +43,7 @@ const UserRecommendContainer = () => {
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Typography fontSize={14} lineHeight="21px" bold>
           <Typography color="primary" inline>
-            열정적인 활동가들
+            {findGroupById(Number(groupId))?.groupName}
           </Typography>
           에게 딱 맞는 혜택 받기
         </Typography>

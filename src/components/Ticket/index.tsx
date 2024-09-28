@@ -27,6 +27,7 @@ interface TicketHeaderProps {
     lat: number;
     lng: number;
   }[];
+  noZoom?: boolean;
 }
 
 interface TicketBottomProps {
@@ -55,7 +56,7 @@ const Ticket = {
       </Stack>
     );
   },
-  Header: ({ label, title, description, coordinates }: TicketHeaderProps) => {
+  Header: ({ label, title, description, coordinates, noZoom = false }: TicketHeaderProps) => {
     const { open, onOpen, onClose } = useDialog();
 
     return (
@@ -89,23 +90,25 @@ const Ticket = {
                 marginTop: '10px',
               }}
             />
-            <IconButton
-              size="small"
-              onClick={onOpen}
-              sx={{
-                position: 'absolute',
-                top: '8px',
-                right: '1px',
-                zIndex: 2,
-              }}
-            >
-              <ZoomOutMapIcon
+            {!noZoom && (
+              <IconButton
+                size="small"
+                onClick={onOpen}
                 sx={{
-                  width: '19px',
-                  height: '19px',
+                  position: 'absolute',
+                  top: '8px',
+                  right: '1px',
+                  zIndex: 2,
                 }}
-              />
-            </IconButton>
+              >
+                <ZoomOutMapIcon
+                  sx={{
+                    width: '19px',
+                    height: '19px',
+                  }}
+                />
+              </IconButton>
+            )}
           </div>
         </Stack>
         <FullScreenMap open={open} onClose={onClose} />

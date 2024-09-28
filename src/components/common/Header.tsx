@@ -2,13 +2,12 @@ import { Avatar, Stack } from '@mui/material';
 import IconButton from './IconButton';
 import { Logo, ShoppingCart } from '../icons';
 import { useInternalRouter } from '@/hooks';
+import { useGetUserQuery } from '@/queries/useGetUserQuery';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 
 const Header = () => {
   const router = useInternalRouter();
-
-  const onClickAvatar = () => {
-    router.push('/login');
-  };
+  const { isLogin } = useGetUserQuery();
 
   return (
     <header>
@@ -21,15 +20,21 @@ const Header = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <IconButton>
+        <IconButton onClick={() => router.push('/')}>
           <Logo />
         </IconButton>
-        <Stack flexDirection="row" alignItems="center" gap="2px">
-          <Avatar sx={{ width: '22px', height: '22px' }} onClick={onClickAvatar} />
-          <IconButton textBadge="3">
-            <ShoppingCart />
+        {isLogin ? (
+          <Stack flexDirection="row" alignItems="center" gap="2px">
+            <Avatar sx={{ width: '22px', height: '22px' }} />
+            <IconButton textBadge="3">
+              <ShoppingCart />
+            </IconButton>
+          </Stack>
+        ) : (
+          <IconButton size="small" sx={{ height: '24px' }} onClick={() => router.push('/login')}>
+            <LoginOutlinedIcon />
           </IconButton>
-        </Stack>
+        )}
       </Stack>
     </header>
   );

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 export const useGetCoursesByGroupQuery = ({ groupId, type }: Parameters<typeof getCoursesByGroup>[0]) => {
   const { data: courseList = [], ...others } = useQuery({
     queryKey: [QUERY_KEY.COURSES, type, groupId],
-    queryFn: () => getCoursesByGroup({ type, groupId }).then((res) => res.data.toursites),
+    queryFn: () => getCoursesByGroup({ type, groupId }).then((res) => res.data.courseList),
   });
 
   return { courseList, ...others };

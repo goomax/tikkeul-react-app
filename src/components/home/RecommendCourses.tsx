@@ -6,6 +6,7 @@ import ImageWithSkeleton from '../common/ImageWithSkeleton';
 import { useInternalRouter } from '@/hooks';
 import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
 import { Course } from '@/schemas/types';
+import { useGetUserQuery } from '@/queries/useGetUserQuery';
 
 interface RecommendCoursesProps {
   courses: Course[];
@@ -14,8 +15,10 @@ interface RecommendCoursesProps {
 const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
   const router = useInternalRouter();
 
-  const onClickCourse = (courseId: number) => {
-    router.push(`/courses/${courseId}`);
+  const { currentGroup } = useGetUserQuery();
+
+  const onClickCourse = (courseId: number, groupId?: number) => {
+    router.push(`/courses/${courseId}?groupId=${groupId}`);
   };
 
   return (
@@ -24,6 +27,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
         boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
         borderRadius: '12px',
         minHeight: '396px',
+        backgroundColor: 'white',
       }}
     >
       {Array.isArray(courses) &&
@@ -44,11 +48,11 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
                 },
               }}
               onClick={() => {
-                onClickCourse(course.id);
+                onClickCourse(course.id, currentGroup?.groupId);
               }}
             >
               <ImageWithSkeleton
-                src={course.tourSites[0].photoUrls[0]}
+                src={course?.tourSites ? course.tourSites[0].photoUrls[0] : ''}
                 width={80}
                 height={80}
                 alt={course.name}
@@ -62,7 +66,11 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
               >
                 {' '}
                 <Stack flexDirection="row" gap="4px">
-                  <Chip radiusVariant="square" color="default" label={formatToursiteType(course.tourSites[0].type)} />
+                  <Chip
+                    radiusVariant="square"
+                    color="default"
+                    label={formatToursiteType(course.tourSites ? course.tourSites[0].type : 'restaurant')}
+                  />
                 </Stack>
                 <Stack gap="1px">
                   <Typography fontSize={12} bold noWrap>
