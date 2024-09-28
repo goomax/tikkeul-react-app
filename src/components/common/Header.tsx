@@ -23,7 +23,7 @@ const Header = () => {
         <IconButton onClick={() => router.push('/')}>
           <Logo />
         </IconButton>
-        {!isLogin ? (
+        {isLogin ? (
           <Stack flexDirection="row" alignItems="center" gap="2px">
             <Avatar sx={{ width: '22px', height: '22px' }} />
             <IconButton textBadge="3">

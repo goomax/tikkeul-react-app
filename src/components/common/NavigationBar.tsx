@@ -1,6 +1,6 @@
 import { SVGProps, MouseEvent } from 'react';
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Stack, useTheme } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Box, Dialog, DialogContent, Stack, useTheme } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { Heart, Home, Map, User } from '../icons';
 import Typography from './Typography';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
