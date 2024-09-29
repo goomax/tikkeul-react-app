@@ -9,7 +9,7 @@ export const DUMMY_OF_POPULAR_SEARCHES = [
   '속초 숙소',
 ];
 
-export const DUMMY_OF_RECOMMENDED_SEARCHES = ['열정적인 활동가', '양양 맛집', '로컬 맛집', '분위기 좋은 속초 카페'];
+export const DUMMY_OF_RECOMMENDED_SEARCHES = ['맛집', '온천', '해수욕장', '일출'];
 
 export const DUMMY_OF_BENEFITS = [
   {
