@@ -154,6 +154,7 @@ const ProfilePage = () => {
           </Button>
           <Button
             variant="outlined"
+            color="error"
             onClick={() => {
               withdrawMutate();
             }}
