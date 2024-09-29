@@ -6,6 +6,7 @@ export const useGetCourseByCourseIdQuery = ({ courseId }: Parameters<typeof getC
   const { data: courseData, ...others } = useQuery({
     queryKey: [QUERY_KEY.COURSES, courseId],
     queryFn: () => getCourse({ courseId }).then((res) => res.data),
+    enabled: !!courseId,
   });
 
   return { courseData, ...others };
