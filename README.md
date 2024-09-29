@@ -1,6 +1,6 @@
 # Tikkeul React Web
 
-#### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
+### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
 
 ## 0. 미리보기
 
@@ -41,17 +41,6 @@ yarn dev
 yarn sb
 ```
 
-#### 기타 커스텀 스크립트
-
-```bash
-yarn gen:icon {컴포넌트 이름}  
-# SVG 아이콘 컴포넌트 템플릿 생성
-# e.g. yarn gen:icon ArrowTop  
-
-yarn gen:index {타겟경로}  
-# 디렉토리 기준 배럴 파일 생성
-# e.g. yarn gen:index src/components/icons
-```
 
 #### 환경변수
 ```
@@ -162,7 +151,7 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 ### 4.4. 코스 담기 및 공유  
 
-#### 4.3.1. 코스 담기 및 편집
+#### 4.4.1. 코스 담기 및 편집
 
 <img width="898" alt="image3" src="./docs/image3.png">
 
@@ -177,7 +166,7 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 이러한 흐름을 통해 사용자는 여행 코스를 유연하게 편집하고, 준비가 되면 바로 여행을 시작할 수 있습니다.
 
-#### 4.3.2. 코스 공유하기
+#### 4.4.2. 코스 공유하기
 <img width="788" alt="image4" src="./docs/image4.png">
 
 여행을 시작하면 사용자는 코스를 공유할 수 있습니다. 클라이언트에서 코스를 공유하는 기능은 다음과 같은 프로세스로 이루어집니다:
