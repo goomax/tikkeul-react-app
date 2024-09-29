@@ -10,6 +10,7 @@ import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
 import { QUERY_PARAM_KEY } from '@/constants/key';
 import { useDialog, useQueryString, useSelectableState } from '@/hooks';
 import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
+import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { usePickCourseToGroup } from '@/queries/usePickCourseToGroup';
 import { Toursite } from '@/schemas/types';
 import { formatTimeToAMPM } from '@/utils/dateHelper';
@@ -21,6 +22,7 @@ const CoursePage = () => {
   const theme = useTheme();
   const { courseId } = useParams<{ courseId: string }>();
   const { getParams } = useQueryString();
+  const { isLogin, hasGroup } = useGetUserQuery();
   const currentGroupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
   const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
   const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
@@ -134,7 +136,7 @@ const CoursePage = () => {
         })}
       </Stack>
 
-      {currentGroupId && (
+      {currentGroupId && isLogin && hasGroup && (
         <FixedBottomCTA
           fullWidth
           onClick={() => {
