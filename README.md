@@ -9,7 +9,6 @@
   <img src="https://github.com/user-attachments/assets/de00ac5c-7b5d-4c71-b246-e66058d72e61" alt="미리보기" style="width: 20%;">
   <img src="https://github.com/user-attachments/assets/8e47ed75-5b1c-4e04-9113-5851b6111273" alt="미리보기" style="width: 20%;">
   <img src="https://github.com/user-attachments/assets/9aa337b5-e628-4ef9-b7eb-5090b286912f" alt="미리보기" style="width: 20%;">
-  <img src="https://github.com/user-attachments/assets/6495b438-2597-42a3-bbd4-64907550b61f" alt="미리보기" style="width: 20%;">
 </div>
 
 ## 1. Getting Started
