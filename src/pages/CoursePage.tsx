@@ -4,11 +4,12 @@ import FixedBottomCTA from '@/components/common/FixedBottomCTA';
 import ImageWithSkeleton from '@/components/common/ImageWithSkeleton';
 import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
+import ProtectedContents from '@/components/hoc/ProtectedContents';
 import { Help, Location, Phone, Time } from '@/components/icons';
 import Ticket from '@/components/Ticket';
 import TourSiteBottomSheet from '@/components/TourSiteBottomSheet';
 import { QUERY_PARAM_KEY } from '@/constants/key';
-import { useDialog, useQueryString, useSelectableState } from '@/hooks';
+import { useDialog, useQueryString } from '@/hooks';
 import { useGetCourseByCourseIdQuery } from '@/queries/useGetCourseByCourseIdQuery';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { usePickCourseToGroup } from '@/queries/usePickCourseToGroup';
@@ -25,13 +26,8 @@ const CoursePage = () => {
   const { isLogin, hasGroup } = useGetUserQuery();
   const currentGroupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
   const { courseData } = useGetCourseByCourseIdQuery({ courseId: Number(courseId) });
-  const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
-  const { open, onOpen, onClose } = useDialog();
-  const { mutate: pickCourseToGroupMutate } = usePickCourseToGroup({ groupId: Number(currentGroupId) });
 
-  const onClickLocation = () => {
-    onOpen();
-  };
+  const { mutate: pickCourseToGroupMutate } = usePickCourseToGroup({ groupId: Number(currentGroupId) });
 
   return (
     <PageTransformWrapper>
@@ -63,80 +59,11 @@ const CoursePage = () => {
           minHeight: '800px',
         }}
       >
-        {/* 장소 카드 */}
         {courseData?.tourSites.map((toursite) => {
-          return (
-            <Stack
-              key={toursite.tourSiteId}
-              gap="1px"
-              sx={{
-                backgroundColor: theme.palette.background.default,
-                padding: '8px 14px',
-                boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
-              }}
-              onClick={() => {
-                onSelect(toursite);
-                onClickLocation();
-              }}
-            >
-              <Carousel
-                gap="12px"
-                sx={{
-                  marginBottom: '5px',
-                  minHeight: '160px',
-                }}
-              >
-                {toursite.photoUrls.map((url, index) => {
-                  return (
-                    <ImageWithSkeleton
-                      key={index}
-                      src={url}
-                      width={240}
-                      height={160}
-                      alt={toursite.name + (index + 1)}
-                      style={{
-                        borderRadius: '5px',
-                      }}
-                    />
-                  );
-                })}
-              </Carousel>
-              <Stack flexDirection="row" gap="12px">
-                <Chip label={formatToursiteType(toursite.type)} radiusVariant="square" color="default" />
-              </Stack>
-              <Typography bold fontSize={14}>
-                {toursite.name}
-              </Typography>
-              <Typography fontSize={12} display="inline-flex" alignItems="center" gap="8px">
-                예상 평균 금액{' '}
-                <Typography fontSize={16} bold color="secondary" inline>
-                  {commaizeNumber(toursite.cost)}원
-                </Typography>
-                <Help />
-              </Typography>
-              <Stack flexDirection="row" gap="7px" alignItems="center">
-                <Location />
-                <Typography fontSize={10}>{toursite.address}</Typography>
-              </Stack>
-              <Stack flexDirection="row" gap="7px" alignItems="center">
-                <Phone />
-                <Typography fontSize={10}>{toursite.phone}</Typography>
-              </Stack>
-              <Stack flexDirection="row" gap="7px" alignItems="center">
-                <Time />
-                <Typography fontSize={10}>
-                  <Typography bold color="secondary" inline>
-                    영업중{` `}
-                  </Typography>
-                  {`${formatTimeToAMPM(toursite.startTime)} ~ ${formatTimeToAMPM(toursite.endTime)}`}
-                </Typography>
-              </Stack>
-            </Stack>
-          );
+          return <LocationCard key={toursite.tourSiteId} toursite={toursite} />;
         })}
       </Stack>
-
-      {currentGroupId && isLogin && hasGroup && (
+      <ProtectedContents hide={!(currentGroupId && isLogin && hasGroup)}>
         <FixedBottomCTA
           fullWidth
           onClick={() => {
@@ -145,17 +72,83 @@ const CoursePage = () => {
         >
           내 코스에 담기
         </FixedBottomCTA>
-      )}
-      <TourSiteBottomSheet
-        open={open}
-        onClose={() => {
-          onClose();
-          onReset();
-        }}
-        toursite={selectedState}
-      />
+      </ProtectedContents>
     </PageTransformWrapper>
   );
 };
 
 export default CoursePage;
+
+const LocationCard = ({ toursite }: { toursite: Toursite }) => {
+  const theme = useTheme();
+  const { open, onOpen, onClose } = useDialog();
+
+  return (
+    <>
+      <Stack
+        key={toursite.tourSiteId}
+        gap="1px"
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          padding: '8px 14px',
+          boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.12)',
+        }}
+        onClick={onOpen}
+      >
+        <Carousel
+          gap="12px"
+          sx={{
+            marginBottom: '5px',
+            minHeight: '160px',
+          }}
+        >
+          {toursite.photoUrls.map((url, index) => {
+            return (
+              <ImageWithSkeleton
+                key={index}
+                src={url}
+                width={240}
+                height={160}
+                alt={toursite.name + (index + 1)}
+                style={{
+                  borderRadius: '5px',
+                }}
+              />
+            );
+          })}
+        </Carousel>
+        <Stack flexDirection="row" gap="12px">
+          <Chip label={formatToursiteType(toursite.type)} radiusVariant="square" color="default" />
+        </Stack>
+        <Typography bold fontSize={14}>
+          {toursite.name}
+        </Typography>
+        <Typography fontSize={12} display="inline-flex" alignItems="center" gap="8px">
+          예상 평균 금액{' '}
+          <Typography fontSize={16} bold color="secondary" inline>
+            {commaizeNumber(toursite.cost)}원
+          </Typography>
+          <Help />
+        </Typography>
+        <Stack flexDirection="row" gap="7px" alignItems="center">
+          <Location />
+          <Typography fontSize={10}>{toursite.address}</Typography>
+        </Stack>
+        <Stack flexDirection="row" gap="7px" alignItems="center">
+          <Phone />
+          <Typography fontSize={10}>{toursite.phone}</Typography>
+        </Stack>
+        <Stack flexDirection="row" gap="7px" alignItems="center">
+          <Time />
+          <Typography fontSize={10}>
+            <Typography bold color="secondary" inline>
+              영업중{` `}
+            </Typography>
+            {`${formatTimeToAMPM(toursite.startTime)} ~ ${formatTimeToAMPM(toursite.endTime)}`}
+          </Typography>
+        </Stack>
+      </Stack>
+      <TourSiteBottomSheet open={open} onClose={onClose} toursite={toursite} />
+    </>
+  );
+};
