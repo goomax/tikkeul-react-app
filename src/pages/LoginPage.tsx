@@ -26,7 +26,7 @@ const LoginPage = () => {
           해 봐요
         </Typography>
       </Stack>
-      <ImageWithSkeleton src={LogoImg} />
+      <ImageWithSkeleton src={LogoImg} width={180} height={180} />
       <Stack sx={{ width: '100%' }} gap="5px">
         <Button
           fullWidth
