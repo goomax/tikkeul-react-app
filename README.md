@@ -4,11 +4,21 @@
 
 ## 0. 미리보기
 
-<div style="display: flex; flex-wrap: nowrap; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/17c7130b-e106-4a87-bccd-70be7f6f4dd0" alt="미리보기" style="width: 20%;">
-  <img src="https://github.com/user-attachments/assets/de00ac5c-7b5d-4c71-b246-e66058d72e61" alt="미리보기" style="width: 20%;">
-  <img src="https://github.com/user-attachments/assets/8e47ed75-5b1c-4e04-9113-5851b6111273" alt="미리보기" style="width: 20%;">
-  <img src="https://github.com/user-attachments/assets/9aa337b5-e628-4ef9-b7eb-5090b286912f" alt="미리보기" style="width: 20%;">
+<div style="display: flex; flex-wrap: nowrap; gap: 5px;">
+  <img src="./docs/미리보기_스마트폰_001.png" alt="미리보기" style="width: 32%;">
+  <img src="./docs/미리보기_스마트폰_002.png" alt="미리보기" style="width: 32%;">
+  <img src="./docs/미리보기_스마트폰_003.png" alt="미리보기" style="width: 32%;">
+</div>
+
+<div style="display: flex; flex-wrap: nowrap; gap: 5px;">
+  <img src="./docs/미리보기_스마트폰_004.png" alt="미리보기" style="width: 32%;">
+  <img src="./docs/미리보기_스마트폰_005.png" alt="미리보기" style="width: 32%;">
+  <img src="./docs/미리보기_스마트폰_006.png" alt="미리보기" style="width: 32%;">
+</div>
+
+<div style="display: flex; flex-wrap: nowrap; gap: 5px;">
+   <img src="./docs/미리보기_스마트폰_007.png" alt="미리보기" style="width: 32%;"> 
+   <img src="./docs/미리보기_스마트폰_008.png" alt="미리보기" style="width: 32%;">
 </div>
 
 ## 1. Getting Started
@@ -91,13 +101,16 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 ## 3. 서비스 아키텍쳐
 
+![Tikkeul](./docs/Tikkeul.png)
+
+
 ## 4. 기능 구현 내용
 
 ### 4.1. 회원 관련
 
 
 #### 4.1.1. 로그인
-<img width="779" alt="image8" src="https://github.com/user-attachments/assets/6a2c3902-4200-417f-9256-5cbcddc0f885">
+<img width="779" alt="image8" src="./docs/image8.png">
 
 카카오 OAuth 로그인 기능은 다음과 같이 구현되었습니다:
 
@@ -114,7 +127,7 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 #### 4.1.2. 회원가입
 
-<img width="896" alt="image" src="https://github.com/user-attachments/assets/b98311c1-31a6-4993-8744-a1f1a74e3034">
+<img width="896" alt="image" src="./docs/image.png">
 
 회원가입은 최초 로그인 여부에 따라 진행됩니다.
 
@@ -134,10 +147,9 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 ### 4.3. 그룹 생성 및 추천 코스
 
-#### 4.3.1. 추천시스템
-#### 4.3.2. 코스 경로 찾기
+#### 4.3.1. 코스 경로 찾기
 
-<img width="790" alt="image2" src="https://github.com/user-attachments/assets/4bcb53ed-158e-479e-99f7-0b6683e2330d">
+<img width="790" alt="image2" src="./docs/image2.png">
 
 1. **코스 데이터 요청 및 응답**:
     - 클라이언트는 서버에 추천 경로와 관련된 데이터를 요청하고 서버는 그에 맞는 코스 데이터를 응답합니다. 이 데이터는 사용자의 요구에 맞는 경로 추천 정보를 포함하고 있습니다.
@@ -152,7 +164,7 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 #### 4.3.1. 코스 담기 및 편집
 
-<img width="898" alt="image3" src="https://github.com/user-attachments/assets/cdd5694b-3b8d-440f-a472-4cf90906a426">
+<img width="898" alt="image3" src="./docs/image3.png">
 
 사용자가 코스를 담은 이후의 흐름입니다:
 
@@ -166,7 +178,7 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 이러한 흐름을 통해 사용자는 여행 코스를 유연하게 편집하고, 준비가 되면 바로 여행을 시작할 수 있습니다.
 
 #### 4.3.2. 코스 공유하기
-<img width="788" alt="image4" src="https://github.com/user-attachments/assets/be4e7734-8375-4763-903f-9e7e40b9b9fb">
+<img width="788" alt="image4" src="./docs/image4.png">
 
 여행을 시작하면 사용자는 코스를 공유할 수 있습니다. 클라이언트에서 코스를 공유하는 기능은 다음과 같은 프로세스로 이루어집니다:
 
