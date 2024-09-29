@@ -97,8 +97,7 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 
 #### 4.1.1. 로그인
-
-![diagram (4)](https://github.com/user-attachments/assets/9b301010-4931-4fe9-808d-2140d02cc1df)
+<img width="779" alt="image8" src="https://github.com/user-attachments/assets/6a2c3902-4200-417f-9256-5cbcddc0f885">
 
 카카오 OAuth 로그인 기능은 다음과 같이 구현되었습니다:
 
