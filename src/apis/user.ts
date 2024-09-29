@@ -28,3 +28,23 @@ export const getUser = () => {
     url: '/user',
   });
 };
+
+/**
+ * 로그아웃
+ */
+export const postLogout = () => {
+  return apiClient.request({
+    method: 'post',
+    url: '/auth/logout',
+  });
+};
+
+/**
+ * 회원탈퇴
+ */
+export const postWithdraw = () => {
+  return apiClient.request({
+    method: 'post',
+    url: '/auth/withdraw',
+  });
+};

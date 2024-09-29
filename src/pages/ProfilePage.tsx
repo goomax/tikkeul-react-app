@@ -3,6 +3,8 @@ import PageTransformWrapper from '@/components/common/PageTransformWrapper';
 import Typography from '@/components/common/Typography';
 import { useInternalRouter } from '@/hooks';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
+import { useLogoutMutation } from '@/queries/useLogoutMutation';
+import { useWithdrawMutation } from '@/queries/useWithdrawMutation';
 import { Avatar, Stack, useTheme } from '@mui/material';
 
 const ProfilePage = () => {
@@ -13,6 +15,9 @@ const ProfilePage = () => {
   const onClickRetest = () => {
     router.push('/headcount-form');
   };
+
+  const { mutate: logoutMutate } = useLogoutMutation();
+  const { mutate: withdrawMutate } = useWithdrawMutation();
 
   return (
     <PageTransformWrapper>
@@ -139,10 +144,20 @@ const ProfilePage = () => {
           </Stack>
         </Stack>
         <Stack gap="10px">
-          <Button variant="outlined" sx={{}}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              logoutMutate();
+            }}
+          >
             로그아웃
           </Button>
-          <Button disabled variant="outlined" sx={{}}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              withdrawMutate();
+            }}
+          >
             회원 탈퇴
           </Button>
         </Stack>
