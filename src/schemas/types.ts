@@ -37,5 +37,6 @@ export interface Course {
   cost: number;
   picked: number;
   liked: number;
+  courseType: string;
   tourSites: Toursite[];
 }

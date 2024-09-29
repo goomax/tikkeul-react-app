@@ -32,14 +32,16 @@ const HomePage = () => {
       <ProtectedContents
         hide={!hasGroup}
         alt={
-          <FixedBottomCTA
-            fullWidth
-            onClick={() => {
-              router.push('/headcount-form');
-            }}
-          >
-            그룹 생성하러가기
-          </FixedBottomCTA>
+          isLogin ? (
+            <FixedBottomCTA
+              fullWidth
+              onClick={() => {
+                router.push('/headcount-form');
+              }}
+            >
+              그룹 생성하러가기
+            </FixedBottomCTA>
+          ) : null
         }
       >
         <UserRecommendContainer />

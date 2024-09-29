@@ -116,9 +116,9 @@ const MyCoursePage = () => {
                             },
                           }}
                         >
-                          {(dayCourse ?? []).map((toursite) => {
+                          {(dayCourse ?? []).map((toursite, index) => {
                             return (
-                              <Step key={toursite.tourSiteId}>
+                              <Step key={day + toursite.tourSiteId + index}>
                                 <StepLabel>
                                   <StepCard
                                     name={toursite.name}
@@ -150,7 +150,7 @@ const MyCoursePage = () => {
                         <>
                           {(dayCourse ?? []).map((toursite) => (
                             <Stack
-                              key={toursite.tourSiteId}
+                              key={day + toursite.tourSiteId + index}
                               flexDirection="row"
                               justifyContent="space-between"
                               alignItems="center"

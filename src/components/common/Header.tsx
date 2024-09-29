@@ -26,7 +26,7 @@ const Header = () => {
         {isLogin ? (
           <Stack flexDirection="row" alignItems="center" gap="2px">
             <Avatar sx={{ width: '22px', height: '22px' }} />
-            <IconButton textBadge="3">
+            <IconButton>
               <ShoppingCart />
             </IconButton>
           </Stack>

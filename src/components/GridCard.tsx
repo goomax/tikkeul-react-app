@@ -44,7 +44,7 @@ const GridItem = ({ thumbnail, title, price, tag, bottom, onClick }: GridCardCar
         }}
         label={tag}
       />
-      <Typography fontSize={12} bold>
+      <Typography fontSize={12} bold noWrap>
         {title}
       </Typography>
       <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">

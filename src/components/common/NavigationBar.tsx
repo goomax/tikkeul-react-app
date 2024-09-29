@@ -119,7 +119,14 @@ const NavigationBar = () => {
             marginBottom: '20px',
           }}
         >
-          <Button onClick={() => router.push('/login')}>맞춤 여행하러 가기</Button>
+          <Button
+            onClick={() => {
+              router.push('/login');
+              onClose();
+            }}
+          >
+            맞춤 여행하러 가기
+          </Button>
         </Stack>
       </Dialog>
     </>
