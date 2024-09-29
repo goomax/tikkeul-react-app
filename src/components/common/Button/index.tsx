@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { CircularProgress, Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 
 export interface ButtonProps extends Omit<PropsWithChildren<MuiButtonProps>, 'color'> {
-  color?: 'primary' | 'secondary' | 'inherit';
+  color?: 'primary' | 'secondary' | 'inherit' | 'error';
   shape?: 'circle' | 'square';
   isLoading?: boolean;
 }

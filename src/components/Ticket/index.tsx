@@ -84,7 +84,7 @@ const Ticket = {
               coordinates={coordinates}
               width="290px"
               height="112px"
-              level={4}
+              level={12}
               style={{
                 borderRadius: '12px',
                 marginTop: '10px',
