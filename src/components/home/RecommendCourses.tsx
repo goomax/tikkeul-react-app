@@ -4,7 +4,7 @@ import { Heart, ShoppingCart } from '@/components/icons';
 import { Box, Stack } from '@mui/material';
 import ImageWithSkeleton from '../common/ImageWithSkeleton';
 import { useInternalRouter } from '@/hooks';
-import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
+import { commaizeNumber } from '@/utils/formatter';
 import { Course } from '@/schemas/types';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
 
@@ -66,11 +66,7 @@ const RecommendCourses = ({ courses }: RecommendCoursesProps) => {
               >
                 {' '}
                 <Stack flexDirection="row" gap="4px">
-                  <Chip
-                    radiusVariant="square"
-                    color="default"
-                    label={formatToursiteType(course.tourSites ? course.tourSites[0].type : 'restaurant')}
-                  />
+                  <Chip radiusVariant="square" color="default" label={course.courseType} />
                 </Stack>
                 <Stack gap="1px">
                   <Typography fontSize={12} bold noWrap>

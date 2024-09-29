@@ -43,7 +43,7 @@ const CoursePage = () => {
         {courseData?.tourSites && courseData?.tourSites.length > 0 && (
           <Ticket.Wrapper>
             <Ticket.Header
-              label="열정적인 활동가에게 추천하는"
+              label={courseData.courseType}
               title={courseData?.name || 'title'}
               description={courseData?.description || 'description'}
               coordinates={courseData?.tourSites.map((toursite) => ({
