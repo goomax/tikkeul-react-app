@@ -86,13 +86,11 @@ export const updateCourseOrder = ({
   from,
   to,
   day,
-  tourSites,
 }: {
   groupId: number;
   from: number;
   to: number;
   day: number;
-  tourSites: number[][];
 }) => {
   return apiClient.request({
     method: 'put',
@@ -101,9 +99,6 @@ export const updateCourseOrder = ({
       from,
       to,
       day,
-    },
-    data: {
-      tourSites,
     },
   });
 };

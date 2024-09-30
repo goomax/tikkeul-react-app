@@ -3,7 +3,7 @@ import Typography from '@/components/common/Typography';
 import { useGetGroupQuery } from '@/queries/useGetGroupQuery';
 import { Divider, Stack } from '@mui/material';
 import { useInternalRouter, useToggle } from '@/hooks';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { mockArray } from '@/utils/generator';
 import ProtectedContents from '@/components/hoc/ProtectedContents';
@@ -14,8 +14,14 @@ const CourseDetailContainer = () => {
   const router = useInternalRouter();
   const { currentGroup } = useGetUserQuery();
 
-  const { groupData } = useGetGroupQuery({ groupId: Number(currentGroup?.groupId) });
+  const { groupData, refetch } = useGetGroupQuery({ groupId: Number(currentGroup?.groupId) });
   const { value: isEditMode, toggle } = useToggle({ initialValue: false });
+
+  useEffect(() => {
+    if (currentGroup?.groupId) {
+      refetch();
+    }
+  }, [isEditMode, currentGroup?.groupId]);
 
   return (
     <Stack>
@@ -34,7 +40,7 @@ const CourseDetailContainer = () => {
               <Typography fontSize={12}>{day}일차</Typography>
               <Stack gap="12px">
                 {isEditMode ? (
-                  <Course.Editor day={day} dayCourse={dayCourse ?? []} toggle={toggle} />
+                  <Course.Editor day={day} dayCourse={dayCourse ?? []} />
                 ) : (
                   <Course.Viewer day={day} dayCourse={dayCourse ?? []} />
                 )}
