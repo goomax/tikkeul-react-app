@@ -87,7 +87,7 @@ const ToastsObserver = () => {
             sx={{
               backgroundColor,
               borderRadius: '4px',
-              marginBottom: '10px', // 여러 Toast가 있을 때 간격을 줌
+              marginBottom: '10px',
               padding: '8px 16px',
             }}
           />

@@ -15,6 +15,7 @@ import { RecommendCourses } from '@/components/home';
 import Button from '@/components/common/Button';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
 import { useInternalRouter } from '@/hooks';
+import SpeechBubble from '@/components/common/SpeechBubble';
 
 const OnboardingPage = () => {
   const theme = useTheme();
@@ -88,15 +89,43 @@ const OnboardingPage = () => {
             }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: theme.palette.background.default }} />} // 원하는 색상으로 변경
+              expandIcon={<ExpandMoreIcon sx={{ color: theme.palette.background.default }} />}
               aria-controls="panel1-content"
               id="panel1-header"
             >
               당신은 {currentGroup?.groupName}!
             </AccordionSummary>
             <AccordionDetails>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit
-              leo lobortis eget.
+              <Stack justifyContent="center" alignItems="center" gap="20px">
+                <Stack justifyContent="center" alignItems="center">
+                  <Typography color="white" fontSize={12}>
+                    {userData?.name} 님의 취향 테스트 결과
+                  </Typography>
+                  <Typography color="white" fontSize={16} bold>
+                    해가 뜨나 달이 뜨나
+                  </Typography>
+                  <Typography color="white" fontSize={16} bold>
+                    {currentGroup?.groupName.split(' ')[0]} 타입
+                  </Typography>
+                </Stack>
+                <Stack gap={'15px'} width="100%" justifyContent="center" alignItems="center">
+                  <SpeechBubble>
+                    <Typography color="primary" fontSize={12}>
+                      여행온 이상 숙소에서 잠만 자는 타입
+                    </Typography>
+                  </SpeechBubble>
+                  <SpeechBubble arrow="right">
+                    <Typography color="primary" fontSize={12}>
+                      식당 찾아 삼만리도 괜찮은 타입
+                    </Typography>
+                  </SpeechBubble>
+                  <SpeechBubble>
+                    <Typography color="primary" fontSize={12}>
+                      밖에 나가지 않고 못 견디는 타입
+                    </Typography>
+                  </SpeechBubble>
+                </Stack>
+              </Stack>
             </AccordionDetails>
           </Accordion>
         </Tooltip>

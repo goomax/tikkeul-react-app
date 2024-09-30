@@ -7,8 +7,11 @@ import { Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDeleteToursiteMutation } from '@/queries/useDeleteToursiteMutation';
-import { deleteToursite } from '@/apis/group';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
+import { useDrag, useDrop, DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useRef } from 'react';
+import { useUpdateOrderMutation } from '@/queries/useUpdateOrderMutation';
 
 interface CourseViewerProps {
   dayCourse: Group['courseDetails'];
@@ -18,7 +21,6 @@ interface CourseViewerProps {
 interface CourseEditorProps {
   dayCourse: Group['courseDetails'];
   day: number;
-  toggle: () => void;
 }
 
 const CourseViewer = ({ dayCourse, day }: CourseViewerProps) => {
@@ -56,54 +58,96 @@ const CourseViewer = ({ dayCourse, day }: CourseViewerProps) => {
   );
 };
 
-const CourseEditor = ({ dayCourse, day, toggle }: CourseEditorProps) => {
-  const { currentGroup } = useGetUserQuery();
-  const { mutate: deleteToursiteMutate } = useDeleteToursiteMutation({
-    groupId: currentGroup?.groupId ?? 1,
-    onSuccess: () => {
-      toggle();
-    },
-  });
-
-  const onDelete = (data: Parameters<typeof deleteToursite>[0]) => {
-    deleteToursiteMutate(data);
+const CourseEditor = ({ dayCourse, day }: CourseEditorProps) => {
+  const getDayByOrder = (order: number) => {
+    return dayCourse.find((course) => course.order === order)?.day ?? 1;
   };
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       {dayCourse.length > 0 ? (
-        <>
-          {dayCourse.map((toursite, index) => (
-            <Stack
-              key={day + toursite.tourSiteId + index}
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <IconButton sx={{ cursor: 'grab' }}>
-                <DragIndicatorIcon sx={{ color: 'grey.400' }} />
-              </IconButton>
-              <StepCard
-                key={toursite.tourSiteId}
-                name={toursite.name}
-                address={toursite.address}
-                recommendType={toursite.recommendType}
-                photoUrl={toursite.photoUrl}
-              />
-              <IconButton
-                onClick={() => {
-                  onDelete({ groupId: Number(currentGroup?.groupId), toursiteId: toursite.tourSiteId });
-                }}
-              >
-                <DeleteIcon sx={{ color: 'grey.400' }} />
-              </IconButton>
-            </Stack>
-          ))}
-        </>
+        dayCourse.map((toursite, index) => (
+          <EdiatableCard
+            key={day + toursite.tourSiteId + index}
+            toursite={toursite}
+            index={toursite.order}
+            getDayByOrder={getDayByOrder}
+          />
+        ))
       ) : (
         <EmptyLocation />
       )}
-    </>
+    </DndProvider>
+  );
+};
+
+const EdiatableCard = ({
+  toursite,
+  index,
+  getDayByOrder,
+}: {
+  toursite: Group['courseDetails'][number];
+  index: number;
+  getDayByOrder: (order: number) => number;
+}) => {
+  const { currentGroup } = useGetUserQuery();
+  const { mutate: deleteToursiteMutate } = useDeleteToursiteMutation({
+    groupId: currentGroup?.groupId ?? 0,
+  });
+
+  const { mutate: updateOrderMutate } = useUpdateOrderMutation({ groupId: currentGroup?.groupId ?? 0 });
+
+  const originalIndexRef = useRef(index);
+
+  const [, ref] = useDrag({
+    type: 'card',
+    item: { index },
+    end: (item, monitor) => {
+      const didDrop = monitor.didDrop();
+      if (didDrop && item.index !== originalIndexRef.current) {
+        const from = originalIndexRef.current;
+        const to = item.index;
+        const day = getDayByOrder(item.index);
+
+        updateOrderMutate({ from, to, day, groupId: currentGroup?.groupId ?? 0 });
+      }
+    },
+  });
+
+  const [, drop] = useDrop({
+    accept: 'card',
+    hover: (item: { index: number }) => {
+      if (item.index !== index) {
+        item.index = index;
+      }
+    },
+  });
+
+  return (
+    <Stack
+      ref={(node) => ref(drop(node))}
+      key={toursite.tourSiteId}
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <IconButton sx={{ cursor: 'grab' }}>
+        <DragIndicatorIcon sx={{ color: 'grey.400' }} />
+      </IconButton>
+      <StepCard
+        name={toursite.name}
+        address={toursite.address}
+        recommendType={toursite.recommendType}
+        photoUrl={toursite.photoUrl}
+      />
+      <IconButton
+        onClick={() => {
+          deleteToursiteMutate({ groupId: Number(currentGroup?.groupId), toursiteId: toursite.tourSiteId });
+        }}
+      >
+        <DeleteIcon sx={{ color: 'grey.400' }} />
+      </IconButton>
+    </Stack>
   );
 };
 
