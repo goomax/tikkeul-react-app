@@ -4,7 +4,7 @@ import ThemeProvider from './components/common/ThemeProvider';
 import { GlobalPortal } from './GlobalProtal';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/queries/queryClient';
-import ToastsObserver from './components/ToastsObserver';
+import ToastsObserver from '@/components/common/ToastObserver';
 
 function App() {
   return (

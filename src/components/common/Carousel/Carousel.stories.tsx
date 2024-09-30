@@ -4,7 +4,7 @@ import { StoryObj } from '@storybook/react';
 import Carousel from '.';
 
 export default {
-  title: 'Module/Carousel',
+  title: 'Common/Carousel',
   component: Carousel,
   tags: ['autodocs'],
 };
