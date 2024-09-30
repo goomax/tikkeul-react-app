@@ -12,6 +12,7 @@ import { useDrag, useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useRef } from 'react';
 import { useUpdateOrderMutation } from '@/queries/useUpdateOrderMutation';
+import { useGetGroupQuery } from '@/queries/useGetGroupQuery';
 
 interface CourseViewerProps {
   dayCourse: Group['courseDetails'];
@@ -59,20 +60,11 @@ const CourseViewer = ({ dayCourse, day }: CourseViewerProps) => {
 };
 
 const CourseEditor = ({ dayCourse, day }: CourseEditorProps) => {
-  const getDayByOrder = (order: number) => {
-    return dayCourse.find((course) => course.order === order)?.day ?? 1;
-  };
-
   return (
     <DndProvider backend={HTML5Backend}>
       {dayCourse.length > 0 ? (
         dayCourse.map((toursite, index) => (
-          <EdiatableCard
-            key={day + toursite.tourSiteId + index}
-            toursite={toursite}
-            index={toursite.order}
-            getDayByOrder={getDayByOrder}
-          />
+          <EdiatableCard key={day + toursite.tourSiteId + index} toursite={toursite} index={toursite.order} />
         ))
       ) : (
         <EmptyLocation />
@@ -81,16 +73,10 @@ const CourseEditor = ({ dayCourse, day }: CourseEditorProps) => {
   );
 };
 
-const EdiatableCard = ({
-  toursite,
-  index,
-  getDayByOrder,
-}: {
-  toursite: Group['courseDetails'][number];
-  index: number;
-  getDayByOrder: (order: number) => number;
-}) => {
+const EdiatableCard = ({ toursite, index }: { toursite: Group['courseDetails'][number]; index: number }) => {
   const { currentGroup } = useGetUserQuery();
+  const { getDayByOrder } = useGetGroupQuery({ groupId: Number(currentGroup?.groupId) });
+
   const { mutate: deleteToursiteMutate } = useDeleteToursiteMutation({
     groupId: currentGroup?.groupId ?? 0,
   });
