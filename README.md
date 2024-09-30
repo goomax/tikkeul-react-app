@@ -18,7 +18,8 @@
 
 ## 0. Demo
 
-#### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
+### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
+### [스토리북 컴포넌트 가이드](https://66c405b6b83833a9c5e7136e-brthakfaiv.chromatic.com/)
 
 
 <div style="display: flex; flex-wrap: nowrap; gap: 5px;">
