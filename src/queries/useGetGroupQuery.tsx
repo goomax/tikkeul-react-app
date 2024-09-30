@@ -11,5 +11,9 @@ export const useGetGroupQuery = ({ groupId }: Parameters<typeof getGroup>[0]) =>
     enabled: !!groupId,
   });
 
-  return { groupData, ...others };
+  const getDayByOrder = (order: number) => {
+    return groupData?.courseDetails.find((course) => course.order === order)?.day ?? 1;
+  };
+
+  return { groupData, getDayByOrder, ...others };
 };
