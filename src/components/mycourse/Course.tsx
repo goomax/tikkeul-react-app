@@ -13,6 +13,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useRef } from 'react';
 import { useUpdateOrderMutation } from '@/queries/useUpdateOrderMutation';
 import { useGetGroupQuery } from '@/queries/useGetGroupQuery';
+import { useDraggable } from '@/hooks';
 
 interface CourseViewerProps {
   dayCourse: Group['courseDetails'];
@@ -77,6 +78,8 @@ const EdiatableCard = ({ toursite, index }: { toursite: Group['courseDetails'][n
   const { currentGroup } = useGetUserQuery();
   const { getDayByOrder } = useGetGroupQuery({ groupId: Number(currentGroup?.groupId) });
 
+  const { isDraggable, onDraggable, onDisDraggable } = useDraggable();
+
   const { mutate: deleteToursiteMutate } = useDeleteToursiteMutation({
     groupId: currentGroup?.groupId ?? 0,
   });
@@ -85,7 +88,8 @@ const EdiatableCard = ({ toursite, index }: { toursite: Group['courseDetails'][n
 
   const originalIndexRef = useRef(index);
 
-  const [, ref] = useDrag({
+  const [, drag] = useDrag({
+    canDrag: () => isDraggable,
     type: 'card',
     item: { index },
     end: (item, monitor) => {
@@ -111,13 +115,13 @@ const EdiatableCard = ({ toursite, index }: { toursite: Group['courseDetails'][n
 
   return (
     <Stack
-      ref={(node) => ref(drop(node))}
+      ref={(node) => drag(drop(node))}
       key={toursite.tourSiteId}
       flexDirection="row"
       justifyContent="space-between"
       alignItems="center"
     >
-      <IconButton sx={{ cursor: 'grab' }}>
+      <IconButton sx={{ cursor: 'grab' }} onMouseOver={onDraggable} onMouseOut={onDisDraggable}>
         <DragIndicatorIcon sx={{ color: 'grey.400' }} />
       </IconButton>
       <StepCard
