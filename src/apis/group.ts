@@ -43,6 +43,18 @@ export const pickCourseToGroup = ({ courseId, groupId }: { courseId: number; gro
 };
 
 /**
+ * 코스 좋아요 여부 확인
+ */
+export const getCourseLike = ({ courseId, groupId }: { courseId: number; groupId: number }) => {
+  return apiClient.request<{
+    like: boolean;
+  }>({
+    method: 'get',
+    url: `/group/${groupId}/like/${courseId}`,
+  });
+};
+
+/**
  * 코스 좋아요 토글
  */
 export const toggleCourseLike = ({ courseId, groupId }: { courseId: number; groupId: number }) => {

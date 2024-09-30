@@ -18,4 +18,5 @@ export const QUERY_KEY = {
   COURSES: 'courses',
   TOURSITES: 'toursites',
   IMPORT: '/import',
+  LIKE: '/course/like',
 };
