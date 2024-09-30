@@ -1,8 +1,25 @@
-# Tikkeul React Web
+<div align="center">
+    <img src="./docs/logo.png" alt="Project Logo" width="80" />
+    <h1 align="center">Tikkeul React Web</h1>
+</div>
 
-### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
+이 프로젝트는 **한국관광공사** x **Kakao** 주최 ['2024 관광데이터 활용 공모전'](https://www.2024tourapi.com/) 출품작입니다.
 
-## 0. 미리보기
+
+## 목차
+
+- [0. Demo](#0-demo)
+- [1. Getting Started](#1-getting-started)
+- [2. 기술 스택](#2-기술-스택)
+- [3. 서비스 아키텍쳐](#3-서비스-아키텍쳐)
+- [4. 기능 구현 내용](#4-기능-구현-내용)
+
+
+
+## 0. Demo
+
+#### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
+
 
 <div style="display: flex; flex-wrap: nowrap; gap: 5px;">
   <img src="./docs/미리보기_스마트폰_001.png" alt="미리보기" style="width: 32%;">
@@ -51,8 +68,10 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 #### 개발환경
 
-- NodeJS-18.18.0
-- yarn-1.22.21
+```
+NodeJS-18.18.0
+yarn-1.22.21
+```
 
 ## 2. 기술 스택
 
@@ -75,10 +94,6 @@ VITE_KAKAO_REST_KEY={KAKAO_REST_KEY}
 
 - React Hook Form ^7.53.0
 - Yup (Schema Validation) ^1.4.0
-
-#### HTTP Client
-
-- Axios ^1.7.5
 
 #### Development & Build Tools
 
