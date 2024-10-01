@@ -15,5 +15,9 @@ export const useGetGroupQuery = ({ groupId }: Parameters<typeof getGroup>[0]) =>
     return groupData?.courseDetails.find((course) => course.order === order)?.day ?? 1;
   };
 
-  return { groupData, getDayByOrder, ...others };
+  const getTourSiteByOrder = (order: number) => {
+    return groupData?.courseDetails.find((course) => course.order === order);
+  };
+
+  return { groupData, getDayByOrder, getTourSiteByOrder, ...others };
 };
