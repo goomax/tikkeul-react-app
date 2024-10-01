@@ -1,10 +1,10 @@
-import { SVGProps, MouseEvent } from 'react';
+import { SVGProps, MouseEvent, ReactNode } from 'react';
 import { Box, Dialog, DialogContent, Stack, useTheme } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { Heart, Home, Map, User } from '../icons';
 import Typography from './Typography';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
-import { useDialog, useInternalRouter } from '@/hooks';
+import { useDialog, useInternalRouter, useSelectableState } from '@/hooks';
 import Button from './Button';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 const navItems = [
@@ -37,19 +37,138 @@ const navItems = [
 const NavigationBar = () => {
   const router = useInternalRouter();
   const { isLogin, hasGroup } = useGetUserQuery();
-  const { open: openAuth, onClose: onCloseAuth, onOpen: onOpenAuth } = useDialog(false);
-  const { open: openGroup, onClose: onCloseGroup, onOpen: onOpenGroup } = useDialog(false);
+  const { open, onClose, onOpen } = useDialog(false);
+  const { selectedState, onReset, onSelect } = useSelectableState<{
+    header: ReactNode;
+    content: ReactNode;
+    bottom: ReactNode;
+  }>(null);
 
   const onClickNav = (navItem: (typeof navItems)[number]) => (e: MouseEvent<HTMLAnchorElement>) => {
     if (navItem.withAuth && !isLogin) {
       e.preventDefault();
-      onOpenAuth();
+      onSelect(NavigationGuardParts.noAuth);
+      onOpen();
     } else if (isLogin && !hasGroup) {
       e.preventDefault();
-      onOpenGroup();
+      onSelect(NavigationGuardParts.noGroup);
+      onOpen();
     } else {
       router.push(navItem.path);
     }
+  };
+
+  const NavigationGuardParts = {
+    noAuth: {
+      header: (
+        <Stack justifyContent="center" alignItems="center">
+          <Typography fontSize={14} bold>
+            간단하게 회원가입하고
+          </Typography>
+          <Typography fontSize={14} bold>
+            나에게 맞는 맞춤 코스를 확인해보세요!
+          </Typography>
+        </Stack>
+      ),
+      content: (
+        <>
+          <Stack justifyContent="center" alignItems="center">
+            <Typography fontSize={10} color="grey">
+              취향 유형 검사를 통해 내 여행 유형을 분석 받아보고
+            </Typography>
+            <Typography fontSize={10} color="grey">
+              더욱 나에게 맞는 여행을 경험해 보실 수 있어요:)
+            </Typography>
+          </Stack>
+          <Stack flexDirection="row" alignItems="center" gap="2px">
+            <InfoOutlinedIcon
+              sx={{
+                color: 'grey.400',
+                width: '12px',
+              }}
+            />
+            <Typography fontSize={10} color="grey">
+              가입하지 않으시면 제공 중인 서비스를 이용하실 수 없어요
+            </Typography>
+          </Stack>
+        </>
+      ),
+      bottom: (
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          gap="8px"
+          sx={{
+            marginBottom: '20px',
+          }}
+        >
+          <Button
+            onClick={() => {
+              router.push('/login');
+              onClose();
+              onReset();
+            }}
+          >
+            맞춤 여행하러 가기
+          </Button>
+        </Stack>
+      ),
+    },
+    noGroup: {
+      header: (
+        <Stack justifyContent="center" alignItems="center">
+          <Typography fontSize={14} bold>
+            그룹이 없어요!
+          </Typography>
+          <Typography fontSize={14} bold>
+            그룹을 만들어야 코스를 생성할 수 있어요
+          </Typography>
+        </Stack>
+      ),
+      content: (
+        <>
+          <Stack justifyContent="center" alignItems="center">
+            <Typography fontSize={10} color="grey">
+              취향 유형 검사를 통해 내 여행 유형을 분석 받아보고
+            </Typography>
+            <Typography fontSize={10} color="grey">
+              더욱 나에게 맞는 여행을 경험해 보실 수 있어요:)
+            </Typography>
+          </Stack>
+          <Stack flexDirection="row" alignItems="center" gap="2px">
+            <InfoOutlinedIcon
+              sx={{
+                color: 'grey.400',
+                width: '12px',
+              }}
+            />
+            <Typography fontSize={10} color="grey">
+              그룹 생성 후에 이용 가능한 서비스입니다
+            </Typography>
+          </Stack>
+        </>
+      ),
+      bottom: (
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          gap="8px"
+          sx={{
+            marginBottom: '20px',
+          }}
+        >
+          <Button
+            onClick={() => {
+              router.push('/headcount-form');
+              onClose();
+              onReset();
+            }}
+          >
+            그룹 만들러 가기
+          </Button>
+        </Stack>
+      ),
+    },
   };
 
   return (
@@ -81,109 +200,15 @@ const NavigationBar = () => {
           );
         })}
       </Box>
-      <Dialog open={openAuth} onClose={onCloseAuth}>
+      <Dialog open={open} onClose={onClose}>
         <DialogContent>
           <Stack justifyContent="center" alignItems="center" gap="8px">
             <img src="/login.png" width={147} height={147} alt="earth" />
-            <Stack justifyContent="center" alignItems="center">
-              <Typography fontSize={14} bold>
-                간단하게 회원가입하고
-              </Typography>
-              <Typography fontSize={14} bold>
-                나에게 맞는 맞춤 코스를 확인해보세요!
-              </Typography>
-            </Stack>
-            <Stack justifyContent="center" alignItems="center">
-              <Typography fontSize={10} color="grey">
-                취향 유형 검사를 통해 내 여행 유형을 분석 받아보고
-              </Typography>
-              <Typography fontSize={10} color="grey">
-                더욱 나에게 맞는 여행을 경험해 보실 수 있어요:)
-              </Typography>
-            </Stack>
-
-            <Stack flexDirection="row" alignItems="center" gap="2px">
-              <InfoOutlinedIcon
-                sx={{
-                  color: 'grey.400',
-                  width: '12px',
-                }}
-              />
-              <Typography fontSize={10} color="grey">
-                가입하지 않으시면 제공 중인 서비스를 이용하실 수 없어요
-              </Typography>
-            </Stack>
+            {selectedState?.header}
+            {selectedState?.content}
           </Stack>
         </DialogContent>
-        <Stack
-          justifyContent="center"
-          alignItems="center"
-          gap="8px"
-          sx={{
-            marginBottom: '20px',
-          }}
-        >
-          <Button
-            onClick={() => {
-              router.push('/login');
-              onCloseAuth();
-            }}
-          >
-            맞춤 여행하러 가기
-          </Button>
-        </Stack>
-      </Dialog>
-      <Dialog open={openGroup} onClose={onCloseGroup}>
-        <DialogContent>
-          <Stack justifyContent="center" alignItems="center" gap="8px">
-            <img src="/login.png" width={147} height={147} alt="earth" />
-            <Stack justifyContent="center" alignItems="center">
-              <Typography fontSize={14} bold>
-                그룹이 없어요!
-              </Typography>
-              <Typography fontSize={14} bold>
-                그룹을 만들어야 코스를 생성할 수 있어요
-              </Typography>
-            </Stack>
-            <Stack justifyContent="center" alignItems="center">
-              <Typography fontSize={10} color="grey">
-                취향 유형 검사를 통해 내 여행 유형을 분석 받아보고
-              </Typography>
-              <Typography fontSize={10} color="grey">
-                더욱 나에게 맞는 여행을 경험해 보실 수 있어요:)
-              </Typography>
-            </Stack>
-
-            <Stack flexDirection="row" alignItems="center" gap="2px">
-              <InfoOutlinedIcon
-                sx={{
-                  color: 'grey.400',
-                  width: '12px',
-                }}
-              />
-              <Typography fontSize={10} color="grey">
-                그룹 생성 후에 이용 가능한 서비스입니다
-              </Typography>
-            </Stack>
-          </Stack>
-        </DialogContent>
-        <Stack
-          justifyContent="center"
-          alignItems="center"
-          gap="8px"
-          sx={{
-            marginBottom: '20px',
-          }}
-        >
-          <Button
-            onClick={() => {
-              router.push('/headcount-form');
-              onCloseGroup();
-            }}
-          >
-            그룹 만들러 가기
-          </Button>
-        </Stack>
+        {selectedState?.bottom}
       </Dialog>
     </>
   );
