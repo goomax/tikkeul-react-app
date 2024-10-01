@@ -6,7 +6,7 @@ import { QUERY_PARAM_KEY } from '@/constants/key';
 import { useQueryString } from '@/hooks';
 import { Group } from '@/schemas/types';
 import { mockArray } from '@/utils/generator';
-import { alpha, Stack, Step, StepLabel, Stepper, ToggleButton, useTheme } from '@mui/material';
+import { alpha, Stack, Step, StepLabel, Stepper, useTheme } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import { commaizeNumber, formatToursiteType } from '@/utils/formatter';
 import { Phone, Time, Location } from '@/components/icons';
@@ -14,6 +14,7 @@ import { formatTimeToAMPM } from '@/utils/dateHelper';
 import { queryClient } from '@/queries/queryClient';
 import { exportCourse } from '@/apis/group';
 import { notifyToast } from '@/utils/subject';
+import ToggleButton from '@/components/common/ToggleButton';
 
 const CourseResult = ({ tourData }: { tourData: Group }) => {
   const theme = useTheme();
@@ -82,28 +83,6 @@ const CourseResult = ({ tourData }: { tourData: Group }) => {
                 value={index + 1}
                 onClick={() => {
                   onChangeDay(index + 1);
-                }}
-                sx={{
-                  borderRadius: '16px',
-                  height: '31px',
-                  backgroundColor: 'grey.200',
-                  color: 'grey.500',
-                  border: 'none',
-                  '&:hover': {
-                    backgroundColor: 'grey.200',
-                    color: 'grey.500',
-                  },
-                  '&.Mui-selected': {
-                    backgroundColor: 'secondary.main',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    border: 'none',
-
-                    '&:hover': {
-                      backgroundColor: 'secondary.main',
-                      color: 'white',
-                    },
-                  },
                 }}
                 color="secondary"
               >

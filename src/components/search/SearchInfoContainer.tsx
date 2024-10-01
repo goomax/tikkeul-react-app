@@ -125,7 +125,7 @@ const SearchInfoContainer = ({
                   setSearchKeyword(popularSearch);
                 }}
               >
-                <Typography fontSize={10} display="inline-flex" alignItems="center" gap="8px">
+                <Stack alignItems="center" gap="8px" flexDirection="row">
                   <Typography fontSize={14} bold>
                     {index + 1}
                   </Typography>
@@ -133,7 +133,7 @@ const SearchInfoContainer = ({
                     NEW
                   </Typography>
                   <Typography fontSize={14}>{popularSearch}</Typography>
-                </Typography>
+                </Stack>
               </Grid>
             );
           })}

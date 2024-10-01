@@ -1,13 +1,12 @@
 import Typography from '@/components/common/Typography';
-import { Grid, Skeleton, Stack, Tab, Tabs, useTheme } from '@mui/material';
-import { Suspense, SyntheticEvent, useState } from 'react';
+import { Stack } from '@mui/material';
 import GridCard from '../GridCard';
 import { useGetTourSiteListQuery } from '@/queries/useGetTourSiteListQuery';
 import { Toursite } from '@/schemas/types';
-import { useDialog, useSelectableState } from '@/hooks';
+import { useDialog, useSelectableState, useTab } from '@/hooks';
 import TourSiteBottomSheet from '../TourSiteBottomSheet';
-import { mockArray } from '@/utils/generator';
 import { formatToursiteType } from '@/utils/formatter';
+import Tab from '@/components/common/Tab';
 
 const TABS = [
   { label: '숙소', value: 'lodging' },
@@ -18,12 +17,13 @@ const TABS = [
 type TabValue = (typeof TABS)[number]['value'];
 
 const LocationRecommendContainer = () => {
-  const theme = useTheme();
-  const [currentTab, setCurrentTab] = useState<TabValue>(TABS[0].value);
-
-  const onChangeTab = (_event: SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue as TabValue);
-  };
+  const { tab: currentTab, onChangeTab } = useTab<TabValue>(TABS[0].value);
+  const { tourSiteData } = useGetTourSiteListQuery({
+    filter: currentTab,
+    count: 4,
+  });
+  const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
+  const { open, onOpen, onClose } = useDialog();
 
   return (
     <>
@@ -36,105 +36,37 @@ const LocationRecommendContainer = () => {
             최근 일주일 간 가장 조회가 많았던 장소입니다
           </Typography>
         </Stack>
-        <Tabs
-          value={currentTab}
-          centered
-          onChange={onChangeTab}
-          textColor="inherit"
-          sx={{
-            height: '36px',
-            maxHeight: '36px',
-            minHeight: '36px',
-
-            backgroundColor: theme.palette.grey[200],
-            borderRadius: '20px',
-            padding: '3.5px 0',
-
-            '& .Mui-selected': {
-              backgroundColor: theme.palette.primary.main,
-              color: 'white',
-              fontWeight: 'bold',
-              borderRadius: '20px',
-            },
-
-            '& .MuiTabs-indicator': {
-              display: 'none',
-            },
-          }}
-        >
+        <Tab.Wrapper value={currentTab} onChange={onChangeTab}>
           {TABS.map((tab) => {
-            return (
-              <Tab
-                label={tab.label}
-                value={tab.value}
-                key={tab.value}
-                {...a11yProps(tab.label)}
-                sx={{ minHeight: '28px', height: '28px' }}
-              />
-            );
+            return <Tab.Item key={tab.value} label={tab.label} value={tab.value} />;
           })}
-        </Tabs>
-        <Suspense
-          fallback={
-            <Grid container spacing={4}>
-              {mockArray(4).map((_, index) => (
-                <Grid item xs={6} key={index}>
-                  <Skeleton variant="rounded" height={211} width={157} />
-                </Grid>
-              ))}
-            </Grid>
-          }
-        >
-          <AsyncTourSiteGrid currentTab={currentTab} />
-        </Suspense>
+        </Tab.Wrapper>
+        <GridCard.Wrapper>
+          {tourSiteData.map((toursite) => (
+            <GridCard.Item
+              key={toursite.tourSiteId}
+              thumbnail={toursite.photoUrls[0]}
+              title={toursite.name}
+              tag={formatToursiteType(toursite.type)}
+              price={toursite.cost}
+              onClick={() => {
+                onSelect(toursite);
+                onOpen();
+              }}
+            />
+          ))}
+        </GridCard.Wrapper>
+        <TourSiteBottomSheet
+          open={open}
+          onClose={() => {
+            onClose();
+            onReset();
+          }}
+          toursite={selectedState}
+        />
       </Stack>
     </>
   );
 };
 
 export default LocationRecommendContainer;
-
-function a11yProps(label: string) {
-  return {
-    id: `simple-tab-${label}`,
-    'aria-controls': `simple-tabpanel-${label}`,
-  };
-}
-
-const AsyncTourSiteGrid = ({ currentTab }: { currentTab: TabValue }) => {
-  const { tourSiteData } = useGetTourSiteListQuery({
-    filter: currentTab,
-    count: 4,
-  });
-
-  const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
-  const { open, onOpen, onClose } = useDialog();
-
-  return (
-    <>
-      <GridCard.Wrapper>
-        {tourSiteData.map((toursite) => (
-          <GridCard.Item
-            key={toursite.tourSiteId}
-            thumbnail={toursite.photoUrls[0]}
-            title={toursite.name}
-            tag={formatToursiteType(toursite.type)}
-            price={toursite.cost}
-            onClick={() => {
-              onSelect(toursite);
-              onOpen();
-            }}
-          />
-        ))}
-      </GridCard.Wrapper>
-      <TourSiteBottomSheet
-        open={open}
-        onClose={() => {
-          onClose();
-          onReset();
-        }}
-        toursite={selectedState}
-      />
-    </>
-  );
-};
