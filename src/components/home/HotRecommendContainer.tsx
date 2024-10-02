@@ -9,7 +9,7 @@ import ErrorBox from '../common/ErrorBox';
 const VISIBLE_LENGTH = 3;
 
 const HotRecommendContainer = () => {
-  const { courseList, isLoading, isError, error } = useGetHotCourseQuery({ count: VISIBLE_LENGTH });
+  const { courseList, isLoading, isError } = useGetHotCourseQuery({ count: VISIBLE_LENGTH });
 
   return (
     <Stack gap="16px" sx={{ padding: '8px 14px' }}>
