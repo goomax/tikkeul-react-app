@@ -1,4 +1,3 @@
-// ES 모듈 구문으로 변경
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
