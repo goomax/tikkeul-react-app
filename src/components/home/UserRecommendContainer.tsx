@@ -5,14 +5,19 @@ import RecommendCourses from './RecommendCourses';
 import { QUERY_PARAM_KEY } from '@/constants/key';
 import { useGetCoursesByGroupQuery } from '@/queries/useGetCoursesByGroupQuery';
 import { useGetUserQuery } from '@/queries/useGetUserQuery';
-import { Suspense } from 'react';
 import { mockArray } from '@/utils/generator';
+import AsyncBoundary from '../hoc/AsyncBoundary';
+import ErrorBox from '../common/ErrorBox';
 
 const UserRecommendContainer = () => {
   const theme = useTheme();
   const { getParams } = useQueryString();
   const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
   const { findGroupById } = useGetUserQuery();
+  const { courseList, isLoading, isError } = useGetCoursesByGroupQuery({
+    groupId: Number(groupId),
+    type: 'recommend',
+  });
 
   return (
     <>
@@ -28,8 +33,11 @@ const UserRecommendContainer = () => {
             같은 유형의 사용자들이 최근 일주일 간 가장 많이 본 코스입니다
           </Typography>
         </Stack>
-        <Suspense
-          fallback={
+        <AsyncBoundary
+          isLoading={isLoading}
+          isError={isError}
+          errorFallback={<ErrorBox height={200} />}
+          loadingFallback={
             <Stack gap="10px">
               {mockArray(3).map((_, index) => (
                 <Skeleton key={index} variant="rectangular" width="100%" height={113} />
@@ -37,8 +45,8 @@ const UserRecommendContainer = () => {
             </Stack>
           }
         >
-          <AsyncRecommendCourses />
-        </Suspense>
+          <RecommendCourses courses={courseList} />
+        </AsyncBoundary>
       </Stack>
       <Stack gap="16px" sx={{ padding: '8px 14px' }}>
         <Typography fontSize={14} lineHeight="21px" bold>
@@ -71,11 +79,3 @@ const UserRecommendContainer = () => {
 };
 
 export default UserRecommendContainer;
-
-const AsyncRecommendCourses = () => {
-  const { getParams } = useQueryString();
-  const groupId = getParams(QUERY_PARAM_KEY.GROUP_ID);
-  const { courseList } = useGetCoursesByGroupQuery({ groupId: Number(groupId), type: 'recommend' });
-
-  return <RecommendCourses courses={courseList} />;
-};
