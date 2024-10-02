@@ -1,11 +1,16 @@
 import Typography from '@/components/common/Typography';
 import { Skeleton, Stack } from '@mui/material';
 import RecommendCourses from './RecommendCourses';
-import { Suspense } from 'react';
 import { mockArray } from '@/utils/generator';
 import { useGetHotCourseQuery } from '@/queries/useGetHotCourseQuerie';
+import AsyncBoundary from '../hoc/AsyncBoundary';
+import ErrorBox from '../common/ErrorBox';
+
+const VISIBLE_LENGTH = 3;
 
 const HotRecommendContainer = () => {
+  const { courseList, isLoading, isError } = useGetHotCourseQuery({ count: VISIBLE_LENGTH });
+
   return (
     <Stack gap="16px" sx={{ padding: '8px 14px' }}>
       <Stack>
@@ -19,25 +24,22 @@ const HotRecommendContainer = () => {
           최근 일주일 간 가장 담기가 많았던 코스입니다
         </Typography>
       </Stack>
-      <Suspense
-        fallback={
+      <AsyncBoundary
+        isLoading={isLoading}
+        isError={isError}
+        loadingFallback={
           <Stack gap="10px">
-            {mockArray(3).map((_, index) => (
+            {mockArray(VISIBLE_LENGTH).map((_, index) => (
               <Skeleton key={index} variant="rectangular" width="100%" height={113} />
             ))}
           </Stack>
         }
+        errorFallback={<ErrorBox height={200} />}
       >
-        <AsyncRecommendCourses />
-      </Suspense>
+        <RecommendCourses courses={courseList} />
+      </AsyncBoundary>
     </Stack>
   );
 };
 
 export default HotRecommendContainer;
-
-const AsyncRecommendCourses = () => {
-  const { courseList } = useGetHotCourseQuery({ count: 3 });
-
-  return <RecommendCourses courses={courseList} />;
-};

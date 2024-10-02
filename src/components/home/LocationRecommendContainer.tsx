@@ -1,5 +1,5 @@
 import Typography from '@/components/common/Typography';
-import { Stack } from '@mui/material';
+import { Grid, Skeleton, Stack } from '@mui/material';
 import GridCard from '../GridCard';
 import { useGetTourSiteListQuery } from '@/queries/useGetTourSiteListQuery';
 import { Toursite } from '@/schemas/types';
@@ -7,6 +7,11 @@ import { useDialog, useSelectableState, useTab } from '@/hooks';
 import TourSiteBottomSheet from '../TourSiteBottomSheet';
 import { formatToursiteType } from '@/utils/formatter';
 import Tab from '@/components/common/Tab';
+import AsyncBoundary from '../hoc/AsyncBoundary';
+import { mockArray } from '@/utils/generator';
+import ErrorBox from '../common/ErrorBox';
+
+const VISIBLE_LENGTH = 4;
 
 const TABS = [
   { label: '숙소', value: 'lodging' },
@@ -18,9 +23,9 @@ type TabValue = (typeof TABS)[number]['value'];
 
 const LocationRecommendContainer = () => {
   const { tab: currentTab, onChangeTab } = useTab<TabValue>(TABS[0].value);
-  const { tourSiteData } = useGetTourSiteListQuery({
+  const { tourSiteData, isLoading, isError } = useGetTourSiteListQuery({
     filter: currentTab,
-    count: 4,
+    count: VISIBLE_LENGTH,
   });
   const { selectedState, onSelect, onReset } = useSelectableState<Toursite>(null);
   const { open, onOpen, onClose } = useDialog();
@@ -42,19 +47,30 @@ const LocationRecommendContainer = () => {
           })}
         </Tab.Wrapper>
         <GridCard.Wrapper>
-          {tourSiteData.map((toursite) => (
-            <GridCard.Item
-              key={toursite.tourSiteId}
-              thumbnail={toursite.photoUrls[0]}
-              title={toursite.name}
-              tag={formatToursiteType(toursite.type)}
-              price={toursite.cost}
-              onClick={() => {
-                onSelect(toursite);
-                onOpen();
-              }}
-            />
-          ))}
+          <AsyncBoundary
+            isLoading={isLoading}
+            isError={isError}
+            loadingFallback={mockArray(VISIBLE_LENGTH).map((_, index) => (
+              <Grid item xs={6} key={index}>
+                <Skeleton height={196} variant="rectangular" />
+              </Grid>
+            ))}
+            errorFallback={<ErrorBox height={200} />}
+          >
+            {tourSiteData.map((toursite) => (
+              <GridCard.Item
+                key={toursite.tourSiteId}
+                thumbnail={toursite.photoUrls[0]}
+                title={toursite.name}
+                tag={formatToursiteType(toursite.type)}
+                price={toursite.cost}
+                onClick={() => {
+                  onSelect(toursite);
+                  onOpen();
+                }}
+              />
+            ))}
+          </AsyncBoundary>
         </GridCard.Wrapper>
         <TourSiteBottomSheet
           open={open}

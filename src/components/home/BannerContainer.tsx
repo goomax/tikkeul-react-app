@@ -60,7 +60,7 @@ const BannerContainer = () => {
         <Stack>
           <Box sx={{ padding: '8px 14px' }}>
             <Typography fontSize={14} lineHeight="21px">
-              안녕하세요, {userData ? userData.name : '김티끌'}님!
+              안녕하세요, {userData && `${userData.name}님`}
             </Typography>
             <Typography fontSize={14} lineHeight="21px" bold>
               오늘 받으실 수 있는 혜택은{' '}
