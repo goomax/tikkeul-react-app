@@ -5,39 +5,19 @@
 
 이 프로젝트는 **한국관광공사** x **Kakao** 주최 ['2024 관광데이터 활용 공모전'](https://www.2024tourapi.com/) 출품작입니다.
 
-
-## 목차
-
-- [0. Demo](#0-demo)
-- [1. Getting Started](#1-getting-started)
-- [2. 기술 스택](#2-기술-스택)
-- [3. 서비스 아키텍쳐](#3-서비스-아키텍쳐)
-- [4. 기능 구현 내용](#4-기능-구현-내용)
-
-
-
-## 0. Demo
-
-### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
-### [스토리북 컴포넌트 가이드](https://66c405b6b83833a9c5e7136e-nqhokgcgkt.chromatic.com/)
-
-
 <div style="display: flex; flex-wrap: nowrap; gap: 5px;">
   <img src="./docs/미리보기_스마트폰_001.png" alt="미리보기" style="width: 32%;">
   <img src="./docs/미리보기_스마트폰_002.png" alt="미리보기" style="width: 32%;">
   <img src="./docs/미리보기_스마트폰_003.png" alt="미리보기" style="width: 32%;">
 </div>
 
-<div style="display: flex; flex-wrap: nowrap; gap: 5px;">
-  <img src="./docs/미리보기_스마트폰_004.png" alt="미리보기" style="width: 32%;">
-  <img src="./docs/미리보기_스마트폰_005.png" alt="미리보기" style="width: 32%;">
-  <img src="./docs/미리보기_스마트폰_006.png" alt="미리보기" style="width: 32%;">
-</div>
+## 목차
 
-<div style="display: flex; flex-wrap: nowrap; gap: 5px;">
-   <img src="./docs/미리보기_스마트폰_007.png" alt="미리보기" style="width: 32%;"> 
-   <img src="./docs/미리보기_스마트폰_008.png" alt="미리보기" style="width: 32%;">
-</div>
+- [1. Getting Started](#1-getting-started)
+- [2. 기술 스택](#2-기술-스택)
+- [3. 서비스 아키텍쳐](#3-서비스-아키텍쳐)
+- [4. 기능 구현 내용](#4-기능-구현-내용)
+- [5. Demo](#5-demo)
 
 ## 1. Getting Started
 
@@ -223,5 +203,30 @@ yarn-1.22.21
     - 공유된 URL의 데이터를 다시 사용하려면 클라이언트는 인코딩된 값을 서버로 전송합니다. 서버는 해당 값을 디코딩하여 JSON 형태의 원래 코스 데이터를 반환합니다.
 
 이러한 과정으로 사용자 간에 코스 공유와 데이터 복원이 간편하게 이루어집니다.
+
+## 5. Demo
+
+### [티끌모아강원 바로가기](https://tikkeul.netlify.app/)
+### [스토리북 컴포넌트 가이드](https://66c405b6b83833a9c5e7136e-nqhokgcgkt.chromatic.com/)
+
+## 5.1. 랜딩페이지 - 찜 페이지
+
+![홈](./docs/1-홈-찜.gif)
+
+## 5.2. 검색페이지
+
+![검색](./docs/2-검색.gif)
+
+## 5.3. 그룹 생성
+
+![그룹](./docs/3-그룹생성.gif)
+
+## 5.4. 코스 상세보기
+
+![코스](./docs/4-코스보기.gif)
+
+## 5.5. 공유
+
+![공유](./docs/5-공유.gif)
 
 
