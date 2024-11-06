@@ -3,7 +3,7 @@
     <h1 align="center">Tikkeul React Web</h1>
 </div>
 
-이 프로젝트는 **한국관광공사** x **Kakao** 주최 ['2024 관광데이터 활용 공모전'](https://www.2024tourapi.com/) 출품작입니다.
+이 프로젝트는 **한국관광공사** x **Kakao** 주최 ['2024 관광데이터 활용 공모전'](https://www.2024tourapi.com/) 출품작입니다. (**장려상** 수상)
 
 <div style="display: flex; flex-wrap: nowrap; gap: 5px;">
   <img src="./docs/미리보기_스마트폰_001.png" alt="미리보기" style="width: 32%;">
