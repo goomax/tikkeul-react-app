@@ -19,9 +19,12 @@ export const useGetUserQuery = () => {
   return {
     userData,
     isLogin: !!userData,
-    hasGroup: userData?.groups && userData?.groups.length > 0,
+    hasGroup: Array.isArray(userData?.groups) && userData.groups.length > 0,
     findGroupById,
-    currentGroup: userData?.groups[userData?.groups.length - 1],
+    currentGroup:
+      Array.isArray(userData?.groups) && userData.groups.length > 0
+        ? userData.groups[userData.groups.length - 1]
+        : null,
     ...others,
   };
 };

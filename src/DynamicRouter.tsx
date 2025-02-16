@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from '@/components/common/Layout';
 import {
@@ -26,7 +26,7 @@ import { initialSignUpFormData, SignUpFormData } from './schemas/signup';
 
 function DynamicRouter() {
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <AnimatePresence>
         <Routes>
@@ -56,7 +56,7 @@ function DynamicRouter() {
           </Route>
         </Routes>
       </AnimatePresence>
-    </BrowserRouter>
+    </>
   );
 }
 
